@@ -1,7 +1,7 @@
 * LeeSin's vanilla Emacs
 Features
-** Modularization
-** Write From scratch
+1. Modularization
+2. Write From scratch
 * Build
 Use the following command to use my configuration.
 #+BEGIN_src sh
@@ -9,17 +9,19 @@ Use the following command to use my configuration.
     git clone https://github.com/endlesspeak/.emacs.d ~
 #+END_src
 
-Gentoo Linux should check the use options:
+Gentoo Linux should check the following things:
+1. check the use options:
 #+BEGIN_SRC conf
     app-editors/emacs acl alsa cairo dbus dynamic-loading gfile gmp gpm gsettings gui gzip-el inotify jpeg json kerberos lcms libxml2 png source ssl systemd threads xft xpm zlib
 #+END_SRC
+2. Install =emacs-daemon= and =emacs-common=
 * Warning
-1. No guarantee for security
+1. No guarantee for stablity
 2. Update extremely slow
 * Reference
 Refer these repos to obtain config files.
-[[https://github.com/seagle0128/.emacs.d][Centaur's emacs configuration]]
-[[https://github.com/redguardtoo/emacs.d][Redguard's emacs configuration]]
-[[https://github.com/evanmeek/.emacs.d][Evanmeek's emacs configuration]]
-[[https://github.com/springhan/.emacs.d][SpringHan's emacs configuration]]
+1. [[https://github.com/seagle0128/.emacs.d][Centaur's emacs configuration]]
+2. [[https://github.com/redguardtoo/emacs.d][Redguard's emacs configuration]]
+3. [[https://github.com/evanmeek/.emacs.d][Evanmeek's emacs configuration]]
+4. [[https://github.com/springhan/.emacs.d][SpringHan's emacs configuration]]
 
