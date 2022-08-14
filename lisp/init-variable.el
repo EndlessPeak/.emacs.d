@@ -14,6 +14,23 @@
 (setq scroll-step 1
       scroll-conservatively 10000)
 
+;; Appearence
+(dolist (hook (list
+               'org-mode-hook
+	       'elisp-mode-hook
+               'conf-mode-hook
+               'c-mode-hook
+               'c++-mode-hook
+               'java-mode-hook
+               'python-mode-hook))
+
+(add-hook hook #'(lambda ()
+                  ;; 设置自动换行
+                  (setq truncate-lines nil)
+                  ;; 针对中文折行的问题进行设置
+                  (toggle-word-wrap nil)
+                  )))
+
 ;; Function Defination
 (defun leesin/toggle-proxy ()
   (interactive)
