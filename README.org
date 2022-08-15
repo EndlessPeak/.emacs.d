@@ -11,9 +11,9 @@ Use the following command to use my configuration.
 
 Gentoo Linux should check the following things:
 1. check the use options:
-#+BEGIN_SRC conf
-    app-editors/emacs acl alsa cairo dbus dynamic-loading gfile gmp gpm gsettings gui gzip-el inotify jpeg json kerberos lcms libxml2 png source ssl systemd threads xft xpm zlib
-#+END_SRC
+   #+BEGIN_SRC conf
+     app-editors/emacs acl alsa cairo dbus dynamic-loading gfile gmp gpm gsettings gui gzip-el inotify jpeg json kerberos lcms libxml2 png source ssl systemd threads xft xpm zlib
+   #+END_SRC
 2. Install =emacs-daemon= and =emacs-common=
 * Warning
 1. No guarantee for stablity
@@ -24,4 +24,6 @@ Refer these repos to obtain config files.
 2. [[https://github.com/redguardtoo/emacs.d][Redguard's emacs configuration]]
 3. [[https://github.com/evanmeek/.emacs.d][Evanmeek's emacs configuration]]
 4. [[https://github.com/springhan/.emacs.d][SpringHan's emacs configuration]]
+5. [[https://github.com/cabins/.emacs.d][Cabins' emacs configuration]]
+6. [[https://github.com/7ym0n/dotfairy][7ym0n's emacs configuration]]
 

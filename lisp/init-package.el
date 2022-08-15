@@ -20,6 +20,13 @@
 
 (require 'use-package)
 
+;; set `use-package' variables
+(setq use-package-always-ensure t
+      use-package-always-defer nil
+      use-package-always-demand nil
+      use-package-expand-minimally t
+      use-package-verbose t)
+
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
 

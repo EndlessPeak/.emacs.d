@@ -29,7 +29,8 @@
   (doom-themes-org-config))
 
 ;; Choose one theme to load
-(load-theme 'doom-dark+ t)
+;; (load-theme 'doom-dark+ t)
+(load-theme 'doom-dracula t)
 
 ;; Load dashboard
 ;; (require 'dashboard)
