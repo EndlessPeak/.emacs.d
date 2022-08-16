@@ -1,4 +1,7 @@
 (with-eval-after-load 'cc-mode
-  (require 'cc)
+  (require 'init-cc))
+
+(with-eval-after-load 'org-mode
+  (require 'init-lang))
 
 (provide 'init-lang)

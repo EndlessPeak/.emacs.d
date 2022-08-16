@@ -1,3 +1,3 @@
 (setq c-basic-offset 4)
 
-(provide 'cc)
+(provide 'lang-cc)
