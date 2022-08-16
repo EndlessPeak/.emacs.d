@@ -10,7 +10,7 @@
 ;; Load path
 (defun update-load-path (&rest _)
   "Update 'load-path' . "
-  (dolist (dir '("site-lisp" "lisp"))
+  (dolist (dir '("site-lisp" "lisp" "lisp/lang"))
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
 (update-load-path)

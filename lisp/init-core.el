@@ -19,4 +19,7 @@
 (require 'init-input)
 
 (require 'init-function)
+
+;; Language support
+(require 'init-lang)
 (provide 'init-core)
