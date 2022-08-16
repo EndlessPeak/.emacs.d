@@ -3,6 +3,9 @@
 (require 'init-editor)
 (require 'init-ui)
 (require 'modeline-customize)
+;; Key bindings
+(require 'init-kbd)
+
 ;; Self Defination
 (require 'init-variable)
 

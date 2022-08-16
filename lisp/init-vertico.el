@@ -10,7 +10,7 @@
   ;;           ("C-M-n" . vertico-next-group)
   ;;           ("C-M-p" . vertico-previous-group))
   :custom
-  (vertico-count 10)  ; Number of candidates to display
+  (vertico-count 15)  ; Number of candidates to display
   (vertico-resize nil)
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
   (vertico-cycle t)
@@ -19,6 +19,9 @@
   (vertico-mode)
   ;; Different scroll margin
   ;; (setq vertico-scroll-margin 0)
+  :custom-face
+  ;; hightlight the current option
+  (vertico-current ((t (:background "#4a3f5a"))))
   )
 
 (use-package consult

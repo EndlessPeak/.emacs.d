@@ -10,7 +10,12 @@
   :ensure t)
 
 ;; Hightlight
-(global-hl-line-mode t)
+;;(global-hl-line-mode t)
+;;(use-package hl-line
+;;  :ensure nil
+;;  :hook ((after-init . global-hl-line-mode)
+;;         ((dashboard-mode eshell-mode shell-mode term-mode vterm-mode fundamental-mode) .
+;;          (lambda () (setq-local global-hl-line-mode nil)))))
 
 ;; Theme
 (use-package doom-themes

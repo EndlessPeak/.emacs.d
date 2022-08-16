@@ -22,4 +22,11 @@
               100)
               '(70 . 70) '(100 . 100)))))
 
+(defun animate-text (text)
+  ;; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
+  (interactive "stext: ")  ; s means read-string
+  (switch-to-buffer (get-buffer-create "*butterfly*"))
+  (erase-buffer)
+  (animate-string text 10))
+
 (provide 'init-function)
