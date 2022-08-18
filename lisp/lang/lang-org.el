@@ -1,6 +1,5 @@
 (use-package org
   :ensure t
-  :defer t
   :config
   (org-indent-mode)
   (setq org-hide-leading-stars t
@@ -11,7 +10,6 @@
 ;; make the org mode more beautiful with optimized leading chars
 (use-package org-superstar
   :ensure t
-  :defer t
   :hook (org-mode . org-superstar-mode)
   :config (setq org-superstar-prettify-item-bullets nil))
 

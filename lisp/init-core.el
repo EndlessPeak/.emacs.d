@@ -10,7 +10,7 @@
 (require 'init-variable)
 
 ;; Org Mode
-(require 'init-org)
+;;(require 'init-org)
 
 ;; Search engine
 ;;(require 'init-ivy)
@@ -26,6 +26,6 @@
   (require 'init-function)
 )
 
-;;(add-hook 'after-init-hook #'load-custom-file)
+(add-hook 'after-init-hook #'load-custom-file)
 
 (provide 'init-core)

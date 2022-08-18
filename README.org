@@ -20,10 +20,11 @@ Gentoo Linux should check the following things:
 2. Update extremely slow
 * Reference
 Refer these repos to obtain config files.
-1. [[https://github.com/seagle0128/.emacs.d][Centaur's emacs configuration]]
-2. [[https://github.com/redguardtoo/emacs.d][Redguard's emacs configuration]]
-3. [[https://github.com/evanmeek/.emacs.d][Evanmeek's emacs configuration]]
-4. [[https://github.com/springhan/.emacs.d][SpringHan's emacs configuration]]
-5. [[https://github.com/cabins/.emacs.d][Cabins' emacs configuration]]
-6. [[https://github.com/7ym0n/dotfairy][7ym0n's emacs configuration]]
+1. [[https://github.com/MatthewZMD/.emacs.d][MatthewZMD's emacs]]
+2. [[https://github.com/seagle0128/.emacs.d][Centaur's emacs configuration]]
+3. [[https://github.com/redguardtoo/emacs.d][Redguard's emacs configuration]]
+4. [[https://github.com/evanmeek/.emacs.d][Evanmeek's emacs configuration]]
+5. [[https://github.com/springhan/.emacs.d][SpringHan's emacs configuration]]
+6. [[https://github.com/cabins/.emacs.d][Cabins' emacs configuration]]
+7. [[https://github.com/7ym0n/dotfairy][7ym0n's emacs configuration]]
 

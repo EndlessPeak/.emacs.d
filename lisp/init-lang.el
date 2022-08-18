@@ -1,7 +1,8 @@
 (with-eval-after-load 'cc-mode
-  (require 'init-cc))
+  (require 'lang-cc))
 
-(with-eval-after-load 'org-mode
-  (require 'init-lang))
+;(with-eval-after-load 'org-mode
+;  (require 'lang-org))
+(add-hook 'org-mode-hook '(lambda() (require 'lang-org)))
 
 (provide 'init-lang)
