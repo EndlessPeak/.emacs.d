@@ -29,9 +29,18 @@
   :config
   ;; Simplify confirm process
   (defalias 'yes-or-no-p 'y-or-n-p)
-  ;; Show line number
-  (setq display-line-numbers-type 't)
+  )
+
+;; Show line number
+;;(setq display-line-numbers-type 't)
+;;(setq display-line-numbers 'absolute)
+(use-package display-line-numbers
+  :ensure t
+  :config
   (global-display-line-numbers-mode t)
+  ;; line number align right
+  :init
+  (setq display-line-numbers-width-start t)
   )
 
 (provide 'init-editor)

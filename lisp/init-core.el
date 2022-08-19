@@ -1,5 +1,10 @@
 (require 'init-package)
 (require 'init-evil)
+
+;; Search engine
+;;(require 'init-ivy)
+(require 'init-vertico)
+
 (require 'init-editor)
 (require 'init-ui)
 (require 'modeline-customize)
@@ -10,11 +15,8 @@
 (require 'init-variable)
 
 ;; Org Mode
-;;(require 'init-org)
+(require 'init-org)
 
-;; Search engine
-;;(require 'init-ivy)
-(require 'init-vertico)
 
 ;; delay load
 (defun load-custom-file()

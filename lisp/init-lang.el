@@ -3,6 +3,6 @@
 
 ;(with-eval-after-load 'org-mode
 ;  (require 'lang-org))
-(add-hook 'org-mode-hook '(lambda() (require 'lang-org)))
+;(add-hook 'org-mode-hook '(lambda() (require 'lang-org)))
 
 (provide 'init-lang)
