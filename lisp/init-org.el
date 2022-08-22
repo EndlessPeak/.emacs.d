@@ -2,7 +2,7 @@
   :ensure t
   :defer t
   :config
-  (org-indent-mode)
+  (org-indent-mode t)
   (setq org-hide-leading-stars t
         org-hide-emphasis-markers t
         org-startup-indented t))
@@ -25,6 +25,30 @@
                             (org-element-update-syntax)
                             ;; 规定上下标必须加 {}，否则中文使用下划线时它会以为是两个连着的下标
                             (setq org-use-sub-superscripts "{}")))
+
+(use-package evil-org
+  :ensure t
+  :defer t
+  :hook
+  (org-mode . evil-org-mode)
+  :config
+  (add-hook 'evil-org-mode-hook #'evil-normalize-keymaps)
+  (evil-org-set-key-theme)
+  )
+  
+;;(use-package org-modern
+;;  :ensure t
+;;  :defer t
+;;  :hook
+;;  ((org-mode . org-modern-mode)
+;;        (org-agenda-finalize . org-modern-agenda)
+;;        (org-modern-mode . (lambda ()
+;;                            "Adapt `org-modern-mode'."
+;;                            ;; Disable Prettify Symbols mode
+;;                            (setq prettify-symbols-alist nil)
+;;                            (prettify-symbols-mode -1)
+;;                            )))
+;;  )
 
 (use-package valign
   :ensure t
