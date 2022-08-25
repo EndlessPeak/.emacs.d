@@ -28,12 +28,17 @@
 
 (use-package evil-org
   :ensure t
-  :defer t
-  :hook
-  (org-mode . evil-org-mode)
+  :after org
+  :hook (org-mode . evil-org-mode)
   :config
-  (add-hook 'evil-org-mode-hook #'evil-normalize-keymaps)
-  (evil-org-set-key-theme)
+  (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading))
+  ;;(add-hook 'evil-org-mode-hook #'evil-normalize-keymaps)
+  ;;(evil-org-set-key-theme)
+  (evil-define-key 'insert 'evil-org-mode
+    (kbd "TAB") 'org-metaright
+    (kbd "<backtab>") 'org-metaleft)
+  (evil-define-key 'normal 'evil-org-mode
+    (kbd "O") 'evil-open-above)
   )
   
 ;;(use-package org-modern
@@ -56,4 +61,10 @@
   :hook (org-mode . valign-mode))
 ;(require 'valign)
 ;(add-hook 'org-mode-hook #'valign-mode)
+
+(use-package ox-hugo
+  :ensure t   ;Auto-install the package from Melpa
+  ;;:pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
+  :after ox)
+
 (provide 'init-org)
