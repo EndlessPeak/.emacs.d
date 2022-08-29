@@ -55,6 +55,7 @@
 ;;                            )))
 ;;  )
 
+;; Standardize the tabel width in different fonts
 (use-package valign
   :ensure t
   :defer t
@@ -64,7 +65,30 @@
 
 (use-package ox-hugo
   :ensure t   ;Auto-install the package from Melpa
+  :defer t
   ;;:pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
   :after ox)
+
+(defun leesin/presentation-setup()
+  ;; Cannot set unicode amount
+  (setq text-scale-mode-amount 1)
+  (org-display-inline-images)
+  (text-scale-mode 1))
+
+(defun leesin/presentation-end()
+  (text-scale-mode 0))
+
+(use-package org-tree-slide
+  :ensure t
+  :defer t
+  :hook ((org-tree-slide-play . leesin/presentation-setup)
+         (org-tree-slide-stop . leesin/presentation-end))
+  :custom
+  (org-tree-slide-slide-in-effect t)
+  (org-tree-slide-activate-message "Presentation started!")
+  (org-tree-slide-deactivate-message "Presentation finished!")
+  (org-tree-slide-header t)
+  (org-tree-slide-breadcrumbs " // ")
+  (org-image-actual-width nil))
 
 (provide 'init-org)

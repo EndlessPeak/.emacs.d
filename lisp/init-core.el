@@ -9,6 +9,7 @@
 (require 'init-ui)
 (require 'modeline-customize)
 ;; Language support
+(require 'init-complete)
 (require 'init-lang)
 
 ;; Self Defination
