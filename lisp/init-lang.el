@@ -10,7 +10,8 @@
   (setq lsp-keymap-prefix "C-c l"
         lsp-prefer-flymake nil)
   :hook ((c++-mode . lsp-deferred)
-         (lsp-mode . lsp-enable-which-key-intergration))
+         ;;(lsp-mode . lsp-enable-which-key-intergration)
+         )
   :commands (lsp lsp-deferred)
   )
 
