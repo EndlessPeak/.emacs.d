@@ -8,13 +8,13 @@
 ;; (add-to-list 'face-font-rescale-alist '(cons (font-spec :family "KaiTi") 1.5) t)
 ;; (setf (alist-get "*KaiTi*" face-font-rescale-alist 1.5 nil 'string=) 1.5 )
 ;; (setq-local face-font-rescale-alist '("KaiTi" . 1.5))
-(dolist (charset '(kana han cjk-misc))
-   (set-fontset-font (frame-parameter nil 'font)
-                     charset (font-spec :family "KaiTi"
-                                        ;; :size 22 ; 16
-                                        ;; :weight 'semi-bold
-                                        )))
-(add-to-list 'face-font-rescale-alist '("KaiTi" . 1.4))
+;; (dolist (charset '(kana han cjk-misc))
+;;    (set-fontset-font (frame-parameter nil 'font)
+;;                      charset (font-spec :family "KaiTi"
+;;                                         ;; :size 22 ; 16
+;;                                         ;; :weight 'semi-bold
+;;                                         )))
+;; (add-to-list 'face-font-rescale-alist '("KaiTi" . 1.4))
 
 ;; all the icons font
 (use-package all-the-icons
