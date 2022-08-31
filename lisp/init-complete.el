@@ -40,16 +40,24 @@
         company-idle-delay 0
         company-echo-delay 0
         company-tooltip-offset-display 'scrollbar
-        company-begin-commands '(self-insert-command))
-        ;;company-backends '((company-yasnippet
-        ;;                    company-capf
-        ;;                    company-dabbrev
-        ;;                    company-files)
-        ;;                   ))
+        company-begin-commands '(self-insert-command)
+        company-backends '((company-yasnippet company-capf)))
   ;;The code above can only show one type of complete method. 
   ;;Use the code blow can show code-complete with yasnippet at the same time
   ;;(push '(company-semantic :with company-yasnippet) company-backends)
-  (push '(company-capf :with company-yasnippet) company-backends)
+  ;;(push '(company-capf :with company-yasnippet) company-backends)
+  ;;Refer to the doom emacs method,both can be shown at the same time.
+  ;;See `init-lang.el'
   )
 
+;;company-yasnippet disable after dot
+(defun company-yasnippet/disable-after-dot (fun command &optional arg &rest _ignore)
+(if (eq command 'prefix)
+    (let ((prefix (funcall fun 'prefix)))
+        (when (and prefix (not (eq (char-before (- (point) (length prefix)))
+                            ?.)))
+        prefix))
+    (funcall fun command arg)))
+
+(advice-add #'company-yasnippet :around #'company-yasnippet/disable-after-dot)
 (provide 'init-complete)

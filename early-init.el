@@ -1,10 +1,12 @@
 ;; Enhance IO
-(setq read-process-output-max ( * 102400 10240))
+(setq read-process-output-max ( * 1024 1024))
 
 (setq process-adaptive-read-buffering nil)
 
 ;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
+;; (setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-threshold 134217728   ; 128mb
+      gc-cons-percentage 1.0)
 
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files
