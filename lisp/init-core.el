@@ -8,6 +8,10 @@
 (require 'init-editor)
 (require 'init-ui)
 (require 'modeline-customize)
+
+;; Sidebar
+(require 'init-sidebar)
+
 ;; Language support
 (require 'init-complete)
 (require 'init-lang)

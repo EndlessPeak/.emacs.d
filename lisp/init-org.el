@@ -34,6 +34,7 @@
   (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading))
   ;;(add-hook 'evil-org-mode-hook #'evil-normalize-keymaps)
   ;;(evil-org-set-key-theme)
+  ;; org-at-heading-or-items-p
   (evil-define-key 'insert 'evil-org-mode
     (kbd "TAB") 'org-metaright
     (kbd "<backtab>") 'org-metaleft)
