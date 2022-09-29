@@ -5,6 +5,7 @@
   (setq yas-snippet-dirs
         '("~/.emacs.d/snippets")))
 
+;;Clone this repo somewhere local https://github.com/doomemacs/snippets
 (use-package doom-snippets
   :load-path "~/.emacs.d/elpa/snippets"
   :after yasnippet
