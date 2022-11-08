@@ -1,4 +1,6 @@
 (require 'init-package)
+;; Self Defination
+(require 'init-variable)
 (require 'init-evil)
 
 ;; Search engine
@@ -12,17 +14,15 @@
 (require 'init-complete)
 (require 'init-lang)
 
-;; Self Defination
-(require 'init-variable)
-
 ;; Org Mode
 (require 'init-org)
 
 
 ;; delay load
 (defun load-custom-file()
-  ;; Input Method
-  (require 'init-input)
+  (when *is-linux*
+    ;; Input Method
+    (require 'init-input))
   ;; Key bindings
   (require 'init-kbd)
   ;; Self function

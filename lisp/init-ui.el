@@ -1,10 +1,16 @@
 ;; Font
 ;; Set Emacs Font
 ;; (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 120)
-(set-face-attribute 'default nil :font (font-spec :family "JetbrainsMono Nerd Font" :size 20)) ;; :size 20
-;;(set-face-attribute 'default nil :font (font-spec :family "Iosevka Nerd Font" :size 20 :style "Regular")) ;; :size 20
-(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" ));; :size 20
-(set-fontset-font t 'han (font-spec :family "KaiTi" :size 22)); :size 22
+(when *is-linux*
+  (set-face-attribute 'default nil :font (font-spec :family "JetbrainsMono Nerd Font" :size 20)) ;; :size 20
+;; (set-face-attribute 'default nil :font (font-spec :family "Iosevka Nerd Font" :size 20 :style "Regular")) ;; :size 20
+  (set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" ));; :size 20 
+  (set-fontset-font t 'han (font-spec :family "KaiTi"))
+  )
+(when *is-windows*
+  (set-face-attribute 'default nil :font (font-spec :family "Consolas" :size 24))
+  (set-fontset-font t 'han (font-spec :family "KaiTi" :size 24))
+  )
 ;; (add-to-list 'face-font-rescale-alist '(cons (font-spec :family "KaiTi") 1.5) t)
 ;; (setf (alist-get "*KaiTi*" face-font-rescale-alist 1.5 nil 'string=) 1.5 )
 ;; (setq-local face-font-rescale-alist '("KaiTi" . 1.5))
