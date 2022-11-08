@@ -33,7 +33,7 @@
 (when *is-windows*
   (setq default-directory "E:/"))
 ;; Appearence
-(when *is-linux
+(when *is-linux*
   (dolist (hook (list
                 'org-mode-hook
                 'emacs-lisp-mode-hook

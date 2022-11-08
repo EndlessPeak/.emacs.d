@@ -3,7 +3,7 @@
 ;; (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 120)
 (when *is-linux*
   (set-face-attribute 'default nil :font (font-spec :family "JetbrainsMono Nerd Font" :size 20)) ;; :size 20
-;; (set-face-attribute 'default nil :font (font-spec :family "Iosevka Nerd Font" :size 20 :style "Regular")) ;; :size 20
+  ;; (set-face-attribute 'default nil :font (font-spec :family "Iosevka Nerd Font" :size 20 :style "Regular")) ;; :size 20
   (set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" ));; :size 20 
   (set-fontset-font t 'han (font-spec :family "KaiTi"))
   )
