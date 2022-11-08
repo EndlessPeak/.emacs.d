@@ -6,3 +6,5 @@ custom.el
 history
 .lsp*
 tramp
+transient
+projectile*

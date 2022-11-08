@@ -95,4 +95,7 @@
 
 ;; Solve the full screen issue
 (setq frame-resize-pixelwise t)
+
+;;(setq default-frame-alist '((alpha-background . 75)))
+;;(push '(alpha-background .50) default-frame-alist)
 (provide 'init-ui)
