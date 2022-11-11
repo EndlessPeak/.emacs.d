@@ -1,3 +1,10 @@
+;; org-mode snippets中
+;; %Y 表示年
+;; %m 表示月 %B 表示英文显示的月
+;; %d 表示日期
+;; %A 表示周 %a 表示短写周
+
+;; 插入日程日期应为 org-time-stamp
 (use-package org
   :ensure t
   :defer t
@@ -7,7 +14,14 @@
         org-hide-emphasis-markers t
         org-startup-indented t))
 
-;; org-superstar
+;; (org-babel-do-load-languages
+;;    'org-babel-load-languages
+;;    '((emacs-lisp . t)
+;;      (json . t)
+;;      (cpp . t)
+;;      (python . t)))
+
+;; ;; org-superstar
 ;; make the org mode more beautiful with optimized leading chars
 (use-package org-superstar
   :ensure t
@@ -35,9 +49,9 @@
   ;;(add-hook 'evil-org-mode-hook #'evil-normalize-keymaps)
   ;;(evil-org-set-key-theme)
   ;; org-at-heading-or-items-p
-  (evil-define-key 'insert 'evil-org-mode
-    (kbd "TAB") 'org-metaright
-    (kbd "<backtab>") 'org-metaleft)
+  ;;(evil-define-key 'insert 'evil-org-mode
+  ;;  (kbd "TAB") 'org-metaright
+  ;;  (kbd "<backtab>") 'org-metaleft)
   (evil-define-key 'normal 'evil-org-mode
     (kbd "O") 'evil-open-above)
   )
@@ -91,5 +105,9 @@
   (org-tree-slide-header t)
   (org-tree-slide-breadcrumbs " // ")
   (org-image-actual-width nil))
+
+(setq org-agenda-files '("~/Documents/org/tasks.org"))
+;;(setq org-agenda-files '(list "~/Documents/org/tasks.org"
+;;                              "~/Documents/org/test.org"))
 
 (provide 'init-org)
