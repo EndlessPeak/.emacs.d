@@ -24,9 +24,8 @@
 
 ;; delay load
 (defun load-custom-file()
-  (when *is-linux*
-    ;; Input Method
-    (require 'init-input))
+  ;; Input Method
+  (require 'init-input)
   ;; Key bindings
   (require 'init-kbd)
   ;; Self function

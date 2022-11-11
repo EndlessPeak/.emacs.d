@@ -9,7 +9,7 @@
   )
 (when *is-windows*
   (set-face-attribute 'default nil :font (font-spec :family "Consolas" :size 24))
-  (set-fontset-font t 'han (font-spec :family "KaiTi" :size 24))
+  (set-fontset-font t 'han (font-spec :family "KaiTi"))
   )
 ;; (add-to-list 'face-font-rescale-alist '(cons (font-spec :family "KaiTi") 1.5) t)
 ;; (setf (alist-get "*KaiTi*" face-font-rescale-alist 1.5 nil 'string=) 1.5 )
