@@ -1,10 +1,11 @@
-(use-package fcitx
-  :ensure t
-  :config
-  (setq fcitx-use-dbus nil
-	fcitx-remote-command "fcitx5-remote")
-  (fcitx-aggressive-setup))
-
+(when *is-linux*
+  (use-package fcitx
+    :ensure t
+    :config
+    (setq fcitx-use-dbus nil
+    fcitx-remote-command "fcitx5-remote")
+    (fcitx-aggressive-setup))
+)
 
 (use-package pangu-spacing
   :ensure t

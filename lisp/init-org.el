@@ -88,16 +88,19 @@
   ;; Cannot set unicode amount
   (setq text-scale-mode-amount 1)
   (org-display-inline-images)
-  (text-scale-mode 1))
+  (text-scale-mode 1)
+  )
 
 (defun leesin/presentation-end()
+  (if (eq text-scale-mode 1) then
   (text-scale-mode 0))
+  )
 
 (use-package org-tree-slide
   :ensure t
   :defer t
-  :hook ((org-tree-slide-play . leesin/presentation-setup)
-         (org-tree-slide-stop . leesin/presentation-end))
+  ;;:hook ((org-tree-slide-play . leesin/presentation-setup)
+  ;;       (org-tree-slide-stop . leesin/presentation-end))
   :custom
   (org-tree-slide-slide-in-effect t)
   (org-tree-slide-activate-message "Presentation started!")

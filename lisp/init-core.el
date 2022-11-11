@@ -1,4 +1,6 @@
 (require 'init-package)
+;; Self Defination
+(require 'init-variable)
 (require 'init-evil)
 
 ;; Search engine
@@ -15,9 +17,6 @@
 ;; Language support
 (require 'init-complete)
 (require 'init-lang)
-
-;; Self Defination
-(require 'init-variable)
 
 ;; Org Mode
 (require 'init-org)
