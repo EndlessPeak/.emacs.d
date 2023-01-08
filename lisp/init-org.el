@@ -87,9 +87,10 @@
 
 (defun leesin/presentation-setup()
   ;; Cannot set unicode amount
-  ;; (setq text-scale-mode-amount 1)
-  ;; (org-display-inline-images)
-  (text-scale-adjust 1)
+  (setq text-scale-mode-amount 3)
+  (org-display-inline-images)
+  (text-scale-mode 1)
+  ;;(text-scale-adjust 1)
   )
 
 (defun leesin/presentation-end()
@@ -106,7 +107,7 @@
   (org-tree-slide-activate-message "Presentation started!")
   (org-tree-slide-deactivate-message "Presentation finished!")
   (org-tree-slide-header t)
-  (org-tree-slide-breadcrumbs " // ")
+  (org-tree-slide-breadcrumbs " > ")
   (org-image-actual-width nil))
 
 (setq org-agenda-files '("~/Documents/org/tasks.org"))
