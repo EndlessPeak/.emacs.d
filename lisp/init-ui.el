@@ -1,12 +1,13 @@
 ;; Font
-;; Set Emacs Font
+;; Set Emacs Font for linux and windows operating system
 ;; (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 120)
 (when *is-linux*
-  (set-face-attribute 'default nil :font (font-spec :family "JetbrainsMono Nerd Font" :size 20)) ;; :size 20
+  (set-face-attribute 'default nil :font (font-spec :family "SauceCodePro Nerd Font" :size 22)) ;; :size 20
   ;; (set-face-attribute 'default nil :font (font-spec :family "Iosevka Nerd Font" :size 20 :style "Regular")) ;; :size 20
   (set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" ));; :size 20 
   (set-fontset-font t 'han (font-spec :family "KaiTi"))
   )
+
 (when *is-windows*
   (set-face-attribute 'default nil :font (font-spec :family "Consolas" :size 24))
   (set-fontset-font t 'han (font-spec :family "KaiTi"))
@@ -25,14 +26,6 @@
 ;; all the icons font
 (use-package all-the-icons
   :ensure t)
-
-;; Hightlight
-;;(global-hl-line-mode t)
-;;(use-package hl-line
-;;  :ensure nil
-;;  :hook ((after-init . global-hl-line-mode)
-;;         ((dashboard-mode eshell-mode shell-mode term-mode vterm-mode fundamental-mode) .
-;;          (lambda () (setq-local global-hl-line-mode nil)))))
 
 ;; Theme
 (use-package doom-themes
@@ -89,9 +82,9 @@
 ;; Modeline Customization in modeline-customize.el
 ;; Required in init-core.el
 
-(when (display-graphic-p)
-  (set-frame-width (selected-frame) 90)
-  (set-frame-height (selected-frame) 35))
+;;(when (display-graphic-p)
+;;  (set-frame-width (selected-frame) 1080)
+;;  (set-frame-height (selected-frame) 1920))
 
 ;; Solve the full screen issue
 (setq frame-resize-pixelwise t)

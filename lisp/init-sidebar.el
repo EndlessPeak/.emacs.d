@@ -112,4 +112,13 @@
   :ensure t
   :config (treemacs-set-scope-type 'Tabs))
 
+(use-package minimap
+  :defer t
+  :ensure t
+  :config
+  (setq minimap-window-location 'right
+        minimap-update-delay 0
+        minimap-width-fraction 0.09
+        minimap-minimum-width 15))
+
 (provide 'init-sidebar)
