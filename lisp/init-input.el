@@ -1,4 +1,4 @@
-(when *is-linux*
+(when *IS-LINUX*
   (use-package fcitx
     :ensure t
     :config
@@ -14,7 +14,7 @@
   (global-pangu-spacing-mode 1)
   ;; Always insert `real' space in org-mode.
   (add-hook 'org-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
   
 (provide 'init-input)

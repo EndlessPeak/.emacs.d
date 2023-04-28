@@ -6,8 +6,9 @@
 (setq package-enable-at-startup nil)
 
 (setq package-archives '(("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-			 ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			 ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                         ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			             ))
 
 (package-initialize)
 

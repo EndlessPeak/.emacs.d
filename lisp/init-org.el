@@ -11,8 +11,8 @@
   :config
   (org-indent-mode t)
   (org-toggle-inline-images)
-  (setq org-hide-leading-stars t
-        org-hide-emphasis-markers t
+  (setq org-hide-leading-stars nil
+        org-hide-emphasis-markers nil
         org-startup-indented t))
 
 ;; (org-babel-do-load-languages
@@ -72,12 +72,15 @@
 ;;  )
 
 ;; Standardize the tabel width in different fonts
-(use-package valign
-  :ensure t
-  :defer t
-  :hook (org-mode . valign-mode))
-;(require 'valign)
-;(add-hook 'org-mode-hook #'valign-mode)
+;; (use-package valign
+;;   :ensure t
+;;   :defer t
+;;   ;;:config
+;;   ;;(setq valign-fancy-bar 1
+;;   ;;      valign-signal-parse-error 1)
+;;   :hook (org-mode . valign-mode))
+(require 'valign)
+(add-hook 'org-mode-hook #'valign-mode)
 
 (use-package ox-hugo
   :ensure t   ;Auto-install the package from Melpa

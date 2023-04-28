@@ -31,6 +31,13 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
   )
 
+
+(use-package beacon
+  :ensure t
+  :defer t
+  :config
+  (beacon-mode 1))
+
 ;; Show line number
 ;;(setq display-line-numbers-type 't)
 ;;(setq display-line-numbers 'absolute)

@@ -1,17 +1,73 @@
 ;; Font
 ;; Set Emacs Font for linux and windows operating system
-;; (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 120)
-(when *is-linux*
-  (set-face-attribute 'default nil :font (font-spec :family "SauceCodePro Nerd Font" :size 22)) ;; :size 20
-  ;; (set-face-attribute 'default nil :font (font-spec :family "Iosevka Nerd Font" :size 20 :style "Regular")) ;; :size 20
-  (set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" ));; :size 20 
-  (set-fontset-font t 'han (font-spec :family "KaiTi"))
+(defun font-installed-p (font-name)
+  "Check if font with FONT-NAME is available."
+  (find-font (font-spec :name font-name)))
+
+(defun leesin/font-setup ()
+  "Font setup."
+
+  (interactive)
+  (when (display-graphic-p)
+    ;; Default font
+    (cl-loop for font in '("JetBrainsMono Nerd Font" "Source Code Pro" "Fira Code" "Hack"  "Menlo" "Monaco" "Consolas")
+             when (font-installed-p font)
+             return (set-face-attribute 'default nil
+                                        :family font
+                                        :weight 'normal
+                                        :width 'normal
+                                        :height (cond (*IS-MAC* 180)
+                                                      (*IS-WINDOWS* 110)
+                                                      (t 180))))
+
+    ;; Unicode characters
+    (cl-loop for font in '("Source Code Pro" "Segoe UI Symbol" "Symbola" "Symbol")
+             when (font-installed-p font)
+             return (set-fontset-font t 'unicode font nil 'prepend))
+
+    ;; Emoji
+    (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji")
+             when (font-installed-p font)
+             return (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))
+
+    ;; Chinese characters
+    (cl-loop for font in '("霞鹜文楷" "KaiTi" "WenQuanYi Micro Hei" "Microsoft Yahei UI" "Microsoft Yahei" "STFangsong")
+             when (font-installed-p font)
+             return (progn
+                      (setq face-font-rescale-alist `((,font . 1.2)))
+                      (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font)))))
   )
 
-(when *is-windows*
-  (set-face-attribute 'default nil :font (font-spec :family "Consolas" :size 24))
-  (set-fontset-font t 'han (font-spec :family "KaiTi"))
-  )
+;; Get the font set
+(leesin/font-setup) 
+;;(add-hook 'emacs-startup-hook 'leesin/font-setup)
+
+;;"霞鹜文楷" "WenQuanYi Micro Hei" "Microsoft Yahei UI" "Microsoft Yahei" "STFangsong"
+
+;; (set-face-attribute 'default nil :font "JetbrainsMono Nerd Font" :height 120)
+;;  (when *IS-LINUX*
+;;    (set-face-attribute 'default nil :font (font-spec :family "SauceCodePro Nerd Font"
+;;                                                                                       :weight 'normal
+;;                                                                                       :slant 'normal
+;;                                                                                       :size 20)) ;; :size 20
+    ;; (set-face-attribute 'default nil :font (font-spec :family "Iosevka Nerd Font" :size 20 :style "Regular")) ;; :size 20
+    ;;(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" ) nil 'prepend :size 16);; :size 20
+    ;;(set-fontset-font t 'han (font-spec :family "KaiTi") nil 'prepend)
+;;    (dolist (charset '(kana han symbol cjk-misc bopomofo chinese-gbk))
+;;      (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "KaiTi"
+;;                                                        :weight 'normal
+;;                                                        :slant 'normal )))
+
+    ;;(set-fontset-font t 'han (font-spec :family "KaiTi"
+    ;;                                                             :weight 'normal
+    ;;                                                             :slant 'normal
+    ;;                                                             :size 16))
+;;  ))
+
+;;(when *IS-WINDOWS*
+;;  (set-face-attribute 'default nil :font (font-spec :family "Consolas" :size 24))
+;;  (set-fontset-font t 'han (font-spec :family "KaiTi"))
+;;  )
 ;; (add-to-list 'face-font-rescale-alist '(cons (font-spec :family "KaiTi") 1.5) t)
 ;; (setf (alist-get "*KaiTi*" face-font-rescale-alist 1.5 nil 'string=) 1.5 )
 ;; (setq-local face-font-rescale-alist '("KaiTi" . 1.5))
@@ -82,9 +138,9 @@
 ;; Modeline Customization in modeline-customize.el
 ;; Required in init-core.el
 
-;;(when (display-graphic-p)
-;;  (set-frame-width (selected-frame) 1080)
-;;  (set-frame-height (selected-frame) 1920))
+(when (display-graphic-p)
+ (set-frame-width (selected-frame) 600)
+ (set-frame-height (selected-frame) 800))
 
 ;; Solve the full screen issue
 (setq frame-resize-pixelwise t)

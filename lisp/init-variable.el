@@ -1,7 +1,7 @@
 ;; Judge Operation System
-(defconst *is-mac* (eq system-type 'darwin))
-(defconst *is-linux* (eq system-type 'gnu/linux))
-(defconst *is-windows* (eq system-type 'windows-nt))
+(defconst *IS-MAC* (eq system-type 'darwin))
+(defconst *IS-LINUX* (eq system-type 'gnu/linux))
+(defconst *IS-WINDOWS* (memq system-type '(cygwin windows-nt ms-dos)))
 ;; Coding System UTF-8
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -30,7 +30,7 @@
 (setq scroll-step 1
       scroll-conservatively 10000)
 
-(when *is-windows*
+(when *IS-WINDOWS*
   (setq default-directory "E:/"))
 ;; Appearence
 (dolist (hook (list
@@ -41,7 +41,7 @@
               'c++-mode-hook
               'java-mode-hook
               'python-mode-hook))
-(add-hook hook '(lambda ()
+(add-hook hook #'(lambda ()
                ;; 设置自动换行
                (setq truncate-lines nil)
                ;; 针对中文折行的问题进行设置
