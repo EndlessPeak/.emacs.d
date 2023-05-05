@@ -1,3 +1,8 @@
+;; Load Modeline
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+
 ;; If non-nil, cause imenu to see `doom-modeline' declarations.
 ;; This is done by adjusting `lisp-imenu-generic-expression' to
 ;; include support for finding `doom-modeline-def-*' forms.
@@ -175,4 +180,4 @@
 (setq doom-modeline-before-update-env-hook nil)
 (setq doom-modeline-after-update-env-hook nil)
 
-(provide 'modeline-customize)
+(provide 'init-modeline)

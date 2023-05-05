@@ -1,15 +1,20 @@
+;; Const variable
+(require 'init-const)
 (require 'init-package)
 ;; Self Defination
 (require 'init-variable)
+
+;; Edit Mode
 (require 'init-evil)
 
 ;; Search engine
-;;(require 'init-ivy)
+;; (require 'init-ivy)
 (require 'init-vertico)
 
 (require 'init-editor)
 (require 'init-ui)
-(require 'modeline-customize)
+(require 'init-dashboard)
+(require 'init-modeline)
 
 ;; Sidebar
 (require 'init-sidebar)

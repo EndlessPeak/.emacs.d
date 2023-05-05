@@ -10,7 +10,7 @@
   (interactive)
   (when (display-graphic-p)
     ;; Default font
-    (cl-loop for font in '("JetBrainsMono Nerd Font" "Source Code Pro" "Fira Code" "Hack"  "Menlo" "Monaco" "Consolas")
+    (cl-loop for font in '("Source Code Pro" "JetBrainsMono Nerd Font" "Fira Code" "Hack"  "Menlo" "Monaco" "Consolas")
              when (font-installed-p font)
              return (set-face-attribute 'default nil
                                         :family font
@@ -83,6 +83,10 @@
 (use-package all-the-icons
   :ensure t)
 
+;; nerd icons
+(use-package nerd-icons
+  :ensure t)
+
 ;; Theme
 (use-package doom-themes
   :ensure t
@@ -101,41 +105,16 @@
 
 ;; Choose one theme to load
 ;; (load-theme 'doom-dark+ t)
-(load-theme 'doom-dracula t)
+;; (load-theme 'doom-dracula t)
 
-;; Load dashboard
-;; (require 'dashboard)
-;; (dashboard-setup-startup-hook)
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
-  ;; Set the banner
-  (setq dashboard-startup-banner 'logo)
-  ;; Value can be
-  ;; 'official which displays the official emacs logo
-  ;; 'logo which displays an alternative emacs logo
-  ;; 1, 2 or 3 which displays one of the text banners
-  ;; "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
+(use-package nord-theme
+  :ensure t)
+(load-theme 'nord t)
 
-  ;; Content is not centered by default. To center, set
-  (setq dashboard-center-content t)
-  (setq dashboard-items '((recents . 7)
-			 (bookmarks . 5)
-			 (agenda . 3)))
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-navigator t)
-  ;; To disable shortcut "jump" indicators for each section, set
-  ;; (setq dashboard-show-shortcuts nil)
-  (setq dashboard-banner-logo-title "LeeSin@EndlessPeak"))
+;; Dashboard Customization in init-dashboard.el
+;; Required in init-core.el
 
-;; Load Modeline
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-
-;; Modeline Customization in modeline-customize.el
+;; Modeline Customization in init-modeline.el
 ;; Required in init-core.el
 
 (when (display-graphic-p)
