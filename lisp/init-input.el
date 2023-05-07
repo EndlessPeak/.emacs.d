@@ -1,4 +1,4 @@
-(when *IS-LINUX*
+(when sys/linux
   (use-package fcitx
     :ensure t
     :config

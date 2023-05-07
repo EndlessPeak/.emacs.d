@@ -16,9 +16,9 @@
                                         :family font
                                         :weight 'normal
                                         :width 'normal
-                                        :height (cond (*IS-MAC* 180)
-                                                      (*IS-WINDOWS* 110)
-                                                      (t 180))))
+                                        :height (cond (sys/mac 180)
+                                                      (sys/win32p 110)
+                                                      (sys/linux 180))))
 
     ;; Unicode characters
     (cl-loop for font in '("Source Code Pro" "Segoe UI Symbol" "Symbola" "Symbol")
@@ -118,8 +118,9 @@
 ;; Required in init-core.el
 
 (when (display-graphic-p)
- (set-frame-width (selected-frame) 600)
- (set-frame-height (selected-frame) 800))
+  (when sys/linux
+    (set-frame-width (selected-frame) 600)
+    (set-frame-height (selected-frame) 800)))
 
 ;; Solve the full screen issue
 (setq frame-resize-pixelwise t)

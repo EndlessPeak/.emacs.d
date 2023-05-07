@@ -1,7 +1,3 @@
-;; Judge Operation System
-(defconst *IS-MAC* (eq system-type 'darwin))
-(defconst *IS-LINUX* (eq system-type 'gnu/linux))
-(defconst *IS-WINDOWS* (memq system-type '(cygwin windows-nt ms-dos)))
 ;; Coding System UTF-8
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -30,7 +26,7 @@
 (setq scroll-step 1
       scroll-conservatively 10000)
 
-(when *IS-WINDOWS*
+(when sys/win32p
   (setq default-directory "E:/"))
 ;; Appearence
 (dolist (hook (list
@@ -49,4 +45,15 @@
                (auto-fill-mode -1)
                )))
 ;;(setq word-wrap-by-category t)
+
+(defcustom  leesin-lsp-format-on-save nil
+  "Auto format buffers on save." )
+
+(defcustom  leesin-lsp-format-on-save-ignore-modes
+  '(c-mode c++-mode python-mode markdown-mode)
+  "Auto format buffers ignored on save." )
+
+(setq leesin-lsp-format-on-save t)
+(setq leesin-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode markdown-mode) )
+
 (provide 'init-variable)

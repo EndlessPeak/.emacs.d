@@ -1,4 +1,8 @@
-(use-package rust-mode)
+(require 'init-variable) ;;need lsp parameters
+
+(use-package rust-mode
+  :ensure t
+  :defer t)
 
 (use-package flycheck
   :ensure nil
@@ -8,10 +12,20 @@
 (use-package lsp-mode
   :ensure t
   :defer t
-  :hook ((c++-mode . lsp-deferred)
-         (python-mode . lsp-deferred)
-         (rust-mode . lsp-deferred)
-         (lsp-mode . lsp-enable-which-key-intergration))
+  :hook ((prog-mode . (lambda ()
+                        ;; Ask lsp mode load
+                        (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
+                          (lsp-deferred))))
+         (lsp-mode . (lambda ()
+                       ;; Intergrate `which-key'
+                       (lsp-enable-which-key-intergration)
+
+                       ;; Format and organize imports
+                       (when (and leesin-lsp-format-on-save
+                                  (not (apply #'derived-mode-p leesin-lsp-format-on-save-ignore-modes)))
+                         (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                         (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+                       )
   :init
   (setq lsp-keymap-prefix "C-c l")
   (setq lsp-prefer-flymake nil)
