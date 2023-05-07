@@ -2,13 +2,13 @@
 (defun leesin/toggle-proxy ()
   (interactive)
   (if (null url-proxy-services)
-      (when *is-windows*
+      (when *IS-WINDOWS*
         (progn
             (setq url-proxy-services
                 '(("http" . "127.0.0.1:10808")
                     ("https" . "127.0.0.1:10808")))
             (message "代理已开启.")))
-      (when *is-linux*
+      (when *IS-LINUX*
         (progn
             (setq url-proxy-services
                 '(("http" . "127.0.0.1:20171")

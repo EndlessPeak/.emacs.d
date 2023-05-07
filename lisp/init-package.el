@@ -6,8 +6,9 @@
 (setq package-enable-at-startup nil)
 
 (setq package-archives '(("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-			 ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			 ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+                         ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                         ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			             ))
 
 (package-initialize)
 
@@ -18,7 +19,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
+(eval-when-compile
+  (require 'use-package))
 
 ;; set `use-package' variables
 (setq use-package-always-ensure t
@@ -31,10 +33,11 @@
 (use-package gnu-elpa-keyring-update)
 
 ;; Auto update packages
-(use-package auto-package-update
+(unless (fboundp 'package-upgrade-all)
+  (use-package auto-package-update
   :init
   (setq auto-package-update-delete-old-versions t
-	auto-package-update-hide-results t)
-  (defalias 'upgrade-packages #'auto-package-update-now))
+          auto-package-update-hide-results t)
+  (defalias 'upgrade-packages #'auto-package-update-now)))
 
 (provide 'init-package)

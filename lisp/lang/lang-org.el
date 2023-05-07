@@ -13,4 +13,5 @@
   :hook (org-mode . org-superstar-mode)
   :config (setq org-superstar-prettify-item-bullets nil))
 
+
 (provide 'lang-org)

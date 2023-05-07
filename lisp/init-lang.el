@@ -1,3 +1,5 @@
+(use-package rust-mode)
+
 (use-package flycheck
   :ensure nil
   ;;:hook (after-init . global-flycheck-mode)
@@ -7,6 +9,8 @@
   :ensure t
   :defer t
   :hook ((c++-mode . lsp-deferred)
+         (python-mode . lsp-deferred)
+         (rust-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-intergration))
   :init
   (setq lsp-keymap-prefix "C-c l")

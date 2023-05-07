@@ -1,4 +1,5 @@
 .cache/
+.local/
 auto-save-list/
 elpa/
 recentf
@@ -8,3 +9,4 @@ history
 tramp
 transient
 projectile*
+projects
