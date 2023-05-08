@@ -10,6 +10,10 @@
   :defer t
   :config
   (org-indent-mode t)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq evil-auto-indent nil)
   (org-toggle-inline-images)
   (setq org-hide-leading-stars nil
         org-hide-emphasis-markers nil
@@ -88,7 +92,8 @@
   ;;:pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
   :after ox)
 
-(defun leesin/presentation-setup()
+;; Org-tree-slide 
+(defun leesin/org-tree-slide-presentation-setup()
   ;; Cannot set unicode amount
   (setq text-scale-mode-amount 3)
   (org-display-inline-images)
@@ -96,15 +101,15 @@
   ;;(text-scale-adjust 1)
   )
 
-(defun leesin/presentation-end()
+(defun leesin/org-tree-slide-presentation-end()
   (text-scale-mode 0)
   )
 
 (use-package org-tree-slide
   :ensure t
   :defer t
-  :hook ((org-tree-slide-play . leesin/presentation-setup)
-         (org-tree-slide-stop . leesin/presentation-end))
+  :hook ((org-tree-slide-play . leesin/org-tree-slide-presentation-setup)
+         (org-tree-slide-stop . leesin/org-tree-slide-presentation-end))
   :custom
   (org-tree-slide-slide-in-effect t)
   (org-tree-slide-activate-message "Presentation started!")
@@ -112,6 +117,61 @@
   (org-tree-slide-header t)
   (org-tree-slide-breadcrumbs " > ")
   (org-image-actual-width nil))
+
+;; Set margin for org-present
+(defun leesin/org-mode-visual-fill()
+  (setq visual-fill-column-width 80
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(defun leesin/org-mode-visual-fill-quit()
+  ;;(setq visual-fill-column-width 0
+  ;;      visual-fill-column-center-text nil)
+  (visual-fill-column-mode 0))
+
+(use-package visual-fill-column
+  :ensure t
+  :defer t
+  :hook ((org-present-mode . leesin/org-mode-visual-fill)
+         (org-present-mode-quit . leesin/org-mode-visual-fill-quit)))
+
+;; Org-present Configuration
+(defun leesin/org-present-prepare-slide()
+  (org-overview)
+  (org-show-entry)
+  (org-show-children))
+
+(defun leesin/org-present-hook()
+  (display-line-numbers-mode nil)
+  (setq-local face-remapping-alist '((header-line (:height 4.0) variable-pitch)))
+  (setq text-scale-mode-amount 1)
+  (text-scale-mode 1)
+  (setq header-line-format " ")
+  (org-display-inline-images)
+  (leesin/org-present-prepare-slide))
+
+(defun leesin/org-present-quit-hook()
+  (display-line-numbers-mode t)
+  (text-scale-mode 0)
+  (setq header-line-format nil)
+  (org-remove-inline-images))
+
+(defun leesin/org-present-prev()
+  (interactive)
+  (org-present-prev)
+  (leesin/org-present-prepare-slide))
+
+(defun leesin/org-present-next()
+  (interactive)
+  (org-present-next)
+  (leesin/org-present-prepare-slide))
+
+(use-package org-present
+  :bind (:map org-present-mode-keymap
+         ("C-c C-j" . leesin/org-present-next)
+         ("C-c C-k" . leesin/org-present-prev))
+  :hook ((org-present-mode . leesin/org-present-hook)
+         (org-present-mode-quit . leesin/org-present-quit-hook)))
 
 (setq org-agenda-files '("~/Documents/org/tasks.org"))
 ;;(setq org-agenda-files '(list "~/Documents/org/tasks.org"

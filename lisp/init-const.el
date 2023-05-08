@@ -2,12 +2,16 @@
 
 ;; Judge Operation System
 (defconst sys/win32p
-   (eq system-type 'windows-nt)
+   (memq system-type '(cygwin windows-nt ms-dos))
    "We are running on a WinNT system.")
 
 (defconst sys/linux
    (eq system-type 'gnu/linux)
    "We are running on a GNU/Linux system.")
+
+(defconst sys/mac
+   (eq system-type 'darwin)
+   "We are running on a MacOS system.")
 
 (defconst emacs/>=28p
   (>= emacs-major-version 28)
