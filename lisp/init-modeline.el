@@ -11,7 +11,7 @@
 
 ;; How tall the mode-line should be. It's only respected in GUI.
 ;; If the actual char height is larger, it respects the actual height.
-(setq doom-modeline-height 25)
+(setq doom-modeline-height 15)
 
 ;; How wide the mode-line bar should be. It's only respected in GUI.
 (setq doom-modeline-bar-width 4)

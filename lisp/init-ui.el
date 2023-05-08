@@ -34,7 +34,7 @@
     (cl-loop for font in '("霞鹜文楷" "KaiTi" "WenQuanYi Micro Hei" "Microsoft Yahei UI" "Microsoft Yahei" "STFangsong")
              when (font-installed-p font)
              return (progn
-                      (setq face-font-rescale-alist `((,font . 1.2)))
+                      (setq face-font-rescale-alist `((,font . 1)))
                       (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font)))))
   )
 
@@ -109,7 +109,11 @@
 
 (use-package nord-theme
   :ensure t)
-(load-theme 'nord t)
+
+(use-package catppuccin-theme
+  :ensure t)
+(load-theme 'catppuccin t)
+;; (load-theme 'nord t)
 
 ;; Dashboard Customization in init-dashboard.el
 ;; Required in init-core.el
