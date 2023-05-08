@@ -1,0 +1,83 @@
+* init-core.el
+:PROPERTIES:
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init-core.el") :lexical t
+:END:
+
+由本核心加载各配置模块。
+** Headers
+#+begin_src emacs-lisp
+  ;;; init-core.el ---   -*- lexical-binding: t; -*-
+
+  ;;; Commentary:
+
+  ;;; Code :
+#+end_src
+** Const & Self Defination
+#+begin_src emacs-lisp
+  ;; Const variable
+  (require 'init-const)
+  ;; Self Defination
+  (require 'init-variable)
+#+end_src
+
+** Package
+#+begin_src emacs-lisp
+  (require 'init-package)
+#+end_src
+
+** Edit Tool
+#+begin_src emacs-lisp
+  ;; Edit Mode
+  (require 'init-evil)
+  (require 'init-editor)
+#+end_src
+
+** Search Engine
+搜素引擎应该在外观之前加载，即使它可选依赖于 =all-the-icons= 。
+不过幸运的是，它依赖的是独立的包 =all-the-icons-completion= 。
+#+begin_src emacs-lisp
+  ;; Search engine
+  ;; (require 'init-ivy)
+  (require 'init-vertico)
+#+end_src
+
+** Appearance
+#+begin_src emacs-lisp
+  (require 'init-ui)
+  (require 'init-dashboard)
+  (require 'init-modeline)
+
+  ;; Sidebar
+  (require 'init-sidebar)
+#+end_src
+
+** Language Support
+#+begin_src emacs-lisp
+  ;; Language support
+  (require 'init-complete)
+  (require 'init-lang)
+
+  (require 'init-org)
+#+end_src
+
+** Delay Load Part
+#+begin_src emacs-lisp
+  ;; delay load
+  (defun load-custom-file()
+    ;; Input Method
+    (require 'init-input)
+    ;; Key bindings
+    (require 'init-kbd)
+    ;; Self function
+    (require 'init-function)
+  )
+
+  (add-hook 'after-init-hook #'load-custom-file)
+#+end_src
+
+** Ends
+#+begin_src emacs-lisp
+  (provide 'init-core)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;; init-core.el ends here
+#+end_src

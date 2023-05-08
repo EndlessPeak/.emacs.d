@@ -1,0 +1,101 @@
+* init-vertico.el
+:PROPERTIES:
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init-vertico.el") :lexical t
+:END:
+
+** Headers
+#+begin_src emacs-lisp
+  ;;; init-vertico.el ---   -*- lexical-binding: t; -*-
+
+  ;;; Commentary:
+
+  ;;; Code :
+#+end_src
+
+** Vertico
+#+begin_src emacs-lisp
+  ;; Enable vertico
+  (use-package vertico
+    :ensure t
+    :hook (after-init . vertico-mode)
+    :bind
+    (:map vertico-map
+               ("<tab>" . vertico-insert)    ; Choose selected candidate
+               ("<escape>" . vertico-exit) ; Close minibuffer
+               ("DEL" . 'vertico-directory-delete-char)
+               ;;("DEl" . vertico-directory-delete-char)
+               ;; NOTE 2022-02-05: Cycle through candidate groups
+               ;;("C-M-n" . vertico-next-group)
+               ;;("C-M-p" . vertico-previous-group)
+               )
+    ;;(map! :map vertico-map "DEl" #'vertico-directory-delete-char)
+    :custom
+    (vertico-count 15)  ; Number of candidates to display
+    (vertico-resize nil)
+    ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+    (vertico-cycle t)
+    ;; Go from last to first candidate and first to last (cycle)?
+    :config
+    (vertico-mode t)
+    ;; Different scroll margin
+    ;; (setq vertico-scroll-margin 0)
+    :custom-face
+    ;; hightlight the current option
+    (vertico-current ((t (:background "#4a3f5a"))))
+    )
+#+end_src
+
+** Orderless
+#+begin_src emacs-lisp
+  ;; Fuzzy find orders
+  (use-package orderless
+    :ensure t
+    :config
+    (setq completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion))))
+    )
+#+end_src
+
+** Marginalia
+#+begin_src emacs-lisp
+  ;; Display the purpose and comment of each command in minibuffer
+  (use-package marginalia
+    :ensure t
+    :config
+    (marginalia-mode t))
+#+end_src
+
+** Consult
+#+begin_src emacs-lisp
+  (use-package consult
+    :ensure t
+    :after(vertico)
+    )
+#+end_src
+
+** Savehist
+#+begin_src emacs-lisp
+  ;; Persist history over Emacs restarts. Vertico sorts by history position.
+  (use-package savehist
+    :ensure t
+    :config
+    (setq histroy-length 25)
+    (savehist-mode 1))
+#+end_src
+
+** Icons support
+#+begin_src emacs-lisp
+  ;; add icons support for vertico
+  (use-package all-the-icons-completion
+    :ensure t
+    :hook (after-init . all-the-icons-completion-mode))
+#+end_src
+
+** Ends
+#+begin_src emacs-lisp
+  (provide 'init-vertico)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;; init-vertico.el ends here
+#+end_src
+

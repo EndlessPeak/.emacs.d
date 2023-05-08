@@ -1,0 +1,71 @@
+* init-package.el
+:PROPERTIES:
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init-package.el") :lexical t
+:END:
+
+** Headers
+#+begin_src emacs-lisp
+  ;;; init-package.el ---   -*- lexical-binding: t; -*-
+
+  ;;; Commentary:
+
+  ;;; Code :
+#+end_src
+
+** Init Package
+#+begin_src emacs-lisp
+  ;; Initialize package sources
+  (require 'package)
+  ;; Package initialize occurs automatically, before `user-init-file' is
+  ;; loaded, but after `early-init-file'. We handle package
+  ;; initialization, so we must prevent Emacs from doing it early!
+  (setq package-enable-at-startup nil)
+
+  (setq package-archives '(("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                           ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                           ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                           ))
+
+  (package-initialize)
+
+  (unless package-archive-contents
+    (package-refresh-contents))
+#+end_src
+
+** Use-package
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+
+  ;; set `use-package' variables
+  (setq use-package-always-ensure t
+        use-package-always-defer nil
+        use-package-always-demand nil
+        use-package-expand-minimally t
+        use-package-verbose t)
+
+  ;; Update GPG keyring for GNU ELPA
+  (use-package gnu-elpa-keyring-update)
+#+end_src
+
+** Auto update packages
+#+begin_src emacs-lisp
+  ;; Auto update packages
+  (unless (fboundp 'package-upgrade-all)
+    (use-package auto-package-update
+    :init
+    (setq auto-package-update-delete-old-versions t
+            auto-package-update-hide-results t)
+    (defalias 'upgrade-packages #'auto-package-update-now)))
+#+end_src
+
+** Ends
+#+begin_src emacs-lisp
+  (provide 'init-package)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;; init-package.el ends here
+#+end_src

@@ -1,0 +1,123 @@
+* init-ui.el
+:PROPERTIES:
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init-ui.el") :lexical t
+:END:
+
+** Headers
+#+begin_src emacs-lisp
+  ;;; init-ui.el ---   -*- lexical-binding: t; -*-
+
+  ;;; Commentary:
+
+  ;;; Code :
+#+end_src
+
+** Font
+本部分内容参考 =centaur emacs= 实现。
+#+begin_src emacs-lisp
+  ;; Font
+  ;; Set Emacs Font for linux and windows operating system
+  (defun font-installed-p (font-name)
+    "Check if font with FONT-NAME is available."
+    (find-font (font-spec :name font-name)))
+
+  (defun leesin/font-setup ()
+    "Font setup."
+
+    (interactive)
+    (when (display-graphic-p)
+      ;; Default font
+      (cl-loop for font in '("Source Code Pro" "JetBrainsMono Nerd Font" "Fira Code" "Hack"  "Menlo" "Monaco" "Consolas")
+               when (font-installed-p font)
+               return (set-face-attribute 'default nil
+                                          :family font
+                                          :weight 'normal
+                                          :width 'normal
+                                          :height (cond (sys/mac 180)
+                                                        (sys/win32p 110)
+                                                        (sys/linux 180))))
+
+      ;; Unicode characters
+      (cl-loop for font in '("Source Code Pro" "Segoe UI Symbol" "Symbola" "Symbol")
+               when (font-installed-p font)
+               return (set-fontset-font t 'unicode font nil 'prepend))
+
+      ;; Emoji
+      (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji")
+               when (font-installed-p font)
+               return (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))
+
+      ;; Chinese characters
+      (cl-loop for font in '("霞鹜文楷" "KaiTi" "WenQuanYi Micro Hei" "Microsoft Yahei UI" "Microsoft Yahei" "STFangsong")
+               when (font-installed-p font)
+               return (progn
+                        (setq face-font-rescale-alist `((,font . 1)))
+                        (set-fontset-font t '(#x4e00 . #x9fff) (font-spec :family font)))))
+    )
+
+  ;; Get the font set
+  (leesin/font-setup) 
+#+end_src
+
+** Icon
+#+begin_src emacs-lisp
+  ;; all the icons font
+  (use-package all-the-icons
+    :ensure t)
+
+  ;; nerd icons
+  (use-package nerd-icons
+    :ensure t)
+#+end_src
+
+** Theme
+#+begin_src emacs-lisp
+  ;; Theme
+  (use-package doom-themes
+    :ensure t
+    :config
+    (setq doom-themes-enable-bold t
+      doom-themes-enable-italic t)
+    ;; (doom-themes-visual-bell-config)
+    ;; Enable custom neotree theme (all-the-icons must be installed!)
+    (doom-themes-neotree-config)
+    ;; or for treemacs users
+    (setq doom-themes-treemacs-theme "doom-atom")
+    ;; use "doom-colors" for less minimal icon theme
+    (doom-themes-treemacs-config)
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
+
+  (use-package nord-theme
+    :ensure t)
+
+  (use-package catppuccin-theme
+    :ensure t)
+
+  ;; Choose one theme to load
+  ;; (load-theme 'doom-dark+ t)
+  ;; (load-theme 'doom-dracula t)
+  (load-theme 'catppuccin t)
+#+end_src
+
+** Settings
+#+begin_src emacs-lisp :tangle no
+  (when (display-graphic-p)
+    (when sys/linux
+      (set-frame-width (selected-frame) 200)
+      (set-frame-height (selected-frame) 80)))
+
+#+end_src
+
+#+begin_src emacs-lisp
+  ;; Solve the full screen issue in dwm gentoo Linux
+  (setq frame-resize-pixelwise t)
+#+end_src
+
+** Ends
+#+begin_src emacs-lisp
+  (provide 'init-ui)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;; init-ui.el ends here
+#+end_src
+

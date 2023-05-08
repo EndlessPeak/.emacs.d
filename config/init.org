@@ -1,0 +1,53 @@
+* init.el
+:PROPERTIES:
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init.el") :lexical t
+:END:
+
+加载主要配置文件。
+** Headers
+#+BEGIN_SRC emacs-lisp
+  ;;; init.el --- Emacs initialization config -*- lexical-binding: t -*-
+  ;;; Commentary:
+
+  ;;; Code:
+#+END_SRC
+
+** Version Check
+#+begin_src emacs-lisp
+  (when (version< emacs-version "26.1")
+    (error "This requires Emacs 26.1 and above!"))
+#+end_src
+
+** Speed up settings
+#+begin_src emacs-lisp
+  ;; Prevent flashing of unstyled modeline at startup
+  (setq-default mode-line-format nil)
+
+  ;; Speed up startup process,don't pass case-insensitive to `auto-mode-alist'
+  (setq auto-mode-case-fold nil)
+#+end_src
+
+** Load Path
+#+begin_src emacs-lisp
+  ;; Load path
+  ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+  (defun update-load-path (&rest _)
+    "Update 'load-path' . "
+    (dolist (dir '("site-lisp" "lisp" "lisp/lang"))
+      (push (expand-file-name dir user-emacs-directory) load-path)))
+
+  (advice-add #'package-initialize :after #'update-load-path)
+
+  (update-load-path)
+
+  ;; Indepentent custom
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+#+end_src
+
+** Ends
+#+begin_src emacs-lisp
+  (require 'init-core)
+  (provide 'init)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;; init.el ends here
+#+END_SRC

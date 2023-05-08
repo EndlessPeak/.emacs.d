@@ -1,0 +1,77 @@
+* init-function.el
+:PROPERTIES:
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init-function.el") :lexical t
+:END:
+
+** Headers
+#+begin_src emacs-lisp
+  ;;; init-function.el ---   -*- lexical-binding: t; -*-
+
+  ;;; Commentary:
+
+  ;;; Code :
+#+end_src
+
+** Proxy
+#+begin_src emacs-lisp
+  ;; Function Defination
+  (defun leesin/toggle-proxy ()
+    (interactive)
+    (if (null url-proxy-services)
+        (when sys/win32p
+          (progn
+              (setq url-proxy-services
+                  '(("http" . "127.0.0.1:10809")
+                      ("https" . "127.0.0.1:10809")))
+              (message "代理已开启.")))
+        (when sys/linux
+          (progn
+              (setq url-proxy-services
+                  '(("http" . "127.0.0.1:20171")
+                      ("https" . "127.0.0.1:20171")))
+              (message "代理已开启.")))
+      (setq url-proxy-services nil)
+      (message "代理已关闭.")))
+#+end_src
+
+** Transparency
+透明背景目前 =emacs= 已支持。
+#+begin_src emacs-lisp
+  (defun leesin/toggle-transparency()
+    (setq default-frame-alist '((alpha-background . 95)))
+    )
+  (leesin/toggle-transparency)
+#+end_src
+原透明函数已弃用，不会参与编译。
+#+begin_src emacs-lisp :tangle no
+  ;;;###autoload
+  (defun leesin/toggle-transparency()
+    (interactive)
+    (let ((alpha (frame-parameter nil 'alpha)))
+      (set-frame-parameter
+       nil 'alpha
+       (if (eql (cond ((numberp alpha) alpha)
+                      ((numberp (cdr alpha)) (cdr alpha))
+                      ((numberp (cadr alpha)) (cadr alpha)))
+                100)
+                '(70 . 70) '(100 . 100)))))
+#+end_src
+
+** Animate text
+用于录制视频时开头播放字符动画。
+#+begin_src emacs-lisp
+  (defun animate-text (text)
+    ;; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
+    (interactive "stext: ")  ; s means read-string
+    (switch-to-buffer (get-buffer-create "*butterfly*"))
+    (erase-buffer)
+    (animate-string text 10))
+#+end_src
+
+** Ends
+#+begin_src emacs-lisp
+  (provide 'init-function)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;; init-function.el ends here
+#+end_src
+

@@ -1,30 +1,34 @@
 * LeeSin's vanilla Emacs
-Features
+** Features
 1. Modularization
 2. Write From scratch
-* Build
+3. Manage the code by org mode
+** Build
 Use the following command to use my configuration.
 #+BEGIN_src sh
-    mv ~/.emacs.d ~/.emacs.d.bak
-    git clone https://github.com/endlesspeak/.emacs.d ~
+  mv ~/.emacs.d ~/.emacs.d.bak
+  git clone https://github.com/endlesspeak/.emacs.d ~
+  make generate
 #+END_src
 
-Gentoo Linux should check the following things:
+If you are using =Gentoo Linux= you should check the following things:
 1. check the use options:
    #+BEGIN_SRC conf
      app-editors/emacs acl alsa cairo dbus dynamic-loading gfile gmp gpm gsettings gui gzip-el inotify jpeg json kerberos lcms libxml2 png source ssl systemd threads xft xpm zlib
    #+END_SRC
 2. Install =emacs-daemon= and =emacs-common=
-* Warning
+** Warning
 1. No guarantee for stablity
 2. Update extremely slow
-* Reference
+** Reference
 Refer these repos to obtain config files.
-1. [[https://github.com/MatthewZMD/.emacs.d][MatthewZMD's emacs]]
-2. [[https://github.com/seagle0128/.emacs.d][Centaur's emacs configuration]]
-3. [[https://github.com/redguardtoo/emacs.d][Redguard's emacs configuration]]
-4. [[https://github.com/evanmeek/.emacs.d][Evanmeek's emacs configuration]]
-5. [[https://github.com/springhan/.emacs.d][SpringHan's emacs configuration]]
-6. [[https://github.com/cabins/.emacs.d][Cabins' emacs configuration]]
-7. [[https://github.com/7ym0n/dotfairy][7ym0n's emacs configuration]]
+1. [[https://github.com/nasyxx/emacs.d/][Nasyxx]]
+2. [[https://remacs.cc/posts/][remacs]]
+3. [[https://github.com/seagle0128/.emacs.d][Centaur]]
+4. [[https://github.com/MatthewZMD/.emacs.d][MatthewZMD]]
+5. [[https://github.com/redguardtoo/emacs.d][Redguard]]
+6. [[https://github.com/evanmeek/.emacs.d][Evanmeek]]
+7. [[https://github.com/springhan/.emacs.d][SpringHan]]
+8. [[https://github.com/cabins/.emacs.d][Cabins]]
+9. [[https://github.com/7ym0n/dotfairy][7ym0n]]
 

@@ -2,6 +2,9 @@
 .local/
 auto-save-list/
 elpa/
+/lisp/
+init.el
+early-init.el
 recentf
 custom.el
 history
@@ -10,3 +13,4 @@ tramp
 transient
 projectile*
 projects
+

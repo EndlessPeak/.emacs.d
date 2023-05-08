@@ -1,0 +1,252 @@
+* init-org.el
+:PROPERTIES:
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init-org.el") :lexical t
+:END:
+
+** Headers
+设置 =org-agenda-files= 时需要根据系统类型选择位置。
+#+begin_src emacs-lisp
+  ;;; init-org.el ---   -*- lexical-binding: t; -*-
+
+  ;;; Commentary:
+
+  ;;; Code :
+  (require 'init-const)
+#+end_src
+
+** Org mode
+在 =org-mode snippets= 中，经常用到的内容有：
+1. 表示时间：
+   1. ~%Y~ 表示年
+   2. ~%m~ 表示月 ~%B~ 表示英文显示的月
+   3. ~%d~ 表示日期
+   4. ~%A~ 表示周 ~%a~ 表示短写周
+   5. 插入日程日期为 ~org-time-stamp~
+2. 表示文件：
+   1. 表示当前文件 ~`(file-name-nondirectory (buffer-file-name))`~
+   2. 去除后缀名 ~`(file-name-sans-extension "test.xx")`~
+#+begin_src emacs-lisp
+  (use-package org
+    :ensure t
+    :defer t
+    :config
+    (org-indent-mode t)
+    (variable-pitch-mode 1)
+    (auto-fill-mode 0)
+    (visual-line-mode 1)
+    (setq evil-auto-indent nil)
+    (org-toggle-inline-images)
+    (setq org-hide-leading-stars nil
+          org-hide-emphasis-markers nil
+          org-startup-indented t))
+#+end_src
+
+** Org babel
+本部分内容需要加强学习，该部分不参与编译。
+#+begin_src emacs-lisp :tangle no
+  (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (json . t)
+       (cpp . t)
+       (python . t)))
+#+end_src
+
+** Org superstar
+使用优化的符号装饰标题。
+#+begin_src emacs-lisp
+  ;; ;; org-superstar
+  ;; make the org mode more beautiful with optimized leading chars
+  (use-package org-superstar
+    :ensure t
+    :defer t
+    :hook (org-mode . org-superstar-mode)
+    :config (setq org-superstar-prettify-item-bullets nil))
+#+end_src
+
+** Settings
+设置 =org-mode= 自定义强调块的语法:
+1. 强调文本可以以单引号、双引号、左括号等符号开头
+2. 强调文本可以以逗号、句号、问号、感叹号、分号、右括号、右花括号、右方括号等符号结尾
+3. 指定在 org-mode 中使用上下标时必须加上大括号 {}，以避免在中文下划线的情况下误将其识别为两个连续的下标。
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook (lambda ()
+                              (setcar (nthcdr 0 org-emphasis-regexp-components)
+                                      "-[:multibyte:][:space:]('\"{")
+                              (setcar (nthcdr 1 org-emphasis-regexp-components)
+                                      "-[:multibyte:][:space:].,:!?;'\")}\\[")
+                              (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+                              (org-element-update-syntax)
+                              ;; 规定上下标必须加 {}，否则中文使用下划线时它会以为是两个连着的下标
+                              (setq org-use-sub-superscripts "{}")))
+#+end_src
+
+** Evil Org
+#+begin_src emacs-lisp
+  (use-package evil-org
+    :ensure t
+    :after org
+    :hook (org-mode . evil-org-mode)
+    :config
+    (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading))
+    ;;(add-hook 'evil-org-mode-hook #'evil-normalize-keymaps)
+    ;;(evil-org-set-key-theme)
+    ;; org-at-heading-or-items-p
+    ;;(evil-define-key 'insert 'evil-org-mode
+    ;;  (kbd "TAB") 'org-metaright
+    ;;  (kbd "<backtab>") 'org-metaleft)
+    (evil-define-key 'normal 'evil-org-mode
+      (kbd "O") 'evil-open-above)
+    )
+#+end_src
+
+** Org modern
+该部分内容不参与编译。
+#+begin_src emacs-lisp :tangle no
+  (use-package org-modern
+    :ensure t
+    :defer t
+    :hook
+    ((org-mode . org-modern-mode)
+          (org-agenda-finalize . org-modern-agenda)
+          (org-modern-mode . (lambda ()
+                              "Adapt `org-modern-mode'."
+                              ;; Disable Prettify Symbols mode
+                              (setq prettify-symbols-alist nil)
+                              (prettify-symbols-mode -1)
+                              )))
+    )
+#+end_src
+
+** Valign
+规范化表格中的中英文占位宽度。可以使用下面两段代码中的任意一个。
+#+begin_src emacs-lisp
+  ;; Standardize the tabel width in different fonts
+  (use-package valign
+    :ensure t
+    :defer t
+    ;;:config
+    ;;(setq valign-fancy-bar 1
+    ;;      valign-signal-parse-error 1)
+    :hook (org-mode . valign-mode)
+    )
+#+end_src
+#+begin_src emacs-lisp :tangle no
+  (unless (package-installed-p 'valign)
+    (package-install 'valign))
+  (require 'valign)
+  (add-hook 'org-mode-hook #'valign-mode)
+#+end_src
+
+** Hugo
+#+begin_src emacs-lisp
+  (use-package ox-hugo
+    :ensure t   ;Auto-install the package from Melpa
+    :defer t
+    ;;:pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
+    :after ox)
+#+end_src
+
+** Presentation
+个人使用的用于将 =org-mode= 进行即时 =presentation= 的工具链。
+*** Org tree slide
+早期使用的该包，目前已弃用，不参与编译。
+#+begin_src emacs-lisp :tangle no
+  ;; Org-tree-slide 
+  (defun leesin/org-tree-slide-presentation-setup()
+    ;; Cannot set unicode amount
+    (setq text-scale-mode-amount 3)
+    (org-display-inline-images)
+    (text-scale-mode 1)
+    ;;(text-scale-adjust 1)
+    )
+
+  (defun leesin/org-tree-slide-presentation-end()
+    (text-scale-mode 0)
+    )
+
+  (use-package org-tree-slide
+    :ensure t
+    :defer t
+    :hook ((org-tree-slide-play . leesin/org-tree-slide-presentation-setup)
+           (org-tree-slide-stop . leesin/org-tree-slide-presentation-end))
+    :custom
+    (org-tree-slide-slide-in-effect t)
+    (org-tree-slide-activate-message "Presentation started!")
+    (org-tree-slide-deactivate-message "Presentation finished!")
+    (org-tree-slide-header t)
+    (org-tree-slide-breadcrumbs " > ")
+    (org-image-actual-width nil))
+#+end_src
+*** Org present
+目前使用该包，考虑 ~reveal.js~
+#+begin_src emacs-lisp
+  ;; Set margin for org-present
+  (defun leesin/org-mode-visual-fill()
+    (setq visual-fill-column-width 80
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1))
+
+  (defun leesin/org-mode-visual-fill-quit()
+    ;;(setq visual-fill-column-width 0
+    ;;      visual-fill-column-center-text nil)
+    (visual-fill-column-mode 0))
+
+  (use-package visual-fill-column
+    :ensure t
+    :defer t
+    :hook ((org-present-mode . leesin/org-mode-visual-fill)
+           (org-present-mode-quit . leesin/org-mode-visual-fill-quit)))
+
+  ;; Org-present Configuration
+  (defun leesin/org-present-prepare-slide()
+    (org-overview)
+    (org-show-entry)
+    (org-show-children))
+
+  (defun leesin/org-present-hook()
+    (display-line-numbers-mode nil)
+    (setq-local face-remapping-alist '((header-line (:height 4.0) variable-pitch)))
+    (setq text-scale-mode-amount 1)
+    (text-scale-mode 1)
+    (setq header-line-format " ")
+    (org-display-inline-images)
+    (leesin/org-present-prepare-slide))
+
+  (defun leesin/org-present-quit-hook()
+    (display-line-numbers-mode t)
+    (text-scale-mode 0)
+    (setq header-line-format nil)
+    (org-remove-inline-images))
+
+  (defun leesin/org-present-prev()
+    (interactive)
+    (org-present-prev)
+    (leesin/org-present-prepare-slide))
+
+  (defun leesin/org-present-next()
+    (interactive)
+    (org-present-next)
+    (leesin/org-present-prepare-slide))
+
+  (use-package org-present
+    :bind (:map org-present-mode-keymap
+           ("C-c C-j" . leesin/org-present-next)
+           ("C-c C-k" . leesin/org-present-prev))
+    :hook ((org-present-mode . leesin/org-present-hook)
+           (org-present-mode-quit . leesin/org-present-quit-hook)))
+#+end_src
+** Settings
+#+begin_src emacs-lisp
+  (when sys/linux
+    (setq org-agenda-files '("~/Documents/org/tasks.org")))
+  (when sys/win32p
+    (setq org-agenda-files '("E:\\org\\task.org")))
+#+end_src
+** Ends
+#+begin_src emacs-lisp
+  (provide 'init-org)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;; init-org.el ends here
+#+end_src
+
