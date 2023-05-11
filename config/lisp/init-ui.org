@@ -71,6 +71,7 @@
 #+end_src
 
 ** Theme
+注意：=catppuccin= 主题对 =org-verbatim= 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置参考 ~org-code~ 将其手动改为 ~(org-verbatim :foreground ,ctp-green)
 #+begin_src emacs-lisp
   ;; Theme
   (use-package doom-themes

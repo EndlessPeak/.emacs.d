@@ -29,6 +29,8 @@
 #+end_src
 
 ** LSP Mode
+如使用 =cape= 和 =corfu= 代替 =company= ，则最后的重置 ~company-backends~ 略过。
+目前仍然使用 =company= ，因此还需配置。
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :ensure t
