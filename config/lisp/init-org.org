@@ -25,10 +25,22 @@
 2. 表示文件：
    1. 表示当前文件 ~`(file-name-nondirectory (buffer-file-name))`~
    2. 去除后缀名 ~`(file-name-sans-extension "test.xx")`~
+ 
 #+begin_src emacs-lisp
   (use-package org
     :ensure t
     :defer t
+    :custom
+    ;; 设置标题行折叠符号
+    (org-ellipsis " ▾")
+    ;; TODO标签美化
+    (org-fontify-todo-headline t)
+    ;; DONE标签美化
+    (org-fontify-done-headline t)
+    ;; 引用块美化
+    (org-fontify-quote-and-verse-blocks t)
+    ;; 隐藏宏标记
+    (org-hide-macro-markers t)
     :config
     (org-indent-mode t)
     (variable-pitch-mode 1)
@@ -38,9 +50,72 @@
     (org-toggle-inline-images)
     (setq org-hide-leading-stars nil
           org-hide-emphasis-markers nil
-          org-startup-indented t))
+          org-startup-indented t)
+    ;; 隐藏强调标签
+    (setq org-hide-emphasis-markers t)
+    (defun leesin/org-prettify-symbols()
+      ;;(interactive)
+      (setq prettify-symbols-alist
+            (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
+                    '(
+                      ;;("[ ]"              . 9744)         ; ☐
+                      ;;("[X]"              . 9745)         ; ☑
+                      ;;("[-]"              . 8863)         ; ⊟
+                      ("#+begin_src"      . 9998)         ; ✎
+                      ;;("#+end_src"        . 9633)         ; □
+                      ("#+end_src"        . 8863)         ; ⊟
+                      ("#+begin_example"  . 129083)       ; 🠻
+                      ("#+end_example"    . 129081)       ; 🠹
+                      ("#+results:"       . 9776)         ; ☰
+                      ("#+attr_latex:"    . "🄛")
+                      ("#+attr_html:"     . "🄗")
+                      ("#+attr_org:"      . "🄞")
+                      ("#+name:"          . "🄝")         ; 127261
+                      ("#+caption:"       . "🄒")         ; 127250
+                      ("#+date:"          . "📅")         ; 128197
+                      ("#+author:"        . "💁")         ; 128100
+                      ("#+setupfile:"     . 128221)       ; 📝
+                      ("#+email:"         . 128231)       ; 📧
+                      ("#+startup:"       . 10034)        ; ✲
+                      ("#+options:"       . 9965)         ; ⛭
+                      ("#+title:"         . 10162)        ; ➲
+                      ("#+subtitle:"      . 11146)        ; ⮊
+                      ("#+downloaded:"    . 8650)         ; ⇊
+                      ("#+language:"      . 128441)       ; 🖹
+                      ("#+begin_quote"    . 187)          ; »
+                      ("#+end_quote"      . 171)          ; «
+                      ("#+begin_results"  . 8943)         ; ⋯
+                      ("#+end_results"    . 8943)         ; ⋯
+                      )))
+      (setq prettify-symbols-unprettify-at-point t)
+      (prettify-symbols-mode 1)
+      )
+    :hook
+    (org-mode . leesin/org-prettify-symbols)
+    ;; Get the org symbols set
+    :custom-face
+    ;; 设置Org mode标题以及每级标题行的大小
+    ;;(org-block-begin-line ((t (:underline t :background unspecified))))
+    ;;(org-block-end-line ((t (:overline t :underline nil :background unspecified))))
+    (org-document-title ((t (:height 1.4 :weight bold))))
+    (org-level-1 ((t (:height 1.2 :weight bold))))
+    (org-level-2 ((t (:height 1.15 :weight bold))))
+    (org-level-3 ((t (:height 1.1 :weight bold))))
+    (org-level-4 ((t (:height 1.05 :weight bold))))
+    (org-level-5 ((t (:height 1.0 :weight bold))))
+    (org-level-6 ((t (:height 1.0 :weight bold))))
+    (org-level-7 ((t (:height 1.0 :weight bold))))
+    (org-level-8 ((t (:height 1.0 :weight bold))))
+    (org-level-9 ((t (:height 1.0 :weight bold))))
+    )
 #+end_src
 
+** Org plus contrib
+=org mode= 的附加包，据说有诸多附加功能。此处不参与编译。
+#+begin_src emacs-lisp :tangle no
+  (use-package org-plus-contrib
+    :ensure t)
+#+end_src
 ** Org babel
 本部分内容需要加强学习，该部分不参与编译。
 #+begin_src emacs-lisp :tangle no
@@ -53,15 +128,85 @@
 #+end_src
 
 ** Org superstar
-使用优化的符号装饰标题。
-#+begin_src emacs-lisp
+使用优化的符号装饰标题，测试 =org-modern= ，本部分暂时不参与编译。
+#+begin_src emacs-lisp :tangle no
   ;; ;; org-superstar
   ;; make the org mode more beautiful with optimized leading chars
   (use-package org-superstar
     :ensure t
     :defer t
     :hook (org-mode . org-superstar-mode)
-    :config (setq org-superstar-prettify-item-bullets nil))
+    :config (setq org-superstar-prettify-item-bullets t))
+#+end_src
+
+** Org modern
+
+#+begin_src emacs-lisp
+  (use-package org-modern
+    :ensure t
+    :hook
+    ((org-mode . (lambda ()
+                   (setq org-modern-hide-stars 'leading)
+                   (global-org-modern-mode t)))
+     (org-agenda-finalize . org-modern-agenda))
+    :config
+    ;; 标题行型号字符
+    (setq org-modern-star ["◉" "○" "✸" "✳" "◈" "◇" "✿" "❀" "✜"])
+    ;; 额外的行间距，0.1表示10%，1表示1px
+    (setq-default line-spacing 0.1)
+    ;; tag边框宽度，还可以设置为 `auto' 即自动计算
+    (setq org-modern-label-border 1)
+    ;; 设置表格竖线宽度，默认为3
+    (setq org-modern-table-vertical 2)
+    ;; 复选框美化
+    (setq org-modern-checkbox
+          '((?X . #("▢✓" 0 2 (composition ((2)))))
+            (?- . #("▢–" 0 2 (composition ((2)))))
+            (?\s . #("▢" 0 1 (composition ((1)))))))
+    ;; 列表符号美化
+    (setq org-modern-list
+          '((?- . "•")
+            (?+ . "◦")
+            (?* . "▹")))
+    ;; 代码块左边加上一条竖边线（需要 `org-startup-indented' 关闭方有效
+    ;; 如果启用了 `visual-fill-column-mode' 会很难看）
+    (setq org-modern-block-fringe nil)
+    ;; 代码块类型美化，我们使用了 `prettify-symbols-mode'
+    (setq org-modern-block-name nil)
+    ;; #+关键字美化，我们使用了 `prettify-symbols-mode'
+    (setq org-modern-keyword nil)
+    )
+#+end_src
+
+该部分内容不参与编译。
+#+begin_src emacs-lisp :tangle no
+  (use-package org-modern
+    :ensure t
+    :defer t
+    :hook
+    ((org-mode . org-modern-mode)
+     (org-agenda-finalize . org-modern-agenda)
+     (org-modern-mode . (lambda ()
+                          "Adapt `org-modern-mode'."
+                          ;; Disable Prettify Symbols mode
+                          (setq prettify-symbols-alist nil)
+                          (prettify-symbols-mode -1)
+                          )))
+    )
+#+end_src
+** Org appear
+通过 =org-appear= 插件，当我们的光标移动到 =Org mode= 里的强调、链接上时，会自动展开，这样方便进行编辑。
+#+begin_src emacs-lisp
+  (use-package org-appear
+    :ensure t
+    :hook (org-mode . org-appear-mode)
+    :config
+    (setq org-appear-autolinks t)
+    (setq org-appear-autosubmarkers t)
+    (setq org-appear-autoentities t)
+    (setq org-appear-autokeywords t)
+    (setq org-appear-inside-latex t)
+    )
 #+end_src
 
 ** Settings
@@ -97,24 +242,6 @@
     ;;  (kbd "<backtab>") 'org-metaleft)
     (evil-define-key 'normal 'evil-org-mode
       (kbd "O") 'evil-open-above)
-    )
-#+end_src
-
-** Org modern
-该部分内容不参与编译。
-#+begin_src emacs-lisp :tangle no
-  (use-package org-modern
-    :ensure t
-    :defer t
-    :hook
-    ((org-mode . org-modern-mode)
-          (org-agenda-finalize . org-modern-agenda)
-          (org-modern-mode . (lambda ()
-                              "Adapt `org-modern-mode'."
-                              ;; Disable Prettify Symbols mode
-                              (setq prettify-symbols-alist nil)
-                              (prettify-symbols-mode -1)
-                              )))
     )
 #+end_src
 

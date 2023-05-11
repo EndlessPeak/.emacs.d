@@ -71,7 +71,11 @@
 #+end_src
 
 ** Theme
-注意：=catppuccin= 主题对 =org-verbatim= 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置参考 ~org-code~ 将其手动改为 ~(org-verbatim :foreground ,ctp-green)
+注意：
+1. =catppuccin= 主题可以选择不同的颜色风格，共有 4 种，按照亮度由亮到暗依次为 =latte= , =frappe= , =macchiato= , =mocha=
+1. =catppuccin= 主题对 =org-verbatim= 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置参考 ~org-code~ 将其手动改为 ~(org-verbatim :foreground ,ctp-green)~
+2. =catppuccin= 主题对 =org-block= 的底色与普通底色相同，可以进行修改，如 ~(org-block :foreground ctp-mauve :background ,"#202334")~
+
 #+begin_src emacs-lisp
   ;; Theme
   (use-package doom-themes
@@ -93,7 +97,10 @@
     :ensure t)
 
   (use-package catppuccin-theme
-    :ensure t)
+    :ensure t
+    :config
+    (setq catppuccin-flavor 'mocha)
+    )
 
   ;; Choose one theme to load
   ;; (load-theme 'doom-dark+ t)
