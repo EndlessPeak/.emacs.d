@@ -108,7 +108,7 @@
            ("C-c f"                               . consult-find)
            ;;("\e\ef"                               . consult-locate)
            ; need to enable locate first
-           ("C-c n h"                             . my/consult-find-org-headings)
+           ("C-c n h"                             . leesin/consult-find-org-headings)
            :map org-mode-map
            ("C-c C-j"                             . consult-org-heading)
            :map minibuffer-local-map
@@ -137,7 +137,7 @@
 
     ;; search all org file headings under a directory, see:
     ;; https://emacs-china.org/t/org-files-heading-entry/20830/4
-    (defun my/consult-find-org-headings (&optional match)
+    (defun leesin/consult-find-org-headings (&optional match)
       "find headngs in all org files."
       (interactive)
       (consult-org-heading match (directory-files org-directory t "^[0-9]\\{8\\}.+\\.org$")))
@@ -147,6 +147,20 @@
       "Consult line the synbol where the point is"
       (interactive)
       (consult-line (thing-at-point 'symbol)))
+    )
+#+end_src
+
+** Color-rg
+本插件用于进行搜索和重构。
+克隆地址 ~git clone https://github.com/manateelazycat/color-rg~
+#+begin_src emacs-lisp :tangle no
+  (add-to-list 'load-path "~/.emacs.d/elpa/color-rg")
+  (require 'color-rg)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package color-rg
+    :load-path "~/.emacs.d/elpa/color-rg"
     )
 #+end_src
 
