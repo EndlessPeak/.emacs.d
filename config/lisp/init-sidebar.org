@@ -13,21 +13,25 @@
 #+end_src
 
 ** Treemacs
+在 =Windows= 下时，可能需要手动指定 =python= 的执行路径，因为我的电脑上 ~where python~ 命令返回空值。
 #+begin_src emacs-lisp
   (use-package treemacs
     :ensure t
     :defer t
-    :init
-    (with-eval-after-load 'winum
-      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    ;;:init
+    ;;(with-eval-after-load 'winum
+    ;;  (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
     :config
     (progn
       (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
             treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
             treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
             treemacs-show-hidden-files               t
+            treemacs-width                           25
+            treemacs-width-is-initially-locked       nil
             ))
-
+    (when sys/win32p
+      (setq treemacs-python-executable "C:/Users/ASUS/AppData/Local/Programs/Python/Python310/python.exe"))
     :bind
     (:map global-map
           ("M-0"       . treemacs-select-window)
@@ -75,6 +79,8 @@
   (use-package minimap
     :defer t
     :ensure t
+    :hook
+    (after-init . minimap-mode)
     :config
     (setq minimap-window-location 'right
           minimap-update-delay 0

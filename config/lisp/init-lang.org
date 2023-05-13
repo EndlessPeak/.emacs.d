@@ -31,24 +31,26 @@
 ** LSP Mode
 如使用 =cape= 和 =corfu= 代替 =company= ，则最后的重置 ~company-backends~ 略过。
 目前仍然使用 =company= ，因此还需配置。
+设置 =LSP Mode= 默认不加载。
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :ensure t
     :defer t
-    :hook ((prog-mode . (lambda ()
-                          ;; Ask lsp mode load
-                          (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
-                            (lsp-deferred))))
-           (lsp-mode . (lambda ()
-                         ;; Intergrate `which-key'
-                         (lsp-enable-which-key-intergration)
+    :hook
+    (;;(prog-mode . (lambda ()
+     ;;               ;; Ask lsp mode load
+     ;;               (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
+     ;;                 (lsp-deferred))))
+     (lsp-mode . (lambda ()
+                   ;; Intergrate `which-key'
+                   (lsp-enable-which-key-intergration)
 
-                         ;; Format and organize imports
-                         (when (and leesin-lsp-format-on-save
-                                    (not (apply #'derived-mode-p leesin-lsp-format-on-save-ignore-modes)))
-                           (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                           (add-hook 'before-save-hook #'lsp-organize-imports t t))))
-                         )
+                   ;; Format and organize imports
+                   (when (and leesin-lsp-format-on-save
+                              (not (apply #'derived-mode-p leesin-lsp-format-on-save-ignore-modes)))
+                     (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                     (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+     )
     :init
     (setq lsp-keymap-prefix "C-c l")
     (setq lsp-prefer-flymake nil)
