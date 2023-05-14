@@ -153,14 +153,21 @@
 ** Color-rg
 本插件用于进行搜索和重构。
 克隆地址 ~git clone https://github.com/manateelazycat/color-rg~
+我个人非常推荐 =color-rg= ，但是如果想在 =windows= 下使用的话需要注意单引号的问题，因为单引号并不是 Windows 系统中合法的路径引用符号。
+目前暂定的解决方案是取消任何有关单引号的参数，见下面的配置。
 #+begin_src emacs-lisp :tangle no
   (add-to-list 'load-path "~/.emacs.d/elpa/color-rg")
   (require 'color-rg)
+  (when sys/win32p
+    (setq color-rg-search-ignore-rules nil))
 #+end_src
 
 #+begin_src emacs-lisp
   (use-package color-rg
     :load-path "~/.emacs.d/elpa/color-rg"
+    :config
+    (when sys/win32p
+      (setq color-rg-search-ignore-rules nil))
     )
 #+end_src
 
