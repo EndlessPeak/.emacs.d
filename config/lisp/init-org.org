@@ -140,7 +140,7 @@
 #+end_src
 
 ** Org modern
-
+禁用 =org-modern-table= ，原因是不好看，回头找找解决方案。
 #+begin_src emacs-lisp
   (use-package org-modern
     :ensure t
@@ -150,14 +150,14 @@
                    (global-org-modern-mode t)))
      (org-agenda-finalize . org-modern-agenda))
     :config
+    ;; 禁用 table 修改，原因是不好看
+    (setq org-modern-table nil)
     ;; 标题行型号字符
     (setq org-modern-star ["◉" "○" "✸" "✳" "◈" "◇" "✿" "❀" "✜"])
     ;; 额外的行间距，0.1表示10%，1表示1px
     (setq-default line-spacing 0.1)
     ;; tag边框宽度，还可以设置为 `auto' 即自动计算
     (setq org-modern-label-border 1)
-    ;; 设置表格竖线宽度，默认为3
-    (setq org-modern-table-vertical 2)
     ;; 复选框美化
     (setq org-modern-checkbox
           '((?X . #("▢✓" 0 2 (composition ((2)))))
