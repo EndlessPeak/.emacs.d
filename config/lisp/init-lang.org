@@ -73,6 +73,9 @@
                                             (set (make-local-variable 'company-backends)
                                                  (remq 'company-capf company-backends)))))
     :commands (lsp lsp-deferred)
+    :config
+    (setq lsp-clients-clangd-args '("-j=3"
+                                    "--background-index"))
     )
 #+end_src
 
@@ -84,6 +87,42 @@
     :hook (lsp-mode . lsp-ui-mode)
     :config (setq lsp-ui-flycheck-enable t)
     :commands lsp-ui-mode)
+#+end_src
+
+** Citre
+先进的 =Ctags= 前端。
+#+begin_src emacs-lisp
+  (use-package citre
+    :ensure t
+    :defer t
+    :commands citre-jump-back
+    :functions xref-go-back
+    :init
+    (setq citre-auto-enable-citre-mode-modes '(prog-mode)
+          citre-default-create-tags-file-location 'global-cache
+          citre-use-project-root-when-creating-tags t
+          citre-prompt-language-for-ctags-command t)
+
+    (defun citre-jump+ ()
+      "Jump to the definition of the symbol at point.
+      Fallback to `xref-find-definitions'."
+      (interactive)
+      (condition-case _
+          (citre-jump)
+        (error (call-interactively #'xref-find-definitions))))
+
+    (defun citre-jump-back+ ()
+      "Go back to the position before last `citre-jump'.
+      Fallback to `xref-go-back'."
+      (interactive)
+      (condition-case _
+          (citre-jump-back)
+        (error (if (fboundp #'xref-go-back)
+                  (call-interactively #'xref-go-back)
+                (call-interactively #'xref-pop-marker-stack)))))
+    :config
+    (with-eval-after-load 'cc-mode (require 'citre-lang-c))
+    )
 #+end_src
 
 ** Defer Load

@@ -17,6 +17,18 @@ If you are using =Gentoo Linux= you should check the following things:
      app-editors/emacs acl alsa cairo dbus dynamic-loading gfile gmp gpm gsettings gui gzip-el inotify jpeg json kerberos lcms libxml2 png source ssl systemd threads xft xpm zlib
    #+END_SRC
 2. Install =emacs-daemon= and =emacs-common=
+
+** Dependency
+部分包是直接从 =github= 上下载的，需要手动克隆。（目前不打算使用 =quelpa= 包）
+1. doom-snippets
+   ~git clone https://github.com/doomemacs/snippets~
+2. color-rg
+   1. ~git clone https://github.com/manateelazycat/color-rg~
+   2. 根据 =init-vertico.org= 中的笔记进行修改
+3. citre
+   安装 =ctags= ，注意 =windows= 平台上不要安装 =clang= 版本的。仓库 https://github.com/universal-ctags/ctags-win32
+4. catppuccin (optional)
+   根据 =init-ui.org= 中的笔记进行修改
 ** Warning
 1. No guarantee for stablity
 2. Update extremely slow

@@ -171,6 +171,19 @@
     )
 #+end_src
 
+我个人将 =color-rg= 中项目查找部分的源代码作了修改，因为我不喜欢 =project= 管理项目，见下面的配置。下面的代码不会直接参与编译，建议手动修改源码。
+#+begin_src emacs-lisp :tangle no
+(defun color-rg-project-root-dir ()
+  "Return root directory of the current project, or default-directory if none is found."
+  (let ((project (project-current)))
+    (if project
+        (expand-file-name
+         (cond
+          ((fboundp 'project-root) (project-root project))
+          ((fboundp 'project-roots) (car (project-roots project)))))
+      (read-directory-name "Enter a directory: " default-directory))))
+#+end_src
+
 ** Savehist
 #+begin_src emacs-lisp
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
