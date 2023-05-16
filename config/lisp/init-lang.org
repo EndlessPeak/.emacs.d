@@ -91,18 +91,23 @@
 
 ** Citre
 先进的 =Ctags= 前端。
+注意：使用 =ctags= 时，针对 =C/C++= 项目，建议显式指明 ~--language=C,C++~ 而非单独的 =C= 或 =C++= ，否则可能不会生成有关头文件的 =file kind tag= ，我不确定这是有关 =ctags= 的一个 =feature= 还是 =issue=
 #+begin_src emacs-lisp
   (use-package citre
     :ensure t
     :defer t
-    :commands citre-jump-back
-    :functions xref-go-back
+    :bind (:map prog-mode-map
+                ("C-x c j" . citre-jump+)
+                ("C-x c k" . citre-jump-back+)
+                ("C-x c p" . citre-peek)
+                ("C-x c a" . citre-ace-peek)
+                ("C-x c u" . citre-update-this-tags-file))
     :init
     (setq citre-auto-enable-citre-mode-modes '(prog-mode)
           citre-default-create-tags-file-location 'global-cache
           citre-use-project-root-when-creating-tags t
           citre-prompt-language-for-ctags-command t)
-
+          )
     (defun citre-jump+ ()
       "Jump to the definition of the symbol at point.
       Fallback to `xref-find-definitions'."

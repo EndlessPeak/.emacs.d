@@ -24,7 +24,7 @@ If you are using =Gentoo Linux= you should check the following things:
    ~git clone https://github.com/doomemacs/snippets~
 2. color-rg
    1. ~git clone https://github.com/manateelazycat/color-rg~
-   2. 根据 =init-vertico.org= 中的笔记进行修改
+   2. 如不习惯使用 =package.el= ，可根据 =init-vertico.org= 中的笔记进行修改
 3. citre
    安装 =ctags= ，注意 =windows= 平台上不要安装 =clang= 版本的。仓库 https://github.com/universal-ctags/ctags-win32
 4. catppuccin (optional)
