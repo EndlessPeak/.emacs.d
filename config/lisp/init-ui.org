@@ -27,7 +27,7 @@
     (interactive)
     (when (display-graphic-p)
       ;; Default font
-      (cl-loop for font in '("Cascadia Code" "JetBrainsMono Nerd Font" "Source Code Pro" "Fira Code" "Hack"  "Menlo" "Monaco" "Consolas")
+      (cl-loop for font in '("JetBrainsMono Nerd Font" "Source Code Pro" "Cascadia Code" "Fira Code" "Hack"  "Menlo" "Monaco" "Consolas")
                when (font-installed-p font)
                return (set-face-attribute 'default nil
                                           :family font
@@ -38,7 +38,7 @@
                                                         (sys/linux 180))))
 
       ;; Unicode characters
-      (cl-loop for font in '("Cascadia Code" "Source Code Pro" "Segoe UI Symbol" "Symbola" "Symbol")
+      (cl-loop for font in '("Source Code Pro" "Cascadia Code" "Segoe UI Symbol" "Symbola" "Symbol")
                when (font-installed-p font)
                return (set-fontset-font t 'unicode font nil 'prepend))
 

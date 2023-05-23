@@ -107,7 +107,6 @@
           citre-default-create-tags-file-location 'global-cache
           citre-use-project-root-when-creating-tags t
           citre-prompt-language-for-ctags-command t)
-          )
     (defun citre-jump+ ()
       "Jump to the definition of the symbol at point.
       Fallback to `xref-find-definitions'."
