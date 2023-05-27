@@ -73,8 +73,9 @@
 ** Theme
 注意：
 1. =catppuccin= 主题可以选择不同的颜色风格，共有 4 种，按照亮度由亮到暗依次为 =latte= , =frappe= , =macchiato= , =mocha=
-1. =catppuccin= 主题对 ~org-verbatim~ 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置将 ~org-code~ 改为 ~(org-code :foreground ,ctp-peach)~ 将 ~org-verbatim~ 改为 ~(org-verbatim :foreground ,ctp-green)~
-2. =catppuccin= 主题对 =org-block= 的底色与普通底色相同，可以进行修改，如 ~(org-block :foreground ctp-mauve :background ,"#202334")~
+2. =catppuccin= 主题对 ~org-verbatim~ 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置将 ~org-code~ 改为 ~(org-code :foreground ,ctp-peach)~ 将 ~org-verbatim~ 改为 ~(org-verbatim :foreground ,ctp-green)~
+3. =catppuccin= 主题对 =org-block= 的底色与普通底色相同，可以进行修改，如 ~(org-block :foreground ctp-mauve :background ,"#202334")~
+4. =hardhacker= 主题下载地址 ~git clone https://github.com/hardhackerlabs/theme-emacs.git hardhacker~
 
 #+begin_src emacs-lisp
   ;; Theme
@@ -102,10 +103,16 @@
     (setq catppuccin-flavor 'mocha)
     )
 
+  (use-package hardhacker-theme
+    :load-path "~/.emacs.d/elpa/hardhacker"
+    )
+
   ;; Choose one theme to load
   ;; (load-theme 'doom-dark+ t)
   ;; (load-theme 'doom-dracula t)
-  (load-theme 'catppuccin t)
+  ;; (load-theme 'catppuccin t)
+  ;; (load-theme 'doom-spacegrey t)
+  (load-theme 'hardhacker t)
 #+end_src
 
 ** Settings
