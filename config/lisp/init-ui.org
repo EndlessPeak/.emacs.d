@@ -104,7 +104,8 @@
     )
 
   (use-package hardhacker-theme
-    :load-path "~/.emacs.d/elpa/hardhacker"
+    ;;:load-path "~/.emacs.d/elpa/hardhacker"
+    :load-path (lambda() (expand-file-name "hardhacker" package-user-dir))
     )
 
   ;; Choose one theme to load

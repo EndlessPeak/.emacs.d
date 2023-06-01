@@ -14,15 +14,18 @@
 
 ** Snippet
 1. 使用 =yassnippet= 和 =doom-snippets= 
-2. 其中 =doom-snippets= 需要下载。克隆命令为：~git clone https://github.com/doomemacs/snippets~
+2. =doom-snippets= 需要下载。克隆命令为：~git clone https://github.com/doomemacs/snippets~
 3. 如需使用 =corfu= 补全，取消 ~custom~ 部分的注释，不过个人体验来看 =corfu= 目前不如 =company=
+4. ~'~ 表示接下来使用的是常量，括号包裹表示使用的是列表，故而使用 =list= 
+5. ~:load-path~ 参数需要一个路径字符串或一个代表路径的符号，可以使用 =lambda= 函数动态实现
 #+begin_src emacs-lisp
   (use-package yasnippet
     :ensure t
     :hook (after-init . yas-global-mode)
     :config
-    (setq yas-snippet-dirs
-          '("~/.emacs.d/snippets"))
+    (setq yas-snippet-dirs (list (expand-file-name "snippets" user-emacs-directory)))
+    
+    ;;(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
     ;; check corfu frame,if it exists,disable yassnippet keymap
     ;;:custom
     ;;(yas-keymap-disable-hook
@@ -32,7 +35,8 @@
 
   ;;Clone this repo somewhere local https://github.com/doomemacs/snippets
   (use-package doom-snippets
-    :load-path "~/.emacs.d/elpa/snippets"
+    ;:load-path "~/.emacs.d/elpa/snippets"
+    :load-path (lambda() (expand-file-name "snippets" package-user-dir))
     :after yasnippet
     )
 #+end_src

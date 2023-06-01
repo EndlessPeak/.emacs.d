@@ -27,23 +27,37 @@
   (setq auto-mode-case-fold nil)
 #+end_src
 
+** Global Variables
+设置 =user-init-file= 和 =user-emacs-directory= 变量，用于加载 =init.el= 所在目录下的配置文件，主要用于从其他位置加载配置环境。
+#+begin_src emacs-lisp
+  ;;(defvar config-directory nil
+  ;;  "This variable indicates where the config directory is.")
+
+  ;;(setq config-directory (file-name-directory (or load-file-name buffer-file-name)))
+
+  ;;(defvar package-user-dir nil
+  ;;  "This variable indicates where the package directory is.")
+
+  (setq user-init-file (or load-file-name (buffer-file-name)))
+  (setq user-emacs-directory (file-name-directory user-init-file))
+#+end_src
+
 ** Load Path
-便携式环境加载。加载命令 ~/path/to/emacs --no-desktop --load="/path/to/early-init" --load="/path/to/init.el"~
+如需从任意其他非家目录位置加载配置环境，使用加载命令 ~/path/to/emacs --no-desktop --load="/path/to/early-init" --load="/path/to/init.el"~
 #+begin_src emacs-lisp 
   ;; Load path
   ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
   (defun update-load-path (&rest _)
     "Update 'load-path'."
-    (let ((default-directory (file-name-directory (or load-file-name buffer-file-name))))
-      (dolist (dir '("site-lisp" "lisp" "lisp/lang"))
-        (push (expand-file-name dir default-directory) load-path))))
+    (dolist (dir '("site-lisp" "lisp" "lisp/lang"))
+      (push (expand-file-name dir user-emacs-directory) load-path)))
 
   (advice-add #'package-initialize :after #'update-load-path)
 
   (update-load-path)
 
   ;; Indepentent custom
-  (setq custom-file (expand-file-name "custom.el" default-directory))
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
