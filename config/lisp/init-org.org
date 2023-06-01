@@ -82,8 +82,8 @@
                       ("#+subtitle:"      . 11146)        ; ⮊
                       ("#+downloaded:"    . 8650)         ; ⇊
                       ("#+language:"      . 128441)       ; 🖹
-                      ("#+begin_quote"    . 187)          ; »
-                      ("#+end_quote"      . 171)          ; «
+                      ("#+begin_quote"    . 171)          ; «
+                      ("#+end_quote"      . 187)          ; »
                       ("#+begin_results"  . 8943)         ; ⋯
                       ("#+end_results"    . 8943)         ; ⋯
                       )))
