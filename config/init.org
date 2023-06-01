@@ -28,7 +28,25 @@
 #+end_src
 
 ** Load Path
-#+begin_src emacs-lisp
+便携式环境加载。加载命令 ~/path/to/emacs --no-desktop --load="/path/to/early-init" --load="/path/to/init.el"~
+#+begin_src emacs-lisp 
+  ;; Load path
+  ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+  (defun update-load-path (&rest _)
+    "Update 'load-path'."
+    (let ((default-directory (file-name-directory (or load-file-name buffer-file-name))))
+      (dolist (dir '("site-lisp" "lisp" "lisp/lang"))
+        (push (expand-file-name dir default-directory) load-path))))
+
+  (advice-add #'package-initialize :after #'update-load-path)
+
+  (update-load-path)
+
+  ;; Indepentent custom
+  (setq custom-file (expand-file-name "custom.el" default-directory))
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
   ;; Load path
   ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
   (defun update-load-path (&rest _)
