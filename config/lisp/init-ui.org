@@ -38,7 +38,7 @@
                                                         (sys/linux 180))))
 
       ;; Unicode characters
-      (cl-loop for font in '("Source Code Pro" "Cascadia Code" "Segoe UI Symbol" "Symbola" "Symbol")
+      (cl-loop for font in '("Segoe UI Symbol" "Source Code Pro" "Cascadia Code" "Symbola" "Symbol")
                when (font-installed-p font)
                return (set-fontset-font t 'unicode font nil 'prepend))
 
