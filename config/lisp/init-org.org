@@ -364,11 +364,16 @@
            (org-present-mode-quit . leesin/org-present-quit-hook)))
 #+end_src
 ** Settings
+使用了反引号和逗号创建表达式，将单个文件名作为列表元素插入到主列表中。如果路径中包含空格，这种语法比引用字符串更加安全。
 #+begin_src emacs-lisp
   (when sys/linux
-    (setq org-agenda-files '("~/Documents/org/tasks.org")))
+    (let ((tasks-file "~/Documents/org/tasks.org"))
+      (when (file-exists-p tasks-file)
+        (setq org-agenda-files `(,tasks-file)))))
   (when sys/win32p
-    (setq org-agenda-files '("E:\\org\\task.org")))
+    (let ((tasks-file "E:\\org\\task.org"))
+      (when (file-exists-p tasks-file)
+        (setq org-agenda-files `(,tasks-file)))))
 #+end_src
 ** Ends
 #+begin_src emacs-lisp

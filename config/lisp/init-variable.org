@@ -48,8 +48,9 @@
         scroll-conservatively 10000)
 
   (when sys/win32p
-    (setq default-directory "E:/"))
-
+    (let ((default-dir "E:/"))
+      (when (file-exists-p default-dir)
+        (setq-default default-directory default-dir)))))
 #+end_src
 
 ** Truncate lines
@@ -73,7 +74,7 @@
 #+end_src
 
 ** Custom variables
-本部分内容可用于后续修改，后续考虑将 custom 变量分离到单独的文件。
+本部分内容可用于后续修改，后续考虑将（机器相关的）自定义变量分离到单独的文件。
 #+begin_src emacs-lisp
   (defcustom  leesin-lsp-format-on-save nil
     "Auto format buffers on save." )
