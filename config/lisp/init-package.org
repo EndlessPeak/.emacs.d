@@ -21,6 +21,8 @@
   ;; initialization, so we must prevent Emacs from doing it early!
   (setq package-enable-at-startup nil)
 
+  (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+
   (setq package-archives '(("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                            ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
                            ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")

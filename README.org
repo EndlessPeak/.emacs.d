@@ -29,9 +29,20 @@ If you are using =Gentoo Linux= you should check the following things:
    安装 =ctags= ，注意 =windows= 平台上不要安装 =clang= 版本的。仓库 https://github.com/universal-ctags/ctags-win32
 4. catppuccin (optional)
    根据 =init-ui.org= 中的笔记进行修改
-** Warning
-1. No guarantee for stablity
-2. Update extremely slow
+
+** Attention && Warning
+1. 为了支持从任何目录加载该配置文件（例如从 U 盘加载配置文件）作了一定的适应性修改，这可能影响加载速度或带来不稳定性。其中：
+   1. 使用全局变量 =user-init-file= =user-emacs-directory= 和 =package-user-directory= 记录配置文件目录和插件下载目录
+   2. 在 =use-package= 中，任何的 ~:load-path~ 参数都需要一个路径字符串或一个代表路径的符号，在目前情况下，可以使用 =lambda= 函数动态实现
+   3. 从其他位置加载配置文件，需要在命令前使用 =env= 指明环境变量，例如在 =windows= 上可以编写 bat 文件：
+      #+begin_src bat
+        @echo off
+        set "HOME=X:\path\to\dir"
+        start /b "Emacs" "X:\path\to\emacs\bin\runemacs.exe" %*
+      #+end_src
+      在 =linux= 上可以使用命令 ~env HOME=/path/to/dir emacs~
+2. No guarantee for stablity
+3. Update extremely slow
 ** Reference
 Refer these repos to obtain config files.
 1. [[https://github.com/nasyxx/emacs.d/][Nasyxx]]

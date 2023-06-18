@@ -165,7 +165,8 @@
 
 #+begin_src emacs-lisp
   (use-package color-rg
-    :load-path "~/.emacs.d/elpa/color-rg"
+    ;:load-path "~/.emacs.d/elpa/color-rg"
+    :load-path (lambda() (expand-file-name "color-rg" package-user-dir))
     :config
     (when sys/win32p
       (setq color-rg-search-ignore-rules nil))
