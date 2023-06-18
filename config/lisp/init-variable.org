@@ -50,7 +50,7 @@
   (when sys/win32p
     (let ((default-dir "E:/"))
       (when (file-exists-p default-dir)
-        (setq-default default-directory default-dir)))))
+        (setq-default default-directory default-dir))))
 #+end_src
 
 ** Truncate lines
