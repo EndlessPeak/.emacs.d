@@ -26,6 +26,9 @@
    1. 表示当前文件 ~`(file-name-nondirectory (buffer-file-name))`~
    2. 去除后缀名 ~`(file-name-sans-extension "test.xx")`~
  
+在 =org-mode= 中需要单独设置：
+1. ~org-indent-mode~ 不能全局开启，而应该在进入 =org-mode= 后开启，否则 =dashboard-mode= 加载不正确
+2. ~variable-pitch-mode~ 需要禁用，或仅针对 =org-mode= 标题、注释等开启，否则非等宽字体会破坏显示效果
 #+begin_src emacs-lisp
   (use-package org
     :ensure t
@@ -42,10 +45,6 @@
     ;; 隐藏宏标记
     (org-hide-macro-markers t)
     :config
-    (org-indent-mode t)
-    (variable-pitch-mode 1)
-    (auto-fill-mode 0)
-    (visual-line-mode 1)
     (setq evil-auto-indent nil)
     (org-toggle-inline-images)
     (setq org-hide-leading-stars nil
@@ -53,7 +52,14 @@
           org-startup-indented t)
     ;; 隐藏强调标签
     (setq org-hide-emphasis-markers t)
-    (defun leesin/org-prettify-symbols()
+    (defun leesin/self-org-mode-hook()
+      ;;(interactive)
+      (org-indent-mode t)
+      (variable-pitch-mode -1)
+      (auto-fill-mode -1)
+      (visual-line-mode t)
+      )
+    (defun leesin/self-org-prettify-symbols()
       ;;(interactive)
       (setq prettify-symbols-alist
             (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
@@ -91,7 +97,8 @@
       (prettify-symbols-mode 1)
       )
     :hook
-    (org-mode . leesin/org-prettify-symbols)
+    (org-mode . leesin/self-org-prettify-symbols)
+    (org-mode . leesin/self-org-mode-hook)
     ;; Get the org symbols set
     :custom-face
     ;; 设置Org mode标题以及每级标题行的大小

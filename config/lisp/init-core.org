@@ -52,18 +52,22 @@
 #+end_src
 
 ** Language Support
+延迟加载，提高加载速度。
 #+begin_src emacs-lisp
   ;; Language support
-  (require 'init-complete)
-  (require 'init-lang)
-
-  (require 'init-org)
+  (defun load-language()
+    (require 'init-complete)
+    (require 'init-lang)
+    )
 #+end_src
 
 ** Delay Load Part
+延迟加载，提高加载速度。
 #+begin_src emacs-lisp
   ;; delay load
   (defun load-custom-file()
+    ;; Org Mode
+    (require 'init-org)
     ;; Input Method
     (require 'init-input)
     ;; Key bindings
@@ -72,6 +76,7 @@
     (require 'init-function)
   )
 
+  (add-hook 'after-init-hook #'load-language)
   (add-hook 'after-init-hook #'load-custom-file)
 #+end_src
 

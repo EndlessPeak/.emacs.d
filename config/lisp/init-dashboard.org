@@ -33,7 +33,7 @@
     ;; Content is not centered by default. To center, set
     (setq dashboard-center-content t)
     ;; To disable shortcut "jump" indicators for each section, set
-    (setq dashboard-show-shortcuts nil)
+    (setq dashboard-show-shortcuts t)
     ;; To customize which widgets are dsiplayed and how many items are willing to show
     (setq dashboard-items '((recents . 5)
                             (bookmarks . 5)
