@@ -51,6 +51,11 @@
   (require 'init-sidebar)
 #+end_src
 
+** Function
+#+begin_src emacs-lisp
+  ;; Self function
+  (require 'init-function)
+#+end_src
 ** Language Support
 延迟加载，提高加载速度。
 #+begin_src emacs-lisp
@@ -72,8 +77,6 @@
     (require 'init-input)
     ;; Key bindings
     (require 'init-kbd)
-    ;; Self function
-    (require 'init-function)
   )
 
   (add-hook 'after-init-hook #'load-language)

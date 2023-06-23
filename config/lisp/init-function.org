@@ -14,6 +14,28 @@
 
 ** Proxy
 #+begin_src emacs-lisp
+  (defvar leesin/proxy-enabled nil)
+  (defun leesin/toggle-proxy ()
+    (interactive)
+    (if leesin/proxy-enabled
+        (progn
+          (setq url-proxy-services nil)
+          (setq leesin/proxy-enabled nil)
+          (message "代理已关闭."))
+        (progn
+          (when sys/win32p
+              (setq url-proxy-services
+                  '(("http" . "127.0.0.1:10809")
+                      ("https" . "127.0.0.1:10809"))))
+          (when sys/linux
+              (setq url-proxy-services
+                  '(("http" . "127.0.0.1:20171")
+                      ("https" . "127.0.0.1:20171"))))
+          (setq leesin/proxy-enabled t)
+          (message "代理已开启."))))
+#+end_src
+由于下面的代码实测无法正确执行，因而不参与编译。
+#+begin_src emacs-lisp :tangle no
   ;; Function Defination
   (defun leesin/toggle-proxy ()
     (interactive)
@@ -68,6 +90,58 @@
     (animate-string text 10))
 #+end_src
 
+** Indent Region
+用于设置在任何编程模式中 =tab= 键的缩进。
+#+begin_src emacs-lisp
+  (defun leesin/indent-region (numSpaces)
+    "该函数会根据当前行或选区的起始和终止位置，将这些行的文本进行缩进处理。"
+    (progn
+      ; 默认是当前行的起始位置和终止位置
+      (setq regionStart (line-beginning-position))
+      (setq regionEnd (line-end-position))
+
+      ; 如果有选区，则使用选区的起始位置和终止位置
+      (when (use-region-p)
+        (setq regionStart (region-beginning))
+        (setq regionEnd (region-end)))
+
+      (save-excursion
+        ; 恢复位置
+        (goto-char regionStart)                ; 移动到选区的起始位置
+        (setq start (line-beginning-position)) ; 保存行的起始位置
+        (goto-char regionEnd)                  ; 移动到选区的终止位置
+        (setq end (line-end-position))         ; 保存行的终止位置
+
+        ; 对 start 和 end 之间的文本进行缩进
+        (indent-rigidly start end numSpaces)
+        (setq deactivate-mark nil) ; 恢复选区
+        )
+      )
+    )
+  (defun leesin/untab-region ()
+    "命令函数，它的作用是将选定的文本块反向缩进。"
+    ;; 它会调用 leesin/indent-region 函数，并将负数的缩进值 -4传递给它。
+    (interactive)
+    (leesin/indent-region -4))
+
+  (defun leesin/tab-region ()
+    "命令函数，它用于将选定的文本块缩进。"
+    ;; 如果存在选区，则调用 `leesin/indent-region' 函数，并将缩进值设置为 4。
+    ;; 如果没有选区，则在当前位置插入四个空格。"
+    (interactive)
+    (if (use-region-p)
+        (leesin/indent-region 4)
+      (insert "    ")))
+
+  (defun leesin/hack-tab-key ()
+    "命令函数，它重新定义了 <tab> 和 <S-tab> 键的行为。"
+    ;; 通过调用 local-set-key 函数，它将 <tab> 键绑定到 leesin/tab-region 函数，将 <S-tab> 键绑定到 leesin/untab-region 函数。
+    (interactive)
+    (local-set-key (kbd "<tab>") 'leesin/tab-region)
+    (local-set-key (kbd "<backtab>") 'leesin/untab-region))
+
+  (add-hook 'prog-mode-hook 'leesin/hack-tab-key)
+#+end_src
 ** Ends
 #+begin_src emacs-lisp
   (provide 'init-function)
