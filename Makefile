@@ -5,7 +5,7 @@ EE ?= $(EM) -Q --batch --eval "(progn (require 'ob-tangle) (setq org-confirm-bab
 # 需要加载的目录，可能有lisp site-lisp 等
 DS = lisp lisp/lang
 
-# 自定义编译模板的函数
+# 自定义编译模板的函数 tangle_template 用于将 *.org 转为 *.el
 define tangle_template
 # 目录作为目标，指示新的编译目标
 $(1): $(patsubst config/$(1)/%.org,$(1)/%.el,$(wildcard config/$(1)/*.org))
@@ -26,9 +26,21 @@ early-init.el: config/early-init.org
 init.el: config/init.org
 	$(EE) --eval '(org-babel-tangle-publish t "$<" "$(@D)/")'
 
+dump.el: config/dump.org
+	$(EE) --eval '(org-babel-tangle-publish t "$<" "$(@D)/")'
+
+# (foreach var, list, template) var 是临时变量，list是需要遍历的列表，template是一个模板字符串
+# foreach 遍历 DS 中的每个元素，作为dir传给后面的eval函数求值，所需求值的表达式为call调用模板方法生成编译命令
+# 遍历 DS 目录，生成 tangle_template规则
 $(foreach dir,$(DS),$(eval $(call tangle_template,$(dir))))
 
-generate: $(DS) early-init.el init.el
+generate: $(DS) early-init.el init.el dump.el
+
+# %.elc: %.el
+# 	$(EM) --batch --eval '(batch-byte-compile "$<")'
+# 
+# # 新增 generate-elc 目标用于将 lisp/*.el 编译为 lisp/*.elc
+# generate-elc: $(foreach dir,$(DS),$(patsubst %.el,%.elc,$(wildcard $(dir)/*.el)))
 
 clean:
 	rm early-init.el init.el
