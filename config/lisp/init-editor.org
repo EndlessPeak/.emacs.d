@@ -51,9 +51,9 @@
 #+begin_src emacs-lisp
   (use-package beacon
     :ensure t
-    :defer t
-    :init
-    (beacon-mode 1))
+    :hook
+    (after-init . beacon-mode)
+    )
 #+end_src
 
 ** Line Number
@@ -72,11 +72,32 @@
     )
 #+end_src
 
+** Comment
+注释与反注释功能。
+#+begin_src emacs-lisp
+  (use-package newcomment
+    :ensure nil
+    :bind ([remap comment-dwim] . #'comment-or-uncomment)
+    :config
+    (defun comment-or-uncomment ()
+      (interactive)
+      (if (region-active-p)
+          (comment-or-uncomment-region (region-beginning) (region-end))
+        (if (save-excursion
+              (beginning-of-line)
+              (looking-at "\\s-*$"))
+            (call-interactively 'comment-dwim)
+          (comment-or-uncomment-region (line-beginning-position) (line-end-position)))))
+    :custom
+    (comment-auto-fill-only-comments t))
+#+end_src
+
 ** Htmlize
 提供代码形成 HTML 格式并保留代码高亮，使用 =htmlize-region-for-paste= 可提供 emacs 到富文本编辑器的高亮。
 #+begin_src emacs-lisp
   (use-package htmlize
-    :ensure t)
+    :ensure t
+    :defer t)
 #+end_src
 ** Ends
 #+begin_src emacs-lisp

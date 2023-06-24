@@ -32,7 +32,7 @@
 #+begin_src emacs-lisp
   (use-package org
     :ensure t
-    :defer t
+    :mode ("\\.org\\'" . org-mode)
     :custom
     ;; 设置标题行折叠符号
     (org-ellipsis " ▾")
@@ -141,7 +141,6 @@
   ;; make the org mode more beautiful with optimized leading chars
   (use-package org-superstar
     :ensure t
-    :defer t
     :hook (org-mode . org-superstar-mode)
     :config (setq org-superstar-prettify-item-bullets t))
 #+end_src
@@ -189,7 +188,6 @@
 #+begin_src emacs-lisp :tangle no
   (use-package org-modern
     :ensure t
-    :defer t
     :hook
     ((org-mode . org-modern-mode)
      (org-agenda-finalize . org-modern-agenda)
@@ -258,7 +256,6 @@
   ;; Standardize the tabel width in different fonts
   (use-package valign
     :ensure t
-    :defer t
     ;;:config
     ;;(setq valign-fancy-bar 1
     ;;      valign-signal-parse-error 1)
@@ -277,7 +274,6 @@
 #+begin_src emacs-lisp
   (use-package ox-hugo
     :ensure t   ;Auto-install the package from Melpa
-    :defer t
     ;;:pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
     :after ox)
 #+end_src
@@ -329,7 +325,6 @@
 
   (use-package visual-fill-column
     :ensure t
-    :defer t
     :hook ((org-present-mode . leesin/org-mode-visual-fill)
            (org-present-mode-quit . leesin/org-mode-visual-fill-quit)))
 

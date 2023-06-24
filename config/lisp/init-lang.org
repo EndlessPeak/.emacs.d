@@ -13,13 +13,6 @@
   (require 'init-variable)
 #+end_src
 
-** Dependency
-#+begin_src emacs-lisp
-  (use-package rust-mode
-    :ensure t
-    :defer t)
-#+end_src
-
 ** Flycheck
 #+begin_src emacs-lisp
   (use-package flycheck
@@ -35,7 +28,6 @@
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :ensure t
-    :defer t
     :hook
     (;;(prog-mode . (lambda ()
      ;;               ;; Ask lsp mode load
@@ -95,7 +87,8 @@
 #+begin_src emacs-lisp
   (use-package citre
     :ensure t
-    :defer t
+    :hook
+    (prog-mode . citre-mode)
     :bind (:map prog-mode-map
                 ("C-x c j" . citre-jump+)
                 ("C-x c k" . citre-jump-back+)
@@ -131,11 +124,11 @@
 
 ** Defer Load
 #+begin_src emacs-lisp
-  (with-eval-after-load 'cc-mode
-    (require 'lang-cc))
-
-  (with-eval-after-load 'json-mode
-    (require 'lang-json))
+  ;;(with-eval-after-load 'cc-mode
+  (require 'lang-cc)
+  (require 'lang-json)
+  (require 'lang-lisp)
+  (require 'lang-rust)
 #+end_src
 
 ** Ends

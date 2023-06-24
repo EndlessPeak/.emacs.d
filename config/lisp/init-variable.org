@@ -38,7 +38,7 @@
   ;; use short answers for YES/NO ect.
   (setq use-short-answers t)
   (setq-default tab-width 4
-            indent-tabs-mode nil)
+                indent-tabs-mode nil)
 
   ;; Default Mode
   (setq-default major-mode 'text-mode)

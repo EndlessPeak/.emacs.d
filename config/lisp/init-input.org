@@ -19,9 +19,10 @@
   (when sys/linux
     (use-package fcitx
       :ensure t
+      :defer 3
       :config
       (setq fcitx-use-dbus nil
-      fcitx-remote-command "fcitx5-remote")
+            fcitx-remote-command "fcitx5-remote")
       (fcitx-aggressive-setup))
   )
 #+end_src
@@ -31,6 +32,7 @@
 #+begin_src emacs-lisp
   (use-package pangu-spacing
     :ensure t
+    :defer 3
     ;:hook (text-mode . pangu-spacing-mode)
     :config
     (global-pangu-spacing-mode 1)

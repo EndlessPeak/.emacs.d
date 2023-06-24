@@ -92,6 +92,7 @@
 
 ** Indent Region
 用于设置在任何编程模式中 =tab= 键的缩进。
+*** Indent Region
 #+begin_src emacs-lisp
   (defun leesin/indent-region (numSpaces)
     "该函数会根据当前行或选区的起始和终止位置，将这些行的文本进行缩进处理。"
@@ -106,6 +107,10 @@
         (setq regionEnd (region-end)))
 
       (save-excursion
+        ;; 通过`narrow-to-region'和`widen'修复缩进影响下一行
+        ;; 限制缩进范围
+        (narrow-to-region regionStart regionEnd)
+
         ; 恢复位置
         (goto-char regionStart)                ; 移动到选区的起始位置
         (setq start (line-beginning-position)) ; 保存行的起始位置
@@ -115,27 +120,62 @@
         ; 对 start 和 end 之间的文本进行缩进
         (indent-rigidly start end numSpaces)
         (setq deactivate-mark nil) ; 恢复选区
+        ;; 修复缩进范围
+        (widen)
         )
       )
     )
+#+end_src
+*** Untab Region
+#+begin_src emacs-lisp
   (defun leesin/untab-region ()
     "命令函数，它的作用是将选定的文本块反向缩进。"
-    ;; 它会调用 leesin/indent-region 函数，并将负数的缩进值 -4传递给它。
+    ;; 如果存在选区，则调用 `leesin/indent-region' 函数，并计算缩进值传递给它。
+    ;; 如果没有选区，则计算需要反向缩进多少，并使用 `delete-char'
     (interactive)
-    (leesin/indent-region -4))
-
+    ;; (leesin/indent-region -4)
+    ;; `bolp' 仅适用于判断单个点，而不适用于选区
+    (if (use-region-p)
+        (let* ((start (region-beginning))
+               (end (region-end))
+               ;; 获取选区的开始行
+               (line-start (line-number-at-pos start))
+               ;; 根据`line-beginning-position'获取该行的起始列号
+               (movement (% (- start (line-beginning-position line-start)) tab-width))
+               (spaces (- (if (= 0 movement) tab-width
+                            (- tab-width movement)))))
+          ;;(goto-char start)
+          (leesin/indent-region spaces))
+      )
+    (unless (bolp)
+      (save-excursion
+        (when (> (current-column) (current-indentation))
+          (back-to-indentation))
+        (let* ((movement (% (current-column) tab-width))
+               (spaces (- (if (= 0 movement) tab-width
+                           (- tab-width movement)))))
+            (delete-char spaces))))
+    )
+#+end_src
+*** Tab Region
+#+begin_src emacs-lisp
   (defun leesin/tab-region ()
     "命令函数，它用于将选定的文本块缩进。"
-    ;; 如果存在选区，则调用 `leesin/indent-region' 函数，并将缩进值设置为 4。
-    ;; 如果没有选区，则在当前位置插入四个空格。"
     (interactive)
+    ;; 如果存在选区，则调用 `leesin/indent-region' 函数，并计算缩进值传递给它。
+    (let* ((movement (% (current-column) tab-width))
+           (spaces (if (= 0 movement) tab-width (- tab-width movement))))
+    ;; 如果没有选区，则计算需要缩进的空格数，并使用 `insert'  
     (if (use-region-p)
-        (leesin/indent-region 4)
-      (insert "    ")))
-
+        (leesin/indent-region spaces)
+      (insert (make-string spaces ? ))))
+    )
+#+end_src
+*** Redefine Tab Key
+#+begin_src emacs-lisp
   (defun leesin/hack-tab-key ()
-    "命令函数，它重新定义了 <tab> 和 <S-tab> 键的行为。"
-    ;; 通过调用 local-set-key 函数，它将 <tab> 键绑定到 leesin/tab-region 函数，将 <S-tab> 键绑定到 leesin/untab-region 函数。
+    "命令函数，它重新定义了 <tab> 和 <backtab> 键的行为。"
+    ;; 通过调用 local-set-key 函数，它将 <tab> 键绑定到 leesin/tab-region 函数，将 <backtab> 键绑定到 leesin/untab-region 函数。
     (interactive)
     (local-set-key (kbd "<tab>") 'leesin/tab-region)
     (local-set-key (kbd "<backtab>") 'leesin/untab-region))
@@ -148,4 +188,3 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;; init-function.el ends here
 #+end_src
-

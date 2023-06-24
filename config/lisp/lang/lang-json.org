@@ -12,10 +12,14 @@
   ;;; Code :
 #+end_src
 
-** Json mode
+** Conf
 #+begin_src emacs-lisp
   (use-package json-mode
-    :ensure t)
+    :ensure t
+    :mode ("\\.json\\'" . json-mode)
+    :hook
+    (json-mode . (lambda () (setq tab-width 4)))
+    )
 #+end_src
 
 
