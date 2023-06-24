@@ -196,14 +196,6 @@
     (savehist-mode 1))
 #+end_src
 
-** Icons support
-#+begin_src emacs-lisp
-  ;; add icons support for vertico
-  (use-package all-the-icons-completion
-    :ensure t
-    :hook (after-init . all-the-icons-completion-mode))
-#+end_src
-
 ** Ends
 #+begin_src emacs-lisp
   (provide 'init-vertico)

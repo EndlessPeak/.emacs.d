@@ -33,8 +33,6 @@
 #+end_src
 
 ** Search Engine
-搜素引擎应该在外观之前加载，即使它可选依赖于 =all-the-icons= 。
-不过幸运的是，它依赖的是独立的包 =all-the-icons-completion= 。
 #+begin_src emacs-lisp
   ;; Search engine
   ;; (require 'init-ivy)
@@ -42,6 +40,8 @@
 #+end_src
 
 ** Appearance
+搜素引擎插件本身应该在外观之前加载，它的图标支持依赖的是独立的包 =all-the-icons-completion=
+该包依赖于 =all-the-icons= ，加载时令其在 =vertico= 之后加载。
 #+begin_src emacs-lisp
   (require 'init-ui)
   (require 'init-dashboard)
@@ -57,7 +57,6 @@
   (require 'init-function)
 #+end_src
 ** Language Support
-延迟加载，提高加载速度。
 #+begin_src emacs-lisp
   ;; Language support
   (require 'init-complete)

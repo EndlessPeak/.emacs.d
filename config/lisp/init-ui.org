@@ -63,11 +63,22 @@
 #+begin_src emacs-lisp
   ;; all the icons font
   (use-package all-the-icons
-    :ensure t)
+    :if (display-graphic-p))
 
   ;; nerd icons
   (use-package nerd-icons
     :ensure t)
+#+end_src
+
+下面的代码用于给 =vertico= 插件提供图标。
+#+begin_src emacs-lisp
+  ;; add icons support for vertico
+  (use-package all-the-icons-completion
+    :if (display-graphic-p)
+    ;;:after (marginalia all-the-icons)
+    :after (vertico)
+    :config
+    (all-the-icons-completion-mode 1))
 #+end_src
 
 ** Theme
