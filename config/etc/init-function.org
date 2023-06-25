@@ -142,26 +142,52 @@
     (interactive)
     ;; (leesin/indent-region -4)
     ;; `bolp' 仅适用于判断单个点，而不适用于选区
-    (if (use-region-p)
-        (let* ((start (region-beginning))
-               ;;(end (region-end)) ;; end is unused
-               ;; 获取选区的开始行
-               (line-start (line-number-at-pos start))
-               ;; 根据`line-beginning-position'获取该行的起始列号
-               (movement (% (- start (line-beginning-position line-start)) tab-width))
-               (spaces (- (if (= 0 movement) tab-width
-                            (- tab-width movement)))))
-          ;;(goto-char start)
-          (leesin/indent-region spaces))
+    (if indent-tabs-mode
+        (if (use-region-p)
+            (leesin/delete-chars-in-region)
+          (call-interactively #'backward-delete-char))
+      (if (use-region-p)
+          (let* ((start (region-beginning))
+                 (line-start (line-number-at-pos start))
+                 (movement (% (- start (line-beginning-position line-start)) tab-width))
+                 (spaces (- (if (= 0 movement) tab-width
+                              (- tab-width movement)))))
+            (leesin/indent-region spaces))
+        (unless (bolp)
+          (save-excursion
+            (when (> (current-column) (current-indentation))
+              (back-to-indentation))
+            (let* ((movement (% (current-column) tab-width))
+                   (spaces (- (if (= 0 movement) tab-width
+                               (- tab-width movement)))))
+              (delete-char spaces))
+            )
+          )
+        )
       )
-    (unless (bolp)
+    )
+#+end_src
+
+注意这个函数和后面的 ~leesin/indent-region-with-tabs~ 的区别，即加了一个 ~save-restriction~ ，否则 ~widen~ 不会自动执行。
+#+begin_src emacs-lisp
+  (defun leesin/delete-chars-in-region ()
+    "在选定区域内逐行删除起始字符(认为它们是\t)。"
+    (let* ((regionStart (region-beginning))
+           (regionEnd (region-end)))
       (save-excursion
-        (when (> (current-column) (current-indentation))
-          (back-to-indentation))
-        (let* ((movement (% (current-column) tab-width))
-               (spaces (- (if (= 0 movement) tab-width
-                           (- tab-width movement)))))
-            (delete-char spaces))))
+        (save-restriction
+          (narrow-to-region regionStart regionEnd)
+          (goto-char regionStart)
+          (while (< (point) regionEnd)
+            (beginning-of-line)
+            ;;(call-interactively #'backward-delete-char)
+            (delete-char 1)
+            (forward-line 1))
+          (setq deactivate-mark nil) ; 恢复选区
+          )
+        (widen)
+        )
+      )
     )
 #+end_src
 *** Tab Region
@@ -169,13 +195,37 @@
   (defun leesin/tab-region ()
     "命令函数，它用于将选定的文本块缩进。"
     (interactive)
-    ;; 如果存在选区，则调用 `leesin/indent-region' 函数，并计算缩进值传递给它。
-    (let* ((movement (% (current-column) tab-width))
-           (spaces (if (= 0 movement) tab-width (- tab-width movement))))
-    ;; 如果没有选区，则计算需要缩进的空格数，并使用 `insert'  
-    (if (use-region-p)
-        (leesin/indent-region spaces)
-      (insert (make-string spaces ? ))))
+    (if indent-tabs-mode
+        (progn
+          (if (use-region-p)
+              (leesin/indent-region-with-tabs) 
+           (insert "\t"))) 
+      ;; 如果存在选区，调用 `leesin/indent-region' 函数，并计算缩进值
+      (let* ((movement (% (current-column) tab-width))
+             (spaces (if (= 0 movement) tab-width (- tab-width movement))))
+      ;; 如果没有选区，则计算需要缩进的空格数，使用 `insert'  
+      (if (use-region-p)
+          (leesin/indent-region spaces)
+        (insert (make-string spaces ? )))))
+    )
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun leesin/indent-region-with-tabs ()
+    "为选定区域逐行添加 \t"
+    (let* ((regionStart (region-beginning))
+           (regionEnd (region-end)))
+      (save-excursion
+        (narrow-to-region regionStart regionEnd)
+        (goto-char regionStart)
+        (while (< (point) regionEnd)
+          (beginning-of-line)
+          (insert "\t")
+          (forward-line 1))
+        (setq deactivate-mark nil) ; 恢复选区
+        (widen)
+        )
+      )
     )
 #+end_src
 *** Redefine Tab Key

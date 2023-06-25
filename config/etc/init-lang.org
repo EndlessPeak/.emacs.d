@@ -53,7 +53,7 @@
     :init
     (setq lsp-keymap-prefix "C-c l")
     (setq lsp-prefer-flymake nil)
-    (setq lsp-prefer-capf t)
+    (setq lsp-completion-provider t)
     ;;`lsp-prefer-capf' is an obsolete variable,use `lsp-completion-provider' instead.
     (setq lsp-enable-snippet t)
     (setq lsp-completion-enable t)

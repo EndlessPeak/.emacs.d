@@ -38,7 +38,14 @@ dump.el: config/dump.org
 # 遍历 DS 目录，生成 tangle_template规则
 $(foreach dir,$(DS),$(eval $(call tangle_template,$(dir))))
 
-generate: $(DS) early-init.el init.el dump.el
+el: $(DS) early-init.el init.el dump.el
+
+elc:
+	$(EM) --batch -l ./init.el -L "lisp" --eval '(byte-recompile-directory "lisp/etc" 0)'
+	$(EM) --batch -l ./init.el -L "lisp" --eval '(byte-recompile-directory "lisp/lang" 0)'
+
+generate: el
+generate-elc: el elc
 
 clean:
 	rm early-init.el init.el
