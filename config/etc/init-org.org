@@ -331,8 +331,10 @@
   ;; Org-present Configuration
   (defun leesin/org-present-prepare-slide()
     (org-overview)
-    (org-show-entry)
-    (org-show-children))
+    ;;`org-show-entry' is an obsolete function; use `org-fold-show-entry' instead.
+    (org-fold-show-entry)
+    ;;`org-show-children' is an obsolete function; use `org-fold-show-children' instead.
+    (org-fold-show-children))
 
   (defun leesin/org-present-hook()
     (display-line-numbers-mode nil)

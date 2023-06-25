@@ -67,7 +67,8 @@
           company-dabbrev-other-buffers 'all
           company-require-match 'never
           company-minimum-prefix-length 2
-          company-show-numbers t
+          company-show-quick-access t
+          ;; `company-show-numbers' is an obsolute variable,use `company-show-quick-access' instead
           company-tooltip-limit 10
           company-idle-delay 0
           company-echo-delay 0

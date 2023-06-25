@@ -6,7 +6,7 @@
 ** Headers
 #+begin_src emacs-lisp
   ;;; init-package.el ---   -*- lexical-binding: t; -*-
-
+  ;; -*- no-byte-compile: t; -*-
   ;;; Commentary:
 
   ;;; Code :

@@ -30,19 +30,29 @@ If you are using =Gentoo Linux= you should check the following things:
 4. catppuccin (optional)
    根据 =init-ui.org= 中的笔记进行修改
 
-** Attention && Warning
-1. 为了支持从任何目录加载该配置文件（例如从 U 盘加载配置文件）作了一定的适应性修改，这可能影响加载速度或带来不稳定性。其中：
-   1. 使用全局变量 =user-init-file= =user-emacs-directory= 和 =package-user-directory= 记录配置文件目录和插件下载目录
-   2. 在 =use-package= 中，任何的 ~:load-path~ 参数都需要一个路径字符串或一个代表路径的符号，在目前情况下，可以使用 =lambda= 函数动态实现
-   3. 从其他位置加载配置文件，需要在命令前使用 =env= 指明环境变量，例如在 =windows= 上可以编写 bat 文件：
-      #+begin_src bat
-        @echo off
-        set "HOME=X:\path\to\dir"
-        start /b "Emacs" "X:\path\to\emacs\bin\runemacs.exe" %*
-      #+end_src
-      在 =linux= 上可以使用命令 ~env HOME=/path/to/dir emacs~
-2. No guarantee for stablity
-3. Update extremely slow
+** Load From Anywhere
+为了支持从任何目录加载该配置文件（例如从 U 盘加载配置文件）作了一定的适应性修改，这可能影响加载速度或带来不稳定性。其中：
+1. 使用全局变量 =user-init-file= =user-emacs-directory= 和 =package-user-directory= 记录配置文件目录和插件下载目录
+2. 在 =use-package= 中，任何的 ~:load-path~ 参数都需要一个路径字符串或一个代表路径的符号，在目前情况下，可以使用 =lambda= 函数动态实现
+3. 从其他位置加载配置文件，需要在命令前使用 =env= 指明环境变量，例如在 =windows= 上可以编写 bat 文件：
+   #+begin_src bat
+     @echo off
+     set "HOME=X:\path\to\dir"
+     start /b "Emacs" "X:\path\to\emacs\bin\runemacs.exe" %*
+   #+end_src
+   在 =linux= 上可以使用命令 ~env HOME=/path/to/dir emacs~
+** Faster Launching
+现在可以在 =emacs= 启动后运行 ~eval-expression~ ，通过 =byte-compile= 加快加载速度。
+由于 =init-package.el= 编译字节码出错，已对项目结构进行重构，以使其仅编译 =etc= 和 =lang= 文件夹。
+也可以单独在 =init-package.el= 上设置 ~no-byte-compile t~ 。
+#+begin_src emacs-lisp
+  (byte-recompile-directory "lisp/etc" 0)
+  (byte-recompile-directory "lisp/lang" 0)
+#+end_src
+其中，=0= 表示编译时不需要进行确认。
+** Note
+1. No guarantee for stablity
+2. Update extremely slow
 ** Reference
 Refer these repos to obtain config files.
 1. [[https://github.com/nasyxx/emacs.d/][Nasyxx]]

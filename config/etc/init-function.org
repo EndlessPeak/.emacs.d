@@ -34,6 +34,7 @@
           (setq leesin/proxy-enabled t)
           (message "代理已开启."))))
 #+end_src
+
 由于下面的代码实测无法正确执行，因而不参与编译。
 #+begin_src emacs-lisp :tangle no
   ;; Function Defination
@@ -96,36 +97,42 @@
 #+begin_src emacs-lisp
   (defun leesin/indent-region (numSpaces)
     "该函数会根据当前行或选区的起始和终止位置，将这些行的文本进行缩进处理。"
-    (progn
-      ; 默认是当前行的起始位置和终止位置
-      (setq regionStart (line-beginning-position))
-      (setq regionEnd (line-end-position))
+    (let ((regionStart nil)
+          (regionEnd nil)
+          (start nil)
+          (end nil))
+      (progn
+        ; 默认是当前行的起始位置和终止位置
+        (setq regionStart (line-beginning-position))
+        (setq regionEnd (line-end-position))
 
-      ; 如果有选区，则使用选区的起始位置和终止位置
-      (when (use-region-p)
-        (setq regionStart (region-beginning))
-        (setq regionEnd (region-end)))
+        ; 如果有选区，则使用选区的起始位置和终止位置
+        (when (use-region-p)
+          (setq regionStart (region-beginning))
+          (setq regionEnd (region-end)))
 
-      (save-excursion
-        ;; 通过`narrow-to-region'和`widen'修复缩进影响下一行
-        ;; 限制缩进范围
-        (narrow-to-region regionStart regionEnd)
+        (save-excursion
+          ;; 通过`narrow-to-region'和`widen'修复缩进影响下一行
+          ;; 限制缩进范围
+          (narrow-to-region regionStart regionEnd)
 
-        ; 恢复位置
-        (goto-char regionStart)                ; 移动到选区的起始位置
-        (setq start (line-beginning-position)) ; 保存行的起始位置
-        (goto-char regionEnd)                  ; 移动到选区的终止位置
-        (setq end (line-end-position))         ; 保存行的终止位置
+          ; 恢复位置
+          (goto-char regionStart)                ; 移动到选区的起始位置
+          (setq start (line-beginning-position)) ; 保存行的起始位置
+          (goto-char regionEnd)                  ; 移动到选区的终止位置
+          (setq end (line-end-position))         ; 保存行的终止位置
 
-        ; 对 start 和 end 之间的文本进行缩进
-        (indent-rigidly start end numSpaces)
-        (setq deactivate-mark nil) ; 恢复选区
-        ;; 修复缩进范围
-        (widen)
+          ; 对 start 和 end 之间的文本进行缩进
+          (indent-rigidly start end numSpaces)
+          (setq deactivate-mark nil) ; 恢复选区
+          ;; 修复缩进范围
+          (widen)
+          )
         )
       )
     )
 #+end_src
+
 *** Untab Region
 #+begin_src emacs-lisp
   (defun leesin/untab-region ()
@@ -137,7 +144,7 @@
     ;; `bolp' 仅适用于判断单个点，而不适用于选区
     (if (use-region-p)
         (let* ((start (region-beginning))
-               (end (region-end))
+               ;;(end (region-end)) ;; end is unused
                ;; 获取选区的开始行
                (line-start (line-number-at-pos start))
                ;; 根据`line-beginning-position'获取该行的起始列号
