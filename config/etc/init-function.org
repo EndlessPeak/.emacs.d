@@ -94,6 +94,7 @@
 ** Indent Region
 用于设置在任何编程模式中 =tab= 键的缩进。
 *** Indent Region
+公共函数，用于对选择区块或单行的缩进，需要给定 ~numSpaces~ 参数说明缩进长度。
 #+begin_src emacs-lisp
   (defun leesin/indent-region (numSpaces)
     "该函数会根据当前行或选区的起始和终止位置，将这些行的文本进行缩进处理。"
@@ -134,6 +135,7 @@
 #+end_src
 
 *** Untab Region
+命令函数，用于将选定的文本反向缩进。
 #+begin_src emacs-lisp
   (defun leesin/untab-region ()
     "命令函数，它的作用是将选定的文本块反向缩进。"
@@ -143,34 +145,41 @@
     ;; (leesin/indent-region -4)
     ;; `bolp' 仅适用于判断单个点，而不适用于选区
     (if indent-tabs-mode
-        (if (use-region-p)
-            (leesin/delete-chars-in-region)
-          (call-interactively #'backward-delete-char))
       (if (use-region-p)
-          (let* ((start (region-beginning))
-                 (line-start (line-number-at-pos start))
-                 (movement (% (- start (line-beginning-position line-start)) tab-width))
-                 (spaces (- (if (= 0 movement) tab-width
-                              (- tab-width movement)))))
-            (leesin/indent-region spaces))
-        (unless (bolp)
-          (save-excursion
-            (when (> (current-column) (current-indentation))
-              (back-to-indentation))
-            (let* ((movement (% (current-column) tab-width))
-                   (spaces (- (if (= 0 movement) tab-width
-                               (- tab-width movement)))))
-              (delete-char spaces))
-            )
-          )
-        )
+         (leesin/unindent-region-with-tabs)
+        (call-interactively #'backward-delete-char))
+      (leesin/unindent-region-without-tabs)
       )
     )
 #+end_src
 
-注意这个函数和后面的 ~leesin/indent-region-with-tabs~ 的区别，即加了一个 ~save-restriction~ ，否则 ~widen~ 不会自动执行。
+该函数用于在 ~indent-tabs-mode~ 为 ~nil~ 时删除空格字符。
 #+begin_src emacs-lisp
-  (defun leesin/delete-chars-in-region ()
+  (defun leesin/unindent-region-without-tabs ()
+   (if (use-region-p)
+       (let* ((start (region-beginning))
+              (line-start (line-number-at-pos start))
+              (movement (% (- start (line-beginning-position line-start)) tab-width))
+              (spaces (- (if (= 0 movement) tab-width
+                           (- tab-width movement)))))
+         (leesin/indent-region spaces))
+     (unless (bolp)
+       (save-excursion
+         (when (> (current-column) (current-indentation))
+           (back-to-indentation))
+         (let* ((movement (% (current-column) tab-width))
+                (spaces (- (if (= 0 movement) tab-width
+                            (- tab-width movement)))))
+           (delete-char spaces))
+         )
+       )
+     )
+   )
+#+end_src
+
+该函数用于在 ~indent-tabs-mode~ 时删除制表符。注意这个函数和后面的 ~leesin/indent-region-with-tabs~ 的区别，本函数加了一个 ~save-restriction~ ，否则 ~widen~ 不会自动执行。
+#+begin_src emacs-lisp
+  (defun leesin/unindent-region-with-tabs ()
     "在选定区域内逐行删除起始字符(认为它们是\t)。"
     (let* ((regionStart (region-beginning))
            (regionEnd (region-end)))
@@ -191,25 +200,37 @@
     )
 #+end_src
 *** Tab Region
+命令函数，用于将选定的文本进行缩进。
 #+begin_src emacs-lisp
   (defun leesin/tab-region ()
-    "命令函数，它用于将选定的文本块缩进。"
+    "命令函数，它用于将选定的文本缩进。"
     (interactive)
     (if indent-tabs-mode
-        (progn
-          (if (use-region-p)
-              (leesin/indent-region-with-tabs) 
-           (insert "\t"))) 
-      ;; 如果存在选区，调用 `leesin/indent-region' 函数，并计算缩进值
-      (let* ((movement (% (current-column) tab-width))
-             (spaces (if (= 0 movement) tab-width (- tab-width movement))))
-      ;; 如果没有选区，则计算需要缩进的空格数，使用 `insert'  
-      (if (use-region-p)
-          (leesin/indent-region spaces)
-        (insert (make-string spaces ? )))))
+      (progn
+        (if (use-region-p)
+            (leesin/indent-region-with-tabs) 
+         (insert "\t"))) 
+      (leesin/indent-region-without-tabs)
+      )
     )
 #+end_src
 
+该函数用于在 ~indent-tabs-mode~ 为 ~nil~ 时插入空格。
+#+begin_src emacs-lisp
+  (defun leesin/indent-region-without-tabs ()
+    ;; 如果存在选区，调用 `leesin/indent-region' 函数，并计算缩进值
+    (let* ((movement (% (current-column) tab-width))
+           (spaces (if (= 0 movement) tab-width (- tab-width movement))))
+      ;; 如果没有选区，则计算需要缩进的空格数，使用 `insert'  
+      (if (use-region-p)
+          (leesin/indent-region spaces)
+        (insert (make-string spaces ? ))
+        )
+      )
+    )
+#+end_src
+
+该函数用于在 ~indent-tabs-mode~ 时插入制表符。
 #+begin_src emacs-lisp
   (defun leesin/indent-region-with-tabs ()
     "为选定区域逐行添加 \t"
