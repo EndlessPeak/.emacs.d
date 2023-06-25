@@ -69,7 +69,7 @@
   ;; Optimize: Force `lisp' and `site-lisp' at the head to reduce the startup time.
   (defun update-load-path (&rest _)
     "Update 'load-path'."
-    (dolist (dir '("site-lisp" "lisp" "lisp/lang"))
+    (dolist (dir '("site-lisp" "lisp/core" "lisp/etc" "lisp/lang"))
       (push (expand-file-name dir user-emacs-directory) load-path)))
 
   (advice-add #'package-initialize :after #'update-load-path)
@@ -85,7 +85,7 @@
   ;; Optimize: Force `lisp' and `site-lisp' at the head to reduce the startup time.
   (defun update-load-path (&rest _)
     "Update 'load-path' ."
-    (dolist (dir '("site-lisp" "lisp" "lisp/lang"))
+    (dolist (dir '("site-lisp" "lisp/core" "lisp/etc" "lisp/lang"))
       (push (expand-file-name dir user-emacs-directory) load-path)))
 
   (advice-add #'package-initialize :after #'update-load-path)

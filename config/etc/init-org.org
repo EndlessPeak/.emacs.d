@@ -12,6 +12,7 @@
 
   ;;; Code :
   (require 'init-const)
+  ;; (require 'init-function) ;; 按照加载顺序此时已经加载了
 #+end_src
 
 ** Org mode
@@ -232,6 +233,9 @@
 #+end_src
 
 ** Evil Org
+在 =evil-normal= 模式下：
+1. =Shift+tab= 作为 ~org-cycle~
+2. 使用 =M-h= 和 =M-l= 对标题进行控制
 #+begin_src emacs-lisp
   (use-package evil-org
     :ensure t
@@ -247,6 +251,10 @@
     ;;  (kbd "<backtab>") 'org-metaleft)
     (evil-define-key 'normal 'evil-org-mode
       (kbd "O") 'evil-open-above)
+    (evil-define-key 'visual 'evil-org-mode
+      (kbd "<tab>") 'leesin/tab-region)
+    (evil-define-key 'visual 'evil-org-mode
+      (kbd "<backtab>") 'leesin/untab-region)
     )
 #+end_src
 
