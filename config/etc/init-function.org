@@ -179,7 +179,9 @@
     )
 #+end_src
 
-该函数用于在 ~indent-tabs-mode~ 时删除制表符。注意这个函数和后面的 ~leesin/indent-region-with-tabs~ 的区别，本函数加了一个 ~save-restriction~ ，否则 ~widen~ 不会自动执行。
+该函数用于在 ~indent-tabs-mode~ 时删除制表符。
+注意这个函数和后面的 ~leesin/indent-region-with-tabs~ 的区别。
+本函数加了一个 ~save-restriction~ ，否则 ~widen~ 不会自动执行。
 #+begin_src emacs-lisp
   (defun leesin/unindent-region-with-tabs ()
     "在选定区域内逐行删除起始字符(认为它们是\t)。"
@@ -221,12 +223,24 @@
 #+begin_src emacs-lisp
   (defun leesin/indent-region-without-tabs ()
     ;; 如果存在选区，调用 `leesin/indent-region' 函数，并计算缩进值
-    (let* ((movement (% (current-column) tab-width))
-           (spaces (if (= 0 movement) tab-width (- tab-width movement))))
-      ;; 如果没有选区，则计算需要缩进的空格数，使用 `insert'  
+    (let ((offset nil)
+          (movement nil)
+          (spaces nil))
+      ;; 如果没有选区，则计算需要缩进的空格数，使用 `insert'
       (if (use-region-p)
-          (leesin/indent-region spaces)
-        (insert (make-string spaces ? ))
+          (progn
+            (goto-char (region-beginning))
+            (setq offset (current-indentation)
+                  movement (% offset tab-width)
+                  spaces (if (= 0 movement) tab-width
+                         (- tab-width movement)))
+            (leesin/indent-region spaces)
+            )
+        (progn
+          (setq movement (% (current-column) tab-width)
+                spaces (if (= 0 movement) tab-width
+                       (- tab-width movement)))
+         (insert (make-string spaces ? )))
         )
       )
     )
