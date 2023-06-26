@@ -15,6 +15,7 @@
 ** Proxy
 #+begin_src emacs-lisp
   (defvar leesin/proxy-enabled nil)
+  ;;;###autoload
   (defun leesin/toggle-proxy ()
     (interactive)
     (if leesin/proxy-enabled
@@ -38,6 +39,8 @@
 由于下面的代码实测无法正确执行，因而不参与编译。
 #+begin_src emacs-lisp :tangle no
   ;; Function Defination
+
+  ;;;###autoload
   (defun leesin/toggle-proxy ()
     (interactive)
     (if (null url-proxy-services)
@@ -60,6 +63,7 @@
 ** Transparency
 透明背景目前 =emacs= 已支持。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/toggle-transparency()
     (setq default-frame-alist '((alpha-background . 95)))
     )
@@ -67,6 +71,7 @@
 #+end_src
 原透明函数已弃用，不会参与编译。
 #+begin_src emacs-lisp :tangle no
+  ;;;###autoload
   (defun leesin/toggle-transparency()
     (interactive)
     (let ((alpha (frame-parameter nil 'alpha)))
@@ -82,6 +87,7 @@
 ** Animate text
 用于录制视频时开头播放字符动画。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun animate-text (text)
     ;; https://github.com/matrixj/405647498.github.com/blob/gh-pages/src/emacs/emacs-fun.org
     (interactive "stext: ")  ; s means read-string
@@ -95,6 +101,7 @@
 *** Indent Region
 公共函数，用于对选择区块或单行的缩进，需要给定 ~numSpaces~ 参数说明缩进长度。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/indent-region (numSpaces)
     "该函数会根据当前行或选区的起始和终止位置，将这些行的文本进行缩进处理。"
     (let ((regionStart nil)
@@ -136,6 +143,7 @@
 *** Untab Region
 命令函数，用于将选定的文本反向缩进。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/untab-region ()
     "命令函数，它的作用是将选定的文本块反向缩进。"
     (interactive)
@@ -152,6 +160,7 @@
 
 该函数用于在 ~indent-tabs-mode~ 为 ~nil~ 时删除空格字符。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/unindent-region-without-tabs ()
     ;; 如果存在选区，则调用 `leesin/indent-region' 函数，并计算缩进值传递给它。
     ;; 如果没有选区，则计算需要反向缩进多少，并使用 `delete-char'
@@ -183,6 +192,7 @@
 注意这个函数和后面的 ~leesin/indent-region-with-tabs~ 的区别。
 本函数加了一个 ~save-restriction~ ，否则 ~widen~ 不会自动执行。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/unindent-region-with-tabs ()
     "在选定区域内逐行删除起始字符(认为它们是\t)。"
     (let* ((regionStart (region-beginning))
@@ -206,6 +216,7 @@
 *** Tab Region
 命令函数，用于将选定的文本进行缩进。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/tab-region ()
     "命令函数，它用于将选定的文本缩进。"
     (interactive)
@@ -221,6 +232,7 @@
 
 该函数用于在 ~indent-tabs-mode~ 为 ~nil~ 时插入空格。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/indent-region-without-tabs ()
     ;; 如果存在选区，调用 `leesin/indent-region' 函数，并计算缩进值
     (let ((offset nil)
@@ -248,6 +260,7 @@
 
 该函数用于在 ~indent-tabs-mode~ 时插入制表符。
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/indent-region-with-tabs ()
     "为选定区域逐行添加 \t"
     (let* ((regionStart (region-beginning))
@@ -271,6 +284,7 @@
 2. 列表侧移使第一行正确缩进 快捷键 =C-u TAB=
 3. 重新缩进区域内所有行 ~indent-region~ 快捷键 =C-M-\=
 #+begin_src emacs-lisp
+  ;;;###autoload
   (defun leesin/hack-tab-key ()
     "命令函数，它重新定义了 <tab> 和 <backtab> 键的行为。"
     ;; 通过调用 local-set-key 函数，它将 <tab> 键绑定到 leesin/tab-region 函数，将 <backtab> 键绑定到 leesin/untab-region 函数。
