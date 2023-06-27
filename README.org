@@ -49,7 +49,7 @@ If you are using =Gentoo Linux= you should check the following things:
   (byte-recompile-directory "lisp/etc" 0)
   (byte-recompile-directory "lisp/lang" 0)
 #+end_src
-其中，=0= 表示编译时不需要进行确认。
+其中， =0= 表示编译时不需要进行确认。
 ** Note
 1. No guarantee for stablity
 2. Update extremely slow
