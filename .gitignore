@@ -3,6 +3,8 @@
 auto-save-list/
 elpa/
 /lisp/
+eshell/
+url/
 init.el
 early-init.el
 recentf

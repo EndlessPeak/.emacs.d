@@ -45,8 +45,9 @@
   ;;(setq display-line-numbers 'absolute)
   (use-package display-line-numbers
     :ensure t
-    :config
-    (global-display-line-numbers-mode t)
+    :hook ((prog-mode yaml-mode conf-mode org-mode) . display-line-numbers-mode)
+    ;;:config
+    ;;(global-display-line-numbers-mode t)
     ;; line number align right
     :init
     (setq display-line-numbers-width-start t)
