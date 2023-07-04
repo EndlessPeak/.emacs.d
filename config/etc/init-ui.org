@@ -83,10 +83,18 @@
 
 ** Theme
 注意：
-1. =catppuccin= 主题可以选择不同的颜色风格，共有 4 种，按照亮度由亮到暗依次为 =latte= , =frappe= , =macchiato= , =mocha=
-2. =catppuccin= 主题对 ~org-verbatim~ 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置将 ~org-code~ 改为 ~(org-code :foreground ,ctp-peach)~ 将 ~org-verbatim~ 改为 ~(org-verbatim :foreground ,ctp-green)~
-3. =catppuccin= 主题对 =org-block= 的底色与普通底色相同，可以进行修改，如 ~(org-block :foreground ctp-mauve :background ,"#202334")~
-4. =hardhacker= 主题下载地址 ~git clone https://github.com/hardhackerlabs/theme-emacs.git hardhacker~
+1. =catppuccin= 主题
+   1. 可以选择不同的颜色风格，共有 4 种，按照亮度由亮到暗依次为 =latte= , =frappe= , =macchiato= , =mocha=
+   2. =catppuccin= 主题对 ~org-verbatim~ 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置将 ~org-code~ 改为 ~(org-code :foreground ,ctp-peach)~ 将 ~org-verbatim~ 改为 ~(org-verbatim :foreground ,ctp-green)~
+   3. =catppuccin= 主题对 =org-block= 的底色与普通底色相同，可以进行修改，如 ~(org-block :foreground ctp-mauve :background ,"#202334")~
+2. =hardhacker= 主题下载地址
+   ~git clone https://github.com/hardhackerlabs/theme-emacs.git hardhacker~
+3. =nano-theme= 主题
+   感觉不好用。
+   1. =nano emacs= 配置文件地址
+      https://github.com/rougier/nano-emacs
+   2. =nano-theme= 主题地址
+      https://github.com/404cn/nano-theme.el
 
 #+begin_src emacs-lisp
   ;; Theme
@@ -104,10 +112,14 @@
     (doom-themes-treemacs-config)
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config))
+#+end_src
 
+#+begin_src emacs-lisp
   (use-package nord-theme
     :ensure t)
+#+end_src
 
+#+begin_src emacs-lisp
   (use-package catppuccin-theme
     :ensure t
     :config
@@ -118,13 +130,16 @@
     ;;:load-path "~/.emacs.d/elpa/hardhacker"
     :load-path (lambda() (expand-file-name "hardhacker" package-user-dir))
     )
+#+end_src
 
+#+begin_src emacs-lisp
   ;; Choose one theme to load
   ;; (load-theme 'doom-dark+ t)
   ;; (load-theme 'doom-dracula t)
   ;; (load-theme 'catppuccin t)
+  ;; (load-theme 'doom-challenger-deep t)
   (cond (sys/win32p (load-theme 'doom-spacegrey t))
-        (sys/linux (load-theme 'hardhacker t))
+        (sys/linux (load-theme 'doom-snazzy t))
         ) 
 #+end_src
 
