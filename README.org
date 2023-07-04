@@ -27,8 +27,12 @@ If you are using =Gentoo Linux= you should check the following things:
    2. 如不习惯使用 =package.el= ，可根据 =init-vertico.org= 中的笔记进行修改
 3. citre
    安装 =ctags= ，注意 =windows= 平台上不要安装 =clang= 版本的。仓库 https://github.com/universal-ctags/ctags-win32
-4. catppuccin (optional)
-   根据 =init-ui.org= 中的笔记进行修改
+4. theme (optional)
+   1. 提供多种主题，按需下载自己喜欢的主题，部分主题可考虑根据 =init-ui.org= 中的笔记进行修改
+   2. 后续考虑将 =theme= 转移到独立的配置文件。
+5. highlight-indent-guides
+   1. ~git clone https://github.com/DarthFennec/highlight-indent-guides.git~ 
+   2. 根据 =init-editor.org= 中的笔记进行修改。
 
 ** Load From Anywhere
 为了支持从任何目录加载该配置文件（例如从 U 盘加载配置文件）作了一定的适应性修改，这可能影响加载速度或带来不稳定性。其中：

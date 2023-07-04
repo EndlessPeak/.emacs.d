@@ -82,7 +82,8 @@
 #+end_src
 
 ** Theme
-注意：
+加载自行克隆的包时， ~use-package~ 后跟的包名会解析为包主函数所在文件名， ~load-path~ 后跟的名称会解析为包文件夹名(解析路径)。
+以下是测试过的一些主题：
 1. =catppuccin= 主题
    1. 可以选择不同的颜色风格，共有 4 种，按照亮度由亮到暗依次为 =latte= , =frappe= , =macchiato= , =mocha=
    2. =catppuccin= 主题对 ~org-verbatim~ 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置将 ~org-code~ 改为 ~(org-code :foreground ,ctp-peach)~ 将 ~org-verbatim~ 改为 ~(org-verbatim :foreground ,ctp-green)~
@@ -95,7 +96,11 @@
       https://github.com/rougier/nano-emacs
    2. =nano-theme= 主题地址
       https://github.com/404cn/nano-theme.el
+4. =everforest= 主题
+   配置克隆地址：https://git.sr.ht/~theorytoe/everforest-theme 或 https://github.com/Theory-of-Everything/everforest-emacs.git
+   注意需要将 =everforest.el= 中的内容取消注释。
 
+*** doom
 #+begin_src emacs-lisp
   ;; Theme
   (use-package doom-themes
@@ -114,30 +119,45 @@
     (doom-themes-org-config))
 #+end_src
 
+*** nord
 #+begin_src emacs-lisp
   (use-package nord-theme
     :ensure t)
 #+end_src
 
+*** catppuccin
 #+begin_src emacs-lisp
   (use-package catppuccin-theme
     :ensure t
     :config
     (setq catppuccin-flavor 'mocha)
     )
+#+end_src
 
+*** hardhacker
+#+begin_src emacs-lisp
   (use-package hardhacker-theme
     ;;:load-path "~/.emacs.d/elpa/hardhacker"
     :load-path (lambda() (expand-file-name "hardhacker" package-user-dir))
     )
 #+end_src
 
+*** everforest
+#+begin_src emacs-lisp
+  (use-package everforest
+    :load-path (lambda() (expand-file-name "everforest-theme" package-user-dir))
+    )
+#+end_src
+
+*** load themes
 #+begin_src emacs-lisp
   ;; Choose one theme to load
   ;; (load-theme 'doom-dark+ t)
   ;; (load-theme 'doom-dracula t)
+  ;; (load-theme 'doom-snazzy) ;; display very well
   ;; (load-theme 'catppuccin t)
   ;; (load-theme 'doom-challenger-deep t)
+  ;; (load-theme 'everforest-hard-dark t)
   (cond (sys/win32p (load-theme 'doom-spacegrey t))
         (sys/linux (load-theme 'doom-snazzy t))
         ) 
