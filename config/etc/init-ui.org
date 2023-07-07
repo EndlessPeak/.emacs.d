@@ -35,7 +35,7 @@
                                           :width 'normal
                                           :height (cond (sys/mac 180)
                                                         (sys/win32p 150)
-                                                        (sys/linux 180))))
+                                                        (sys/linux 210))))
 
       ;; Unicode characters
       (cl-loop for font in '("Segoe UI Symbol" "Source Code Pro" "Cascadia Code" "Symbola" "Symbol")
@@ -154,12 +154,13 @@
   ;; Choose one theme to load
   ;; (load-theme 'doom-dark+ t)
   ;; (load-theme 'doom-dracula t)
-  ;; (load-theme 'doom-snazzy) ;; display very well
+  ;; (load-theme 'doom-snazzy t) ;; display very well
+  ;; (load-theme 'doom-spacegrey t)
   ;; (load-theme 'catppuccin t)
   ;; (load-theme 'doom-challenger-deep t)
   ;; (load-theme 'everforest-hard-dark t)
-  (cond (sys/win32p (load-theme 'doom-spacegrey t))
-        (sys/linux (load-theme 'doom-snazzy t))
+  (cond (sys/win32p (load-theme 'everforest-hard-dark t))
+        (sys/linux (load-theme 'everforest-hard-dark t))
         ) 
 #+end_src
 

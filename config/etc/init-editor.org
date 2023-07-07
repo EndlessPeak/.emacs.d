@@ -40,10 +40,13 @@
     :config
     (setq highlight-indent-guides-method 'character)
     (setq highlight-indent-guides-character ?|)
-    (setq highlight-indent-guides-auto-enabled t)
-    (setq highlight-indent-guides-auto-odd-face-perc 40)
-    (setq highlight-indent-guides-auto-even-face-perc 40)
-    (setq highlight-indent-guides-auto-character-face-perc 100)
+    (setq highlight-indent-guides-auto-enabled nil)
+    ;;(setq highlight-indent-guides-auto-odd-face-perc 40)
+    ;;(setq highlight-indent-guides-auto-even-face-perc 40)
+    ;;(setq highlight-indent-guides-auto-character-face-perc 100)
+    (set-face-foreground 'highlight-indent-guides-odd-face "darkgray")
+    (set-face-foreground 'highlight-indent-guides-even-face "dimgray")
+    (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
     )
 #+end_src
 

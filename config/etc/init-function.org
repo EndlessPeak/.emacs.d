@@ -23,17 +23,17 @@
           (setq url-proxy-services nil)
           (setq leesin/proxy-enabled nil)
           (message "代理已关闭."))
-        (progn
-          (when sys/win32p
-              (setq url-proxy-services
-                  '(("http" . "127.0.0.1:10809")
-                      ("https" . "127.0.0.1:10809"))))
-          (when sys/linux
-              (setq url-proxy-services
-                  '(("http" . "127.0.0.1:20171")
-                      ("https" . "127.0.0.1:20171"))))
-          (setq leesin/proxy-enabled t)
-          (message "代理已开启."))))
+      (progn
+        (when sys/win32p
+          (setq url-proxy-services
+                '(("http" . "127.0.0.1:10809")
+                  ("https" . "127.0.0.1:10809"))))
+        (when sys/linux
+          (setq url-proxy-services
+                '(("http" . "127.0.0.1:20171")
+                  ("https" . "127.0.0.1:20171"))))
+        (setq leesin/proxy-enabled t)
+        (message "代理已开启."))))
 #+end_src
 
 由于下面的代码实测无法正确执行，因而不参与编译。
@@ -46,16 +46,16 @@
     (if (null url-proxy-services)
         (when sys/win32p
           (progn
-              (setq url-proxy-services
+            (setq url-proxy-services
                   '(("http" . "127.0.0.1:10809")
-                      ("https" . "127.0.0.1:10809")))
-              (message "代理已开启.")))
-        (when sys/linux
-          (progn
-              (setq url-proxy-services
-                  '(("http" . "127.0.0.1:20171")
-                      ("https" . "127.0.0.1:20171")))
-              (message "代理已开启.")))
+                    ("https" . "127.0.0.1:10809")))
+            (message "代理已开启.")))
+      (when sys/linux
+        (progn
+          (setq url-proxy-services
+                '(("http" . "127.0.0.1:20171")
+                  ("https" . "127.0.0.1:20171")))
+          (message "代理已开启.")))
       (setq url-proxy-services nil)
       (message "代理已关闭.")))
 #+end_src
@@ -75,13 +75,12 @@
   (defun leesin/toggle-transparency()
     (interactive)
     (let ((alpha (frame-parameter nil 'alpha)))
-      (set-frame-parameter
-       nil 'alpha
-       (if (eql (cond ((numberp alpha) alpha)
-                      ((numberp (cdr alpha)) (cdr alpha))
-                      ((numberp (cadr alpha)) (cadr alpha)))
-                100)
-                '(70 . 70) '(100 . 100)))))
+      (set-frame-parameter nil 'alpha
+                           (if (eql (cond ((numberp alpha) alpha)
+                                          ((numberp (cdr alpha)) (cdr alpha))
+                                          ((numberp (cadr alpha)) (cadr alpha)))
+                                    100)
+                               '(70 . 70) '(100 . 100)))))
 #+end_src
 
 ** Animate text
@@ -165,14 +164,15 @@
     ;; 如果存在选区，则调用 `leesin/indent-region' 函数，并计算缩进值传递给它。
     ;; 如果没有选区，则计算需要反向缩进多少，并使用 `delete-char'
     (if (use-region-p)
-        (progn
-          (goto-char (region-beginning))
-          (let* ((start (region-beginning))
-                 (offset (current-indentation))
-                 (movement (% (- start offset) tab-width))
-                 (spaces (- (if (= 0 movement) tab-width
-                              (- tab-width movement)))))
-            (leesin/indent-region spaces)))
+        (leesin/indent-region (- 0 tab-width))
+        ;; (progn
+        ;;   (goto-char (region-beginning))
+        ;;   (let* ((start (region-beginning))
+        ;;          (offset (current-indentation))
+        ;;          (movement (% (- start offset) tab-width))
+        ;;          (spaces (- (if (= 0 movement) tab-width
+        ;;                       (- tab-width movement)))))
+        ;;     (leesin/indent-region spaces)))
       (unless (bolp)
         (save-excursion
           (when (> (current-column) (current-indentation))
@@ -240,14 +240,15 @@
           (spaces nil))
       ;; 如果没有选区，则计算需要缩进的空格数，使用 `insert'
       (if (use-region-p)
-          (progn
-            (goto-char (region-beginning))
-            (setq offset (current-indentation)
-                  movement (% offset tab-width)
-                  spaces (if (= 0 movement) tab-width
-                         (- tab-width movement)))
-            (leesin/indent-region spaces)
-            )
+          (leesin/indent-region tab-width)
+          ;; (progn
+          ;;   (goto-char (region-beginning))
+          ;;   (setq offset (current-indentation)
+          ;;         movement (% offset tab-width)
+          ;;         spaces (if (= 0 movement) tab-width
+          ;;                (- tab-width movement)))
+          ;;   (leesin/indent-region spaces)
+          ;;   )
         (progn
           (setq movement (% (current-column) tab-width)
                 spaces (if (= 0 movement) tab-width
