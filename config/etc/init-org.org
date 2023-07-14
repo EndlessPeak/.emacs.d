@@ -49,10 +49,9 @@
     (setq evil-auto-indent nil)
     (org-toggle-inline-images)
     (setq org-hide-leading-stars nil
-          org-hide-emphasis-markers nil
-          org-startup-indented t)
-    ;; 隐藏强调标签
-    (setq org-hide-emphasis-markers t)
+          org-hide-emphasis-markers t
+          org-startup-indented t
+          org-modern-timestamp nil)
     (defun leesin/self-org-mode-hook()
       ;;(interactive)
       (org-indent-mode t)
@@ -65,10 +64,10 @@
       (setq prettify-symbols-alist
             (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
                     '(
-                      ;;("[ ]"              . 9744)         ; ☐
-                      ;;("[X]"              . 9745)         ; ☑
-                      ;;("[-]"              . 8863)         ; ⊟
-                      ("#+begin_src"      . 9998)         ; ✎
+                      ("[ ]"              . 9744)         ; ☐
+                      ("[X]"              . 9745)         ; ☑
+                      ("[-]"              . 8863)         ; ⊟
+                      ("#+begin_src"      . "✑")         ; ✎
                       ;;("#+end_src"        . 9633)         ; □
                       ("#+end_src"        . 8863)         ; ⊟
                       ("#+begin_example"  . 129083)       ; 🠻
@@ -80,7 +79,8 @@
                       ("#+name:"          . "🄝")         ; 127261
                       ("#+caption:"       . "🄒")         ; 127250
                       ("#+date:"          . "📅")         ; 128197
-                      ("#+author:"        . "💁")         ; 128100
+                      ;;("#+author:"        . "💁")         ; 128100
+                      ("#+author:"        . "👤")         ; ✎
                       ("#+setupfile:"     . 128221)       ; 📝
                       ("#+email:"         . 128231)       ; 📧
                       ("#+startup:"       . 10034)        ; ✲

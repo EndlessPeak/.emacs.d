@@ -58,9 +58,9 @@
                company-manual-begin
                company-grab-line)
     :config
-    (setq ;;company-dabbrev-code-everywhere t
-          ;;company-dabbrev-code-modes t
-          ;;company-dabbrev-code-other-buffers 'all
+    (setq company-dabbrev-code-everywhere t
+          company-dabbrev-code-modes t
+          company-dabbrev-code-other-buffers 'all
           company-dabbrev-downcase nil
           company-dabbrev-ignore-case nil
           company-dabbrev-other-buffers 'all
@@ -73,8 +73,10 @@
           company-echo-delay 0
           company-tooltip-offset-display 'scrollbar
           company-begin-commands '(self-insert-command)
-          company-backends '((company-yasnippet company-capf)))
+          company-backends '((company-yasnippet company-dabbrev company-capf company-files)))
     ;;The code above can only show one type of complete method. 
+    ;;Unless set all the company-backens in a group by add another ()
+
     ;;Use the code blow can show code-complete with yasnippet at the same time
     ;;(push '(company-semantic :with company-yasnippet) company-backends)
     ;;(push '(company-capf :with company-yasnippet) company-backends)

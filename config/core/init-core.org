@@ -55,6 +55,7 @@
 #+begin_src emacs-lisp
   ;; Self function
   (require 'init-function)
+  (require 'init-term)
 #+end_src
 ** Language Support
 #+begin_src emacs-lisp
