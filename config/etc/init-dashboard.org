@@ -62,18 +62,20 @@
                                       (agenda . "calendar")))
     (setq dashboard-set-navigator t)
     (setq dashboard-banner-logo-title "LeeSin@EndlessPeak")
-    (setq dashboard-navigator-buttons
-          `(;; line1
-            (
-             (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
-              "Github"
-              "Browse Emacs Github"
-              (lambda (&rest _) (browse-url "https://github.com/endlesspeak/.emacs.d")))
-             (,(all-the-icons-octicon "history") "Recently" "Restore closed buffers"
-              (lambda (&rest _) (progn (print "test") (recentf-open-files))))
-             ("⚑" "Bookmarks" "Quick access bookmarks" (lambda (&rest _) (bookmark-set)))   
-             )
-            ))
+    (when (display-graphic-p)
+      (setq dashboard-navigator-buttons
+            `(;; line1
+              (
+               (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+                "Github"
+                "Browse Emacs Github"
+                (lambda (&rest _) (browse-url "https://github.com/endlesspeak/.emacs.d")))
+               (,(all-the-icons-octicon "history") "Recently" "Restore closed buffers"
+                (lambda (&rest _) (progn (print "test") (recentf-open-files))))
+               ("⚑" "Bookmarks" "Quick access bookmarks" (lambda (&rest _) (bookmark-set)))   
+               )
+              ))
+      )
     (setq dashboard-set-separator t)
     (setq dashboard-page-separator "\n\f\n")
 
