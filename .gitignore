@@ -18,3 +18,4 @@ projects
 
 .last-package-update-day
 .direnv
+self-custom.el

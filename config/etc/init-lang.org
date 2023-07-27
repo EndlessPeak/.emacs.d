@@ -35,7 +35,7 @@
      ;;                 (lsp-deferred))))
      (lsp-mode . (lambda ()
                    ;; Intergrate `which-key'
-                   (lsp-enable-which-key-intergration)
+                   (lsp-enable-which-key-integration)
 
                    ;; Format and organize imports
                    (when (and leesin-lsp-format-on-save
@@ -152,6 +152,15 @@
     :config
     (with-eval-after-load 'cc-mode (require 'citre-lang-c))
     )
+#+end_src
+
+** Direnv
+NixOS 上需要开启此插件。
+#+begin_src emacs-lisp
+  (use-package direnv
+    :ensure t
+    :config
+    (direnv-mode))
 #+end_src
 
 ** Defer Load

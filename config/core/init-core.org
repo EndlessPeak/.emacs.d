@@ -25,18 +25,15 @@
   (require 'init-package)
 #+end_src
 
-** Edit Tool
+** Edit Tool & Search Engine
 #+begin_src emacs-lisp
   ;; Edit Mode
   (require 'init-evil)
   (require 'init-editor)
-#+end_src
-
-** Search Engine
-#+begin_src emacs-lisp
   ;; Search engine
   ;; (require 'init-ivy)
   (require 'init-vertico)
+    
 #+end_src
 
 ** Appearance
@@ -46,40 +43,50 @@
   (require 'init-ui)
   (require 'init-dashboard)
   (require 'init-modeline)
-
-  ;; Sidebar
-  (require 'init-sidebar)
 #+end_src
 
 ** Function
 #+begin_src emacs-lisp
-  ;; Self function
-  (require 'init-function)
-  (require 'init-term)
+  (defun load-function-part-file()
+    ;; Self function
+    (require 'init-function)
+    ;; Sidebar
+    (require 'init-sidebar)
+    ;; Term
+    (require 'init-term)
+  )
 #+end_src
 ** Language Support
 #+begin_src emacs-lisp
-  ;; Language support
-  (require 'init-complete)
-  (require 'init-lang)
+  (defun load-language-part-file()
+    ;; Complete Frame
+    (require 'init-complete)
+    ;; Language support
+    (require 'init-lang)
+    )
 #+end_src
 
-** Delay Load Part
-延迟加载，提高加载速度。
+** Other Part
 #+begin_src emacs-lisp
   ;; delay load
-  ;; Org Mode
-  (require 'init-org)
-
-  (defun load-custom-file()
+  (defun load-other-part-file()
+    ;; Org Mode
+    (require 'init-org)
     ;; Input Method
     (require 'init-input)
     ;; Key bindings
     (require 'init-kbd)
   )
+#+end_src
 
+** Delay Load Part
+延迟加载，提高加载速度。
+#+begin_src emacs-lisp
+  (run-with-idle-timer 2 nil #'load-language-part-file)
+  (run-with-idle-timer 2 nil #'load-function-part-file)
+  (run-with-idle-timer 3 nil #'load-other-part-file)
   ;;(add-hook 'after-init-hook #'load-language)
-  (add-hook 'after-init-hook #'load-custom-file)
+  ;;(add-hook 'after-init-hook #'load-custom-file)
 #+end_src
 
 ** Ends

@@ -24,7 +24,8 @@
   (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 
   (setq package-archives '(("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                           ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                           ;;("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                           ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
                            ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                            ))
 
