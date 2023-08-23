@@ -11,6 +11,28 @@
 
   ;;; Code :
 #+end_src
+** Self Custom
+#+begin_src emacs-lisp
+  (require 'cl-lib)
+  ;; Self Custom
+  (let ((self-custom-path (expand-file-name "self-custom.el" user-emacs-directory)))
+    (when (file-exists-p self-custom-path)
+      (load-file self-custom-path)))
+#+end_src
+
+** UI
+#+begin_src emacs-lisp
+  (defun leesin/childframe-workable-p ()
+    "Whether childframe is workable."
+    (not (or noninteractive
+            emacs-basic-display
+            (not (display-graphic-p)))))
+
+  (defun leesin/childframe-completion-workable-p ()
+    "Whether childframe completion is workable."
+    (and (eq leesin-completion-style 'childframe)
+        (leesin/childframe-workable-p)))
+#+end_src
 
 ** Proxy
 #+begin_src emacs-lisp

@@ -1,12 +1,12 @@
-* init-variable.el
+* init-custom.el
 :PROPERTIES:
-:HEADER-ARGS: :tangle (concat temporary-file-directory "init-variable.el") :lexical t
+:HEADER-ARGS: :tangle (concat temporary-file-directory "init-custom.el") :lexical t
 :END:
 
 ** Headers
 由于后续存在根据操作系统判断初始化路径的代码，因此需要从 =init-const= 模块获知操作系统。
 #+begin_src emacs-lisp
-  ;;; init-variable.el ---   -*- lexical-binding: t; -*-
+  ;;; init-custom.el ---   -*- lexical-binding: t; -*-
 
   ;;; Commentary:
 
@@ -79,12 +79,15 @@
   ;; Simplify confirm process
   (defalias 'yes-or-no-p 'y-or-n-p)
 
-  (defcustom  leesin-lsp-format-on-save nil
+  (defcustom leesin-lsp-format-on-save nil
     "Auto format buffers on save." )
 
-  (defcustom  leesin-lsp-format-on-save-ignore-modes
+  (defcustom leesin-lsp-format-on-save-ignore-modes
     '(c-mode c++-mode python-mode markdown-mode)
     "Auto format buffers ignored on save." )
+
+  (defcustom leesin-completion-style 'minibuffer
+    "Completion display style.")
 
   (setq leesin-lsp-format-on-save t)
   (setq leesin-lsp-format-on-save-ignore-modes '(c-mode c++-mode python-mode markdown-mode) )
@@ -92,8 +95,8 @@
 
 ** Ends
 #+begin_src emacs-lisp
-  (provide 'init-variable)
+  (provide 'init-custom)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;; init-variable.el ends here
+  ;;; init-custom.el ends here
 #+end_src
 

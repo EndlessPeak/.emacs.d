@@ -14,12 +14,6 @@
 
 ** Font
 本部分内容参考 =centaur emacs= 实现。该部分内容经常修改，转到 =custom.el= 中实现。
-由于 =core= 部分已经指定了该文件，因此此处可以直接利用相关变量检查文件是否存在。
-#+begin_src emacs-lisp
-  (let ((self-custom-path (expand-file-name "self-custom.el" user-emacs-directory)))
-    (when (file-exists-p self-custom-path)
-      (load-file self-custom-path)))
-#+end_src
 
 以下内容不参与编译。
 #+begin_src emacs-lisp :tangle no

@@ -10,7 +10,7 @@
   ;;; Commentary:
 
   ;;; Code :
-  (require 'init-variable)
+  (require 'init-custom)
 #+end_src
 
 ** Flycheck
@@ -155,11 +155,11 @@
 #+end_src
 
 ** Direnv
-NixOS 上需要开启此插件。
-#+begin_src emacs-lisp
+NixOS 上需要开启此插件，暂时停用。
+#+begin_src emacs-lisp :tangle no
   (when sys/linux
     (use-package direnv
-      :ensure t
+      :ensure nil
       :config
       (direnv-mode))
     )

@@ -13,11 +13,14 @@
   ;;; Code :
 #+end_src
 ** Const & Self Defination
+先加载常量配置，再加载配置文件，最后加载个人定义的实用函数配置。
+在实用函数配置中加载相关的个人自定义配置。
 #+begin_src emacs-lisp
   ;; Const variable
   (require 'init-const)
-  ;; Self Defination
-  (require 'init-variable)
+  (require 'init-custom)
+  ;; Self function
+  (require 'init-function)
 #+end_src
 
 ** Package
@@ -48,8 +51,6 @@
 ** Function
 #+begin_src emacs-lisp
   (defun load-function-part-file()
-    ;; Self function
-    (require 'init-function)
     ;; Sidebar
     (require 'init-sidebar)
     ;; Term
