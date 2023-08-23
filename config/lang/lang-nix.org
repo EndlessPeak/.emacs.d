@@ -17,6 +17,8 @@
   (use-package nix-mode
     :ensure t
     :mode ("\\.nix\\'" . nix-mode)
+    :hook
+    (nix-mode . (lambda () (setq tab-width 4)))
     )
 #+end_src
 
