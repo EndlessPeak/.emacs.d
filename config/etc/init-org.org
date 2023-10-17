@@ -124,6 +124,7 @@
   (use-package org-plus-contrib
     :ensure t)
 #+end_src
+
 ** Org babel
 本部分内容需要加强学习，该部分不参与编译。
 #+begin_src emacs-lisp :tangle no
@@ -200,6 +201,7 @@
                           )))
     )
 #+end_src
+
 ** Org appear
 通过 =org-appear= 插件，当我们的光标移动到 =Org mode= 里的强调、链接上时，会自动展开，这样方便进行编辑。
 #+begin_src emacs-lisp
@@ -270,6 +272,7 @@
     :hook (org-mode . valign-mode)
     )
 #+end_src
+
 以下代码不会参与编译。
 #+begin_src emacs-lisp :tangle no
   (unless (package-installed-p 'valign)
@@ -288,6 +291,7 @@
 
 ** Presentation
 个人使用的用于将 =org-mode= 进行即时 =presentation= 的工具链。
+
 *** Org tree slide
 早期使用的该包，目前已弃用，不参与编译。
 #+begin_src emacs-lisp :tangle no
@@ -317,6 +321,7 @@
     (org-tree-slide-breadcrumbs " > ")
     (org-image-actual-width nil))
 #+end_src
+
 *** Org present
 目前使用该包，考虑 ~reveal.js~
 #+begin_src emacs-lisp
@@ -376,6 +381,7 @@
     :hook ((org-present-mode . leesin/org-present-hook)
            (org-present-mode-quit . leesin/org-present-quit-hook)))
 #+end_src
+
 ** Settings
 使用了反引号和逗号创建表达式，将单个文件名作为列表元素插入到主列表中。如果路径中包含空格，这种语法比引用字符串更加安全。
 #+begin_src emacs-lisp
@@ -388,6 +394,7 @@
       (when (file-exists-p tasks-file)
         (setq org-agenda-files `(,tasks-file)))))
 #+end_src
+
 ** Ends
 #+begin_src emacs-lisp
   (provide 'init-org)

@@ -15,6 +15,7 @@ tramp
 transient
 projectile*
 projects
+eln-cache/
 
 .last-package-update-day
 .direnv

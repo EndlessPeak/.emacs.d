@@ -87,7 +87,7 @@
 #+begin_src emacs-lisp
   ;;;###autoload
   (defun leesin/toggle-transparency()
-    (setq default-frame-alist '((alpha-background . 95)))
+    (setq default-frame-alist '((alpha-background . 90)))
     )
   (leesin/toggle-transparency)
 #+end_src
@@ -316,6 +316,28 @@
     (local-set-key (kbd "<backtab>") 'leesin/untab-region))
 
   (add-hook 'prog-mode-hook 'leesin/hack-tab-key)
+#+end_src
+** Org Export
+导出为HTML时使用。
+#+begin_src emacs-lisp
+  (defun leesin-org-inline-css-hook (exporter)
+    "Insert custom inline css"
+    (when (eq exporter 'html)
+      (let* ((dir (ignore-errors (file-name-directory (buffer-file-name))))
+             (style-path (concat user-emacs-directory "config/org-style/gongzhitaao-style.css"))
+             (final-path (if (file-exists-p style-path) style-path nil)))
+        (when final-path
+          (setq-local org-html-head-include-default-style nil)
+          (setq-local org-html-head (concat
+                                     "<style type=\"text/css\">\n"
+                                     "<!--/*--><![CDATA[/*><!--*/\n"
+                                     (with-temp-buffer
+                                       (insert-file-contents final-path)
+                                       (buffer-string))
+                                     "/*]]>*/-->\n"
+                                     "</style>\n"))))))
+
+  (add-hook 'org-export-before-processing-hook 'leesin-org-inline-css-hook)
 #+end_src
 ** Ends
 #+begin_src emacs-lisp

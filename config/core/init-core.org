@@ -48,6 +48,17 @@
   (require 'init-modeline)
 #+end_src
 
+** Language Support
+
+#+begin_src emacs-lisp
+  ;;(defun load-language-part-file()
+  ;; Complete Frame
+  (require 'init-complete)
+  ;; Language support
+  (require 'init-lang)
+  ;;)
+#+end_src
+
 ** Function
 #+begin_src emacs-lisp
   (defun load-function-part-file()
@@ -56,15 +67,6 @@
     ;; Term
     (require 'init-term)
   )
-#+end_src
-** Language Support
-#+begin_src emacs-lisp
-  (defun load-language-part-file()
-    ;; Complete Frame
-    (require 'init-complete)
-    ;; Language support
-    (require 'init-lang)
-    )
 #+end_src
 
 ** Other Part
@@ -83,11 +85,15 @@
 ** Delay Load Part
 延迟加载，提高加载速度。
 #+begin_src emacs-lisp
-  (run-with-idle-timer 2 nil #'load-language-part-file)
-  (run-with-idle-timer 2 nil #'load-function-part-file)
-  (run-with-idle-timer 3 nil #'load-other-part-file)
-  ;;(add-hook 'after-init-hook #'load-language)
-  ;;(add-hook 'after-init-hook #'load-custom-file)
+  ;;(add-hook 'after-init-hook #'load-language-part-file)
+  (add-hook 'after-init-hook #'load-function-part-file)
+  (add-hook 'after-init-hook #'load-other-part-file)
+  ;; (run-with-idle-timer 2 nil #'load-language-part-file)
+  ;; (run-with-idle-timer 2 nil #'load-function-part-file)
+  ;; (run-with-idle-timer 3 nil #'load-other-part-file)
+
+  ;; (add-hook 'after-init-hook #'load-language)
+  ;; (add-hook 'after-init-hook #'load-custom-file)
 #+end_src
 
 ** Ends

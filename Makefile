@@ -38,6 +38,11 @@ dump.el: config/dump.org
 # 遍历 DS 目录，生成 tangle_template规则
 $(foreach dir,$(DS),$(eval $(call tangle_template,$(dir))))
 
+# org-style 编译方法
+lisp/org-style/ox-bibtex.el:
+
+
+
 el: $(DS) early-init.el init.el dump.el
 
 elc:
