@@ -24,7 +24,7 @@
               # llvmPackages_15.bintools
 
               # gcc
-	            # clang_16
+	          # clang_16
               # clang-tools_16
               gnumake
             ];

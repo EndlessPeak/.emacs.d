@@ -89,9 +89,9 @@
 #+end_src
 
 ** Orderless
-先安装一个支持中文的首字母匹配的插件 =pinyinlib= 。
+先安装一个支持中文的首字母匹配的插件 =pinyin-search= ( =pinyinlib= is deprecated)。
 #+begin_src emacs-lisp
-  (use-package pinyinlib
+  (use-package pinyin-search
     :ensure t)
 #+end_src
 再安装 =orderless= ，用于无序补全。
