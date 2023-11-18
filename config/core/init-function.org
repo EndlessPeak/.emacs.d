@@ -87,7 +87,7 @@
 #+begin_src emacs-lisp
   ;;;###autoload
   (defun leesin/toggle-transparency()
-    (setq default-frame-alist '((alpha-background . 90)))
+    (setq default-frame-alist '((alpha-background . 95)))
     )
   (leesin/toggle-transparency)
 #+end_src
@@ -318,7 +318,7 @@
   (add-hook 'prog-mode-hook 'leesin/hack-tab-key)
 #+end_src
 ** Org Export
-导出为HTML时使用。
+导出为 HTML 时使用。
 #+begin_src emacs-lisp
   (defun leesin-org-inline-css-hook (exporter)
     "Insert custom inline css"

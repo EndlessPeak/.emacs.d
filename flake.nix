@@ -26,7 +26,7 @@
               # gcc
 	            # clang_16
               # clang-tools_16
-              gnumake
+              cmake
             ];
           };
         });
