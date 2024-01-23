@@ -84,7 +84,7 @@
 
 ** Transparency
 透明背景目前 =emacs= 已支持。
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   ;;;###autoload
   (defun leesin/toggle-transparency()
     (setq default-frame-alist '((alpha-background . 95)))

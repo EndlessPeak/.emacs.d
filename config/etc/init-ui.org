@@ -89,20 +89,32 @@
 加载自行克隆的包时， ~use-package~ 后跟的包名会解析为包主函数所在文件名， ~load-path~ 后跟的名称会解析为包文件夹名(解析路径)。
 以下是测试过的一些主题：
 1. =catppuccin= 主题
-   1. 可以选择不同的颜色风格，共有 4 种，按照亮度由亮到暗依次为 =latte= , =frappe= , =macchiato= , =mocha=
-   2. =catppuccin= 主题对 ~org-verbatim~ 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置将 ~org-code~ 改为 ~(org-code :foreground ,ctp-peach)~ 将 ~org-verbatim~ 改为 ~(org-verbatim :foreground ,ctp-green)~
-   3. =catppuccin= 主题对 =org-block= 的底色与普通底色相同，可以进行修改，如 ~(org-block :foreground ctp-mauve :background ,"#202334")~
-2. =hardhacker= 主题下载地址
-   ~git clone https://github.com/hardhackerlabs/theme-emacs.git hardhacker~
+2. =hardhacker= 主题
 3. =nano-theme= 主题
-   感觉不好用。
-   1. =nano emacs= 配置文件地址
-      https://github.com/rougier/nano-emacs
-   2. =nano-theme= 主题地址
-      https://github.com/404cn/nano-theme.el
 4. =everforest= 主题
-   配置克隆地址：https://git.sr.ht/~theorytoe/everforest-theme 或 https://github.com/Theory-of-Everything/everforest-emacs.git
-   注意需要将 =everforest.el= 中的内容取消注释。
+
+Nano 使用了 quelpa 进行管理，修改时需要先改 =quelpa/build= 中的源码，而后 =quelpa-use-package= 会加载到 elpa 中。
+*** nano
+1. =nano emacs= 配置文件地址
+  https://github.com/rougier/nano-emacs
+2. =nano-theme= 主题地址
+   1. https://github.com/rougier/nano-theme [Offical]
+   2. https://github.com/404cn/nano-theme.el [Deprecated]
+
+由于 =nano-theme= 的标题栏底色 ~nano-faded~ 会被遮盖，建议修改 ~nano-theme-support.el~ 第 787 行 ~font-lock-string-face~ 的颜色。
+#+begin_src emacs-lisp :tangle no
+  '(font-lock-string-face         ((t (:inherit nano-default))))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package nano-theme
+    :ensure nil
+    :defer t
+    :quelpa (nano-theme
+             :fetcher github
+             :repo "rougier/nano-theme")
+    )
+#+end_src
 
 *** doom
 #+begin_src emacs-lisp
@@ -130,6 +142,11 @@
 #+end_src
 
 *** catppuccin
+对于 =catppuccin= ：
+1. 可以选择不同的颜色风格，共有 4 种，按照亮度由亮到暗依次为 =latte= , =frappe= , =macchiato= , =mocha=
+2. =catppuccin= 主题对 ~org-verbatim~ 的强调是 ~(org-verbatim :inherit org-quote)~ ，导致显示不正确，本配置将 ~org-code~ 改为 ~(org-code :foreground ,ctp-peach)~ 将 ~org-verbatim~ 改为 ~(org-verbatim :foreground ,ctp-green)~
+3. =catppuccin= 主题对 =org-block= 的底色与普通底色相同，可以进行修改，如 ~(org-block :foreground ctp-mauve :background ,"#202334")~
+
 #+begin_src emacs-lisp
   (use-package catppuccin-theme
     :ensure t
@@ -139,6 +156,8 @@
 #+end_src
 
 *** hardhacker
+下载地址：~git clone https://github.com/hardhackerlabs/theme-emacs.git hardhacker~
+
 #+begin_src emacs-lisp
   (use-package hardhacker-theme
     ;;:load-path "~/.emacs.d/elpa/hardhacker"
@@ -147,6 +166,9 @@
 #+end_src
 
 *** everforest
+配置克隆地址：https://git.sr.ht/~theorytoe/everforest-theme 或 https://github.com/Theory-of-Everything/everforest-emacs.git
+注意需要将 =everforest.el= 中的内容取消注释。
+
 #+begin_src emacs-lisp
   (use-package everforest
     :load-path (lambda() (expand-file-name "everforest-theme" package-user-dir))
@@ -163,9 +185,14 @@
   ;; (load-theme 'catppuccin t)
   ;; (load-theme 'doom-challenger-deep t)
   ;; (load-theme 'everforest-hard-dark t)
-  (cond (sys/win32p (load-theme 'doom-dracula t))
-        (sys/linux (load-theme 'doom-dracula t))
-        ) 
+  (cond
+    (sys/win32p
+      (load-theme 'doom-dracula t))
+    (sys/linux
+      (load-theme 'nano t)
+      (nano-dark)
+     )
+  )
 #+end_src
 
 ** Ligature
@@ -219,8 +246,8 @@
 #+begin_src emacs-lisp :tangle no
   (when (display-graphic-p)
     (when sys/linux
-      (set-frame-width (selected-frame) 200)
-      (set-frame-height (selected-frame) 80)))
+      (set-frame-width (selected-frame) 400)
+      (set-frame-height (selected-frame) 200)))
 
 #+end_src
 

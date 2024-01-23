@@ -2,6 +2,7 @@
 .local/
 auto-save-list/
 elpa/
+quelpa/
 /lisp/
 eshell/
 url/
