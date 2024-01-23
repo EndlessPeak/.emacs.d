@@ -55,6 +55,35 @@
   (use-package gnu-elpa-keyring-update)
 #+end_src
 
+** quelpa
+用于下载 github 上的包。
+#+begin_src emacs-lisp
+  (use-package quelpa
+    :ensure nil
+    :config  
+    (setq quelpa-upgrade-p nil
+          quelpa-update-melpa-p nil)
+    )
+
+#+end_src
+
+用于集成到 use-package 上。
+#+begin_src emacs-lisp
+  (quelpa
+   '(quelpa-use-package
+     :fetcher git
+     :url "https://github.com/quelpa/quelpa-use-package.git"))
+  (require 'quelpa-use-package)
+#+end_src
+
+** package utils
+主要用于下载和更新包，自动更新时可以删除冗余包。
+#+begin_src emacs-lisp
+  (use-package package-utils
+    :ensure t
+    )
+#+end_src
+
 ** Auto update packages
 #+begin_src emacs-lisp
   ;; Auto update packages
