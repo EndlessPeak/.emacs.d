@@ -199,6 +199,9 @@
 克隆地址 ~git clone https://github.com/manateelazycat/color-rg~
 我个人非常推荐 =color-rg= ，但是如果想在 =windows= 下使用的话需要注意单引号的问题，因为单引号并不是 Windows 系统中合法的路径引用符号。
 目前暂定的解决方案是取消任何有关单引号的参数，见下面的配置。
+
+*** V1
+使用默认的 =require= 加载。
 #+begin_src emacs-lisp :tangle no
   (add-to-list 'load-path "~/.emacs.d/elpa/color-rg")
   (require 'color-rg)
@@ -206,7 +209,9 @@
     (setq color-rg-search-ignore-rules nil))
 #+end_src
 
-#+begin_src emacs-lisp
+*** V2
+使用 =use-package= 管理，引入了加载路径。
+#+begin_src emacs-lisp :tangle no
   (use-package color-rg
     ;:load-path "~/.emacs.d/elpa/color-rg"
     :load-path (lambda() (expand-file-name "color-rg" package-user-dir))
@@ -216,7 +221,22 @@
     )
 #+end_src
 
-我个人将 =color-rg= 中项目查找部分的源代码作了修改，因为我不喜欢 =project= 管理项目，见下面的配置。下面的代码不会直接参与编译，建议手动修改源码。
+*** V3
+以上方法不利于迁移和自动构建，现在改为使用 =quelpa= 加载。
+#+begin_src emacs-lisp
+  (use-package color-rg
+    :ensure t
+    :defer t
+    :quelpa (color-rg
+       :fetcher github
+       :repo "manateelazycat/color-rg")
+    :config
+    (when sys/win32p
+      (setq color-rg-search-ignore-rules nil))
+  )
+#+end_src
+*** Note
+我个人曾经将 =color-rg= 中项目查找部分的源代码作了修改，因为我以前不喜欢 =project= 管理项目，见下面的配置。下面的代码不会直接参与编译，建议手动修改源码。
 #+begin_src emacs-lisp :tangle no
 (defun color-rg-project-root-dir ()
   "Return root directory of the current project, or default-directory if none is found."
