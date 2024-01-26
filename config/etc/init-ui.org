@@ -185,12 +185,13 @@ Nano 使用了 quelpa 进行管理，修改时需要先改 =quelpa/build= 中的
   ;; (load-theme 'catppuccin t)
   ;; (load-theme 'doom-challenger-deep t)
   ;; (load-theme 'everforest-hard-dark t)
+  ;; (load-theme 'nano t)
   (cond
     (sys/win32p
       (load-theme 'doom-dracula t))
     (sys/linux
-      (load-theme 'nano t)
-      (nano-dark)
+      (load-theme 'doom-palenight t)
+      ;;(nano-dark)
      )
   )
 #+end_src

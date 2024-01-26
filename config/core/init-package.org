@@ -59,7 +59,7 @@
 用于下载 github 上的包。
 #+begin_src emacs-lisp
   (use-package quelpa
-    :ensure nil
+    :ensure t
     :config  
     (setq quelpa-upgrade-p nil
           quelpa-update-melpa-p nil)
