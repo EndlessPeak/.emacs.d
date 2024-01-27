@@ -227,6 +227,7 @@
   (use-package color-rg
     :ensure t
     :defer t
+    :after vertico
     :quelpa (color-rg
        :fetcher github
        :repo "manateelazycat/color-rg")

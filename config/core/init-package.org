@@ -31,8 +31,8 @@
 
   (package-initialize)
 
-  (unless package-archive-contents
-    (package-refresh-contents))
+  ;(unless package-archive-contents
+  ;  (package-refresh-contents))
 #+end_src
 
 ** Use-package
@@ -60,6 +60,7 @@
 #+begin_src emacs-lisp
   (use-package quelpa
     :ensure t
+    :defer t
     :config  
     (setq quelpa-upgrade-p nil
           quelpa-update-melpa-p nil)
@@ -81,6 +82,14 @@
 #+begin_src emacs-lisp
   (use-package package-utils
     :ensure t
+    :commands
+    (package-utils-upgrade-all
+     package-utils-list-upgrades
+     package-utils-upgrade-by-name
+     package-utils-remove-by-name
+     package-utils-upgrade-all-and-quit
+     package-utils-upgrade-all-and-restart
+     package-utils-upgrade-all-and-recompile)
     )
 #+end_src
 
@@ -89,10 +98,11 @@
   ;; Auto update packages
   (unless (fboundp 'package-upgrade-all)
     (use-package auto-package-update
-    :init
-    (setq auto-package-update-delete-old-versions t
-            auto-package-update-hide-results t)
-    (defalias 'upgrade-packages #'auto-package-update-now)))
+      :defer t
+      :init
+      (setq auto-package-update-delete-old-versions t
+              auto-package-update-hide-results t)
+      (defalias 'upgrade-packages #'auto-package-update-now)))
 #+end_src
 
 ** Ends

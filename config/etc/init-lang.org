@@ -17,6 +17,7 @@
 #+begin_src emacs-lisp
   (use-package flycheck
     :ensure t
+    :defer t
     ;;:hook (after-init . global-flycheck-mode)
     )
 #+end_src
@@ -96,9 +97,7 @@
 #+begin_src emacs-lisp
   (use-package tree-sitter
     :ensure t
-    :config
-    (require 'tree-sitter-langs)
-
+    :defer t
     ;; use tree sitter mode and highlighting globally
     :hook
     (c-mode . tree-sitter-mode)
@@ -107,12 +106,17 @@
     (rust-mode . tree-sitter-mode)
     (python-mode . tree-sitter-mode)
     (tree-sitter-after-on . tree-sitter-hl-mode)
+
+    :config
+    (require 'tree-sitter-langs)
     )
 #+end_src
 
 #+begin_src emacs-lisp
   (use-package tree-sitter-langs
     :ensure t
+    :defer t
+    :after tree-sitter
     :config
     (tree-sitter-require 'c)
     (tree-sitter-require 'cpp)

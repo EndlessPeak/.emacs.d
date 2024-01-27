@@ -11,6 +11,7 @@
 
   ;;; Code :
 #+end_src
+
 ** Self Custom
 #+begin_src emacs-lisp
   (require 'cl-lib)
@@ -18,6 +19,17 @@
   (let ((self-custom-path (expand-file-name "self-custom.el" user-emacs-directory)))
     (when (file-exists-p self-custom-path)
       (load-file self-custom-path)))
+#+end_src
+
+** Startup Performance
+#+begin_src emacs-lisp
+  (defun leesin/display-startup-time ()
+    (message "Emacs loaded in %s with %d garbage collections."
+             (format "%.2f seconds"
+                     (float-time
+                      (time-subtract after-init-time before-init-time)))
+             gcs-done))
+  (add-hook 'emacs-startup-hook #'leesin/display-startup-time)
 #+end_src
 
 ** UI
@@ -91,6 +103,7 @@
     )
   (leesin/toggle-transparency)
 #+end_src
+
 原透明函数已弃用，不会参与编译。
 #+begin_src emacs-lisp :tangle no
   ;;;###autoload
@@ -235,6 +248,7 @@
       )
     )
 #+end_src
+
 *** Tab Region
 命令函数，用于将选定的文本进行缩进。
 #+begin_src emacs-lisp
@@ -301,6 +315,7 @@
       )
     )
 #+end_src
+
 *** Redefine Tab Key
 该函数花费了足足两天的时间编写，不过它的具体实现仍然有误，但我才发现 =emacs= 本身定义了三个完美的函数，以后用下面三个：
 1. 重新缩进列表内所有行 ~indent-sexp~ 快捷键 =C-M-q=
@@ -317,6 +332,7 @@
 
   (add-hook 'prog-mode-hook 'leesin/hack-tab-key)
 #+end_src
+
 ** Org Export
 导出为 HTML 时使用。
 #+begin_src emacs-lisp
@@ -339,6 +355,7 @@
 
   (add-hook 'org-export-before-processing-hook 'leesin-org-inline-css-hook)
 #+end_src
+
 ** Ends
 #+begin_src emacs-lisp
   (provide 'init-function)

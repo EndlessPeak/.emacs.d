@@ -21,6 +21,7 @@
 #+begin_src emacs-lisp
   (use-package yasnippet
     :ensure t
+    :defer t
     :hook (after-init . yas-global-mode)
     :config
     (setq yas-snippet-dirs (list (expand-file-name "snippets" user-emacs-directory)))
