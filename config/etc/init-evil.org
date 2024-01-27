@@ -12,24 +12,30 @@
   ;;; Code :
 #+end_src
 
-** Install
+** Evil
+*** Install
 可以使用 =use-package= 安装。下面的代码参与编译。
 #+begin_src emacs-lisp
+  ;; Set variable before evil due to evil-collection issue 60
+  (setq evil-want-integration t
+        evil-want-keybinding nil)
+
   (use-package evil
     :ensure t
     :init
     (require 'evil)
     :hook
-    (after-init . evil-mode))
+    (after-init . evil-mode)
+  )
 #+end_src
 
-可以使用 =package.el= 安装。下面的代码不会参与编译。
+也可以使用 =package.el= 安装。下面的代码不会参与编译。
 #+begin_src emacs-lisp :tangle no
   (unless (package-installed-p 'evil)
     (package-install 'evil))
 #+end_src
 
-** Load
+*** Load
 由于使用 =use-package= ，下面的代码不会参与编译。
 #+begin_src emacs-lisp :tangle no
   (require 'evil)
@@ -48,6 +54,18 @@
   ;(evil-declare-key 'insert org-mode-map
     ;(kbd "TAB") 'org-do-demote 
     ;(kbd "<backtab>") 'org-do-promote)
+#+end_src
+
+** Evil-collection
+使用 =evil-collection= 为其他常用 emacs 插件提供 =evil= 绑定。
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :ensure t
+    :after evil
+    :hook
+    (magit-mode . evil-collection-magit-init)
+    (evil-mode . evil-collection-init)
+    )
 #+end_src
 
 ** Ends
