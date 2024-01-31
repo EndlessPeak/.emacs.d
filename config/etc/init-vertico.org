@@ -226,7 +226,6 @@
 #+begin_src emacs-lisp
   (use-package color-rg
     :ensure t
-    :defer t
     :after vertico
     :quelpa (color-rg
        :fetcher github
