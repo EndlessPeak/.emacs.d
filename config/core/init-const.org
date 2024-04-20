@@ -11,6 +11,7 @@
 
   ;;; Code :
 #+end_src
+
 ** Judge Operating System
 #+begin_src emacs-lisp
   ;; Judge Operation System
@@ -25,10 +26,6 @@
   (defconst sys/mac
      (eq system-type 'darwin)
      "We are running on a MacOS system.")
-
-  (defconst emacs/>=28p
-    (>= emacs-major-version 28)
-    "Emacs is 28 or above.")
 #+end_src
 
 ** Emacs version check

@@ -38,6 +38,9 @@
   (use-package doom-snippets
     ;:load-path "~/.emacs.d/elpa/snippets"
     :load-path (lambda() (expand-file-name "snippets" package-user-dir))
+    ;; :quelpa (doom-snippets
+    ;;    :fetcher github
+    ;;    :repo "doomemacs/snippets")
     :after yasnippet
     )
 #+end_src

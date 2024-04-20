@@ -12,30 +12,10 @@
   ;;; Code:
 #+END_SRC
 
-** Dump
-#+begin_src emacs-lisp :tangle no
-  ;; dump后load-path值，当这个变量为nil时是不会加载pdmp的。
-  (defvar +dumped-load-path nil
-    "Not nil when using dump.")
-
-  ;; 通过dump启动时的配置
-  (when +dumped-load-path
-    ;;恢复load-path
-    (setq load-path +dumped-load-path)
-    ;; 修改一下报错等级，这个读者按心意加，不影响dump
-    (setq warning-minimum-level :emergency)
-    ;; 一些功能失常的mode，需要重新开启
-    (global-font-lock-mode t)
-    (transient-mark-mode t))
-
-  (unless +dumped-load-path
-    ;; 下面正常加载
-#+end_src
-
 ** Version Check
 #+begin_src emacs-lisp
-  (when (version< emacs-version "26.1")
-    (error "This requires Emacs 26.1 and above!"))
+  (when (version< emacs-version "29")
+    (error "This requires Emacs 29 and above!"))
 #+end_src
 
 ** Speed up settings
@@ -63,28 +43,17 @@
 #+end_src
 
 ** Load Path
-如需从任意其他非家目录位置加载配置环境，使用加载命令 ~/path/to/emacs --no-desktop --load="/path/to/early-init" --load="/path/to/init.el"~
+如需从任意其他非家目录位置加载配置环境，使用下面的加载命令 
+#+begin_src shell :tangle no
+  emacs --no-desktop --load="/path/to/early-init" --load="/path/to/init.el"
+#+end_src
+
+加载配置路径和文件。
 #+begin_src emacs-lisp 
   ;; Load path
   ;; Optimize: Force `lisp' and `site-lisp' at the head to reduce the startup time.
   (defun update-load-path (&rest _)
     "Update 'load-path'."
-    (dolist (dir '("site-lisp" "lisp/core" "lisp/etc" "lisp/lang"))
-      (push (expand-file-name dir user-emacs-directory) load-path)))
-
-  (advice-add #'package-initialize :after #'update-load-path)
-
-  (update-load-path)
-
-  ;; Indepentent custom
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-#+end_src
-
-#+begin_src emacs-lisp :tangle no
-  ;; Load path
-  ;; Optimize: Force `lisp' and `site-lisp' at the head to reduce the startup time.
-  (defun update-load-path (&rest _)
-    "Update 'load-path' ."
     (dolist (dir '("site-lisp" "lisp/core" "lisp/etc" "lisp/lang"))
       (push (expand-file-name dir user-emacs-directory) load-path)))
 

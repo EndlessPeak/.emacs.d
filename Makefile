@@ -30,9 +30,6 @@ early-init.el: config/early-init.org
 init.el: config/init.org
 	$(EE) --eval '(org-babel-tangle-publish t "$<" "$(@D)/")'
 
-dump.el: config/dump.org
-	$(EE) --eval '(org-babel-tangle-publish t "$<" "$(@D)/")'
-
 # (foreach var, list, template) var 是临时变量，list是需要遍历的列表，template是一个模板字符串
 # foreach 遍历 DS 中的每个元素，作为dir传给后面的eval函数求值，所需求值的表达式为call调用模板方法生成编译命令
 # 遍历 DS 目录，生成 tangle_template规则
@@ -41,9 +38,7 @@ $(foreach dir,$(DS),$(eval $(call tangle_template,$(dir))))
 # org-style 编译方法
 lisp/org-style/ox-bibtex.el:
 
-
-
-el: $(DS) early-init.el init.el dump.el
+el: $(DS) early-init.el init.el
 
 elc:
 	$(EM) --batch -l ./init.el -L "lisp" --eval '(byte-recompile-directory "lisp/etc" 0)'

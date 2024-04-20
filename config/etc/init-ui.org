@@ -135,7 +135,8 @@
 #+end_src
 
 *** nord
-#+begin_src emacs-lisp
+现在该包已经废弃，如需使用应当寻找其他替代内容。
+#+begin_src emacs-lisp :tangle no
   (use-package nord-theme
     :ensure nil)
 #+end_src

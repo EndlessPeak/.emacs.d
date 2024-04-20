@@ -32,7 +32,7 @@
 缩进线高亮显示。
 项目地址：https://github.com/DarthFennec/highlight-indent-guides.git
 注意：提供显示缩进线的方式包括 =fill= =column= =character= =bitmap= 四种，其中 =character= 建议修改字符，因为原字符会导致缩进问题。
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package highlight-indent-guides
     :load-path (lambda() (expand-file-name "highlight-indent-guides" package-user-dir))
     :hook
@@ -48,6 +48,27 @@
     (set-face-foreground 'highlight-indent-guides-even-face "dimgray")
     (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
     )
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package highlight-indent-guides
+    :quelpa (highlight-indent-guides
+       :fetcher github
+       :repo "DarthFennec/highlight-indent-guides")
+    :hook
+    (prog-mode . highlight-indent-guides-mode)
+    :config
+    (setq highlight-indent-guides-method 'character)
+    (setq highlight-indent-guides-character ?|)
+    (setq highlight-indent-guides-auto-enabled nil)
+    ;;(setq highlight-indent-guides-auto-odd-face-perc 40)
+    ;;(setq highlight-indent-guides-auto-even-face-perc 40)
+    ;;(setq highlight-indent-guides-auto-character-face-perc 100)
+    (set-face-foreground 'highlight-indent-guides-odd-face "darkgray")
+    (set-face-foreground 'highlight-indent-guides-even-face "dimgray")
+    (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+  )
+
 #+end_src
 
 ** Beacon

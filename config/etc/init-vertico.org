@@ -91,7 +91,7 @@
 ** Orderless
 先安装一个支持中文的首字母匹配的插件 =pinyin-search= ( =pinyinlib= is deprecated)。
 #+begin_src emacs-lisp
-  (use-package pinyin-search
+  (use-package pinyin-isearch
     :ensure t)
 #+end_src
 再安装 =orderless= ，用于无序补全。
@@ -108,9 +108,9 @@
     :config
     ;; make completion support pinyin
     ;; refer to https://emacs-china.org/t/vertico/17913/2
-    (defun completion-regex-pinyin (str)
-      (orderless-regexp (pinyinlib-build-regexp-string str)))
-    (add-to-list 'orderless-matching-styles 'completion-regex-pinyin)
+    ;;(defun completion-regex-pinyin (str)
+    ;;  (orderless-regexp (pinyinlib-build-regexp-string str)))
+    ;;(add-to-list 'orderless-matching-styles 'completion-regex-pinyin)
     )
 #+end_src
 
@@ -225,11 +225,11 @@
 以上方法不利于迁移和自动构建，现在改为使用 =quelpa= 加载。
 #+begin_src emacs-lisp
   (use-package color-rg
-    :ensure t
-    :after vertico
     :quelpa (color-rg
        :fetcher github
        :repo "manateelazycat/color-rg")
+    :ensure t
+    :after vertico
     :config
     (when sys/win32p
       (setq color-rg-search-ignore-rules nil))

@@ -12,6 +12,7 @@
 
   ;;; Code:
 #+END_SRC
+
 ** IO & Garbage collection
 #+BEGIN_SRC emacs-lisp
   ;; Enhance IO
@@ -20,8 +21,8 @@
   (setq process-adaptive-read-buffering nil)
 
   ;; Defer garbage collection further back in the startup process
-  ;; (setq gc-cons-threshold most-positive-fixnum)
-  (setq gc-cons-threshold 134217728   ; 128mb
+  (setq gc-cons-threshold most-positive-fixnum
+  ;; (setq gc-cons-threshold 134217728   ; 128mb
         gc-cons-percentage 1.0)
 
   ;; In noninteractive sessions, prioritize non-byte-compiled source files to
@@ -30,6 +31,7 @@
   (setq load-prefer-newer noninteractive)
 
 #+END_SRC
+
 ** Native-Comp & Package
 #+begin_src emacs-lisp
   ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
