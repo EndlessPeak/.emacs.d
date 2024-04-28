@@ -169,7 +169,7 @@
 
 ** Direnv
 NixOS 上需要开启此插件。如果不是 NixOS 则暂时停用。
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (when sys/linux
     (use-package direnv
       :ensure nil
